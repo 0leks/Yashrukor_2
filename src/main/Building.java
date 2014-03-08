@@ -1,8 +1,11 @@
 package main;
 
 public class Building extends Thing {
-	public Building()
+	Player myPlayer;
+	public Building(int x, int y)
 	{
-		
+		this.x = x;
+		this.y = y;
 	}
+
 }
