@@ -9,12 +9,13 @@ public class Unit extends Thing {
 	public final int MEDIC = 6;
 	private boolean isRanged;
 	private int damage;
-	
+	Player myPlayer;
 	private int unitType;
-	public Unit(int unitType, int x, int y)
+	public Unit(int unitType, int x, int y, Player p)
 	{	
 		this.x = x;
 		this.y = y;
+		myPlayer = p;
 		this.unitType = unitType; 
 		if(unitType == WORKER)
 		{
