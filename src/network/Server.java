@@ -70,6 +70,7 @@ public class Server implements Runnable{
 		timer = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sendtoall(world);
 				asdf.panel.repaint();
 			}
 		});

@@ -1,6 +1,8 @@
 package main;
 
-public class Building extends Thing {
+import java.io.Serializable;
+
+public class Building extends Thing  implements Serializable{
 	Player myPlayer;
 	public final int BASE = 1;
 	public final int FARM = 2;

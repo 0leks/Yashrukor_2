@@ -65,9 +65,11 @@ public class Client implements Runnable{
 			try {
 				Object o = in.readUnshared();
 				System.out.println("Read Object:"+o);
-				this.send("Read Object:"+o);
+				//this.send("Read Object:"+o);
 				if(o instanceof World) {
 					world = (World)o;
+					System.out.println("Read World!");
+					frame.panel.repaint();
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -82,13 +84,16 @@ public class Client implements Runnable{
 		public Frame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setSize(500, 500);
+			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
+					System.out.println("repainting");
 					if(world!=null) {
 						world.drawEverything(g);
 					}
 				}
 			};
+			this.add(panel);
 		}
 	}
 	public void start() {

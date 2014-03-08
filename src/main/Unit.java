@@ -1,8 +1,9 @@
 package main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Unit extends Thing {
+public class Unit extends Thing  implements Serializable{
 	public final static int WORKER = 1;
 	public final static int WARRIOR = 2;
 	public final static int ARCHER = 3;
