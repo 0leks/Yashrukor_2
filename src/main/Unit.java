@@ -14,11 +14,14 @@ public class Unit extends Thing {
 	private int damage;
 	private int range;
 	private ArrayList<Command> commandList = new ArrayList<Command>();
-	
 	private int unitType;
-	public Unit(int unitType, int x, int y){
+	Player myPlayer;
+	
+	public Unit(int unitType, int x, int y, Player p)
+	{	
 		this.x = x;
 		this.y = y;
+		myPlayer = p;
 		this.unitType = unitType; 
 		if(unitType == WORKER){
 			hp = 50;
