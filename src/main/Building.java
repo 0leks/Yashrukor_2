@@ -15,5 +15,10 @@ public class Building extends Thing {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Player getPlayer()
+	{
+		return myPlayer;
+	}
 
 }

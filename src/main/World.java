@@ -10,10 +10,11 @@ import javax.swing.JPanel;
 public class World {
 	ArrayList<Building> allBuildigs = new ArrayList<Building>();
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
+	Player temp = new Player();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	public World() {
 		Thing.myWorld = this;
-		allThings.add(new Unit(1, 50, 50));
+		allThings.add(new Unit(1, 50, 50, temp));
 		TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
 	
