@@ -14,7 +14,7 @@ public class World {
 	public World() {
 		Thing.myWorld = this;
 		allThings.add(new Unit(1, 50, 50));
-		TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
+		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
 	
 	public void drawEverything(Graphics g) {

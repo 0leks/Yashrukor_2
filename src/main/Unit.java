@@ -12,10 +12,10 @@ public class Unit extends Thing {
 	public final int SHAMAN = 7;
 	private boolean isRanged;
 	private int damage;
+	Player myPlayer;
 	private int range;
 	private ArrayList<Command> commandList = new ArrayList<Command>();
 	private int unitType;
-	Player myPlayer;
 	
 	public Unit(int unitType, int x, int y, Player p){
 		this.x = x;

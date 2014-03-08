@@ -1,5 +1,6 @@
 package network;
 
+import java.awt.Graphics;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,13 +10,22 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import main.World;
+
 public class Client implements Runnable{
 	private Thread thread;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private Socket socket;
+	private World world;
+	private Frame frame;
+	
 	public Client() {
 		thread = new Thread(this);
+		frame = new Frame();
 	}
 	@Override
 	public void run() {
@@ -47,7 +57,6 @@ public class Client implements Runnable{
 		try {
 			out.writeUnshared(o);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -57,12 +66,29 @@ public class Client implements Runnable{
 				Object o = in.readUnshared();
 				System.out.println("Read Object:"+o);
 				this.send("Read Object:"+o);
+				if(o instanceof World) {
+					world = (World)o;
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
+		}
+	}
+	public class Frame extends JFrame {
+		JPanel panel;
+		public Frame() {
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setSize(500, 500);
+			panel = new JPanel() {
+				public void paintComponent(Graphics g) {
+					if(world!=null) {
+						world.drawEverything(g);
+					}
+				}
+			};
 		}
 	}
 	public void start() {
