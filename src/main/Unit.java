@@ -17,8 +17,7 @@ public class Unit extends Thing {
 	private int unitType;
 	Player myPlayer;
 	
-	public Unit(int unitType, int x, int y, Player p)
-	{	
+	public Unit(int unitType, int x, int y, Player p){
 		this.x = x;
 		this.y = y;
 		myPlayer = p;

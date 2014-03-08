@@ -10,4 +10,7 @@ public class Command {
 	public Command (int command){
 		this.command = command;
 	}
+	public int getCommand(){
+		return command;
+	}
 }
