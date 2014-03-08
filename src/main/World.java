@@ -2,20 +2,21 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class World {
+public class World implements Serializable {
 	ArrayList<Building> allBuildigs = new ArrayList<Building>();
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
 	Player temp = new Player();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	public World() {
 		Thing.myWorld = this;
-		allThings.add(new Unit(1, 50, 50, temp));
-		TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
+		allThings.add(new Unit(1, 50, 50, new Player()));
+		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
 	
 	public void drawEverything(Graphics g) {
