@@ -10,7 +10,7 @@ public class World extends JPanel {
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	public World()
 	{
-		
+		Thing.myWorld = this;
 	}
 	
 	
