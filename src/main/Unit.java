@@ -74,7 +74,7 @@ public class Unit extends Thing {
 	}
 	public void tic(){
 		commandList.get(0);//gets and does the next command that the unit needs to do
-		
+		commandList.remove(0);
 	}
 	public boolean isRanged(){
 		return isRanged;
