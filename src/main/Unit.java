@@ -3,13 +3,13 @@ package main;
 import java.util.ArrayList;
 
 public class Unit extends Thing {
-	public final int WORKER = 1;
-	public final int WARRIOR = 2;
-	public final int ARCHER = 3;
-	public final int KNIGHT = 4;
-	public final int CROSSBOW = 5;
-	public final int MEDIC = 6;
-	public final int SHAMAN = 7;
+	public final static int WORKER = 1;
+	public final static int WARRIOR = 2;
+	public final static int ARCHER = 3;
+	public final static int KNIGHT = 4;
+	public final static int CROSSBOW = 5;
+	public final static int MEDIC = 6;
+	public final static int SHAMAN = 7;
 	private boolean isRanged;
 	private int damage;
 	Player myPlayer;
@@ -74,6 +74,18 @@ public class Unit extends Thing {
 	public void tic(){
 		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
 		if(todo.command == Command.ATTACKMOVE)
+		{
+			
+		}
+		else if(todo.command == Command.ATTACK)
+		{
+			
+		}
+		else if(todo.command == Command.BUILD)
+		{
+			
+		}
+		else if(todo.command == Command.MOVE)
 		{
 			
 		}
