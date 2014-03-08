@@ -6,6 +6,7 @@ public class Command {
 	public final static int MOVE = 2;
 	public final static int BUILD = 3;
 	int command;
+	Thing target;
 	
 	public Command (int command){
 		this.command = command;
@@ -13,4 +14,10 @@ public class Command {
 	public int getCommand(){
 		return command;
 	}
+	
+	public void setTarget(Thing t)
+	{
+		target = t; 
+	}
+	
 }
