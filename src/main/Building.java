@@ -10,15 +10,23 @@ public class Building extends Thing {
 	public final int BARRACKS = 6;
 	public final int RANGE = 7;
 	public final int HOSPITAL = 8; 
-	public Building(int x, int y)
-	{
+	private int type;
+	private int productiontic=0;
+	public Building(int x, int y, int type){
 		this.x = x;
 		this.y = y;
+		this.type=type;
 	}
-	
+	public void tic(){
+		if(type==BASE){
+			productiontic++;
+			if(productiontic==20){
+				
+			}
+		}
+	}
 	public Player getPlayer()
 	{
 		return myPlayer;
 	}
-
 }
