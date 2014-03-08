@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class World implements Serializable {
 	ArrayList<Building> allBuildigs = new ArrayList<Building>();
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
+	Player temp = new Player();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	public World() {
 		Thing.myWorld = this;

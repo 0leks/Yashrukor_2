@@ -18,8 +18,7 @@ public class Unit extends Thing  implements Serializable{
 	private ArrayList<Command> commandList = new ArrayList<Command>();
 	private int unitType;
 	
-	public Unit(int unitType, int x, int y, Player p)
-	{	
+	public Unit(int unitType, int x, int y, Player p){
 		this.x = x;
 		this.y = y;
 		myPlayer = p;
@@ -74,8 +73,13 @@ public class Unit extends Thing  implements Serializable{
 		}
 	}
 	public void tic(){
-		commandList.get(0);//gets and does the next command that the unit needs to do
+		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
+		if(todo.command == Command.ATTACKMOVE)
+		{
+			
+		}
 		commandList.remove(0);
+		
 	}
 	public boolean isRanged(){
 		return isRanged;

@@ -7,6 +7,7 @@ public class Thing implements Serializable{
 	protected int y;
 	int MAXHEALTH;
 	int hp;
+	private boolean isBeingAttacked;
 	private boolean destroyed;
 	public static World myWorld;
 	public Thing()
@@ -17,6 +18,20 @@ public class Thing implements Serializable{
 	{
 		destroyed = false;
 		this.x = this.y;
+	}	
+	
+	public void getAttacked(int damage)
+	{
+		hp -= damage; 
+	}
+	public World myWorld()
+	{
+		return myWorld;
+	}
+	public void setPosition(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
 	}
 	
 }
