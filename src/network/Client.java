@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -53,6 +54,7 @@ public class Client implements Runnable{
 	private int cameraspeed = 20;
 	private Timer timer; 
 	private Point mousepress;
+	private Point currentmouse;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
@@ -256,6 +258,16 @@ public class Client implements Runnable{
 				}
 			};
 			this.add(panel);
+			this.addMouseMotionListener(new MouseMotionListener() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					mouseMoved(e);
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					currentmouse = e.getPoint();
+				}
+			});
 			this.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -351,29 +363,6 @@ public class Client implements Runnable{
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
 						movecameraright = true;
 					}
-					if(workercommands==true){
-						if(e.getKeyCode()==KeyEvent.VK_1) {
-							//build farm
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_2) {
-							//build quarry
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_3) {
-							//build lumbermill
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_4) {
-							//build tower
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_5) {
-							//build barracks
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_6) {
-							//build range
-						}
-						else if(e.getKeyCode()==KeyEvent.VK_7) {
-							//build hospital
-						}
-					}
 //					System.out.println(lookingat);
 				}
 				@Override
@@ -390,6 +379,15 @@ public class Client implements Runnable{
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
 						movecameraright = false;
 					}
+//					if(workercommands==true){
+						if(e.getKeyCode()>=49 && e.getKeyCode()<=56) {
+							int buildingtype = e.getKeyCode()-49;
+							BuildCommand bc = new BuildCommand();
+							bc.type = buildingtype;
+							bc.location = currentmouse;
+							send(bc);
+						}
+//					}
 				}
 				@Override
 				public void keyTyped(KeyEvent e) {

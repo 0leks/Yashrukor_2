@@ -61,6 +61,9 @@ public class World implements Serializable {
 		});
 		worldtimer.start();
 	}
+	public void addBuilding(Building b) {
+		allThings.add(b);
+	}
 	/**
 	 * ONLY FOR USE BY CLIENT
 	 */
