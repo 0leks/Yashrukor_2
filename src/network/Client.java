@@ -483,23 +483,64 @@ public class Client implements Runnable {
 						}
 						
 					}
-					if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
-						int buildingtype = e.getKeyCode() - 48;
-						BuildCommand bc = new BuildCommand();
-						bc.type = buildingtype;
-						bc.location = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
-						boolean cansend = false;
-						if (world.spotCloseEnough(bc.location, me)) {
-							if (me.resource().check(Building.getResource(bc.type))) {
-								me.resource().add(Building.getResource(bc.type));
-								send(bc);
-							} else {
-								errormessage = "Not enough Resources";
+					System.out.println("bs:"+bselected);
+					if(bselected==0){
+						if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
+							int buildingtype = e.getKeyCode() - 48;
+							BuildCommand bc = new BuildCommand();
+							bc.type = buildingtype;
+							bc.location = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+							boolean cansend = false;
+							if (world.spotCloseEnough(bc.location, me)) {
+								if (me.resource().check(Building.getResource(bc.type))) {
+									me.resource().add(Building.getResource(bc.type));
+									send(bc);
+								} else {
+									errormessage = "Not enough Resources";
+									errortic = 20;
+								}
+							} 
+							else {
+								errormessage = "Too far from your buildings";
 								errortic = 20;
 							}
-						} else {
-							errormessage = "Too far from your buildings";
-							errortic = 20;
+						}
+					}
+					else if(bselected==1){
+						System.out.println(e.getKeyCode());
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.WARRIOR);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.KNIGHT);
+							}
+						}
+					}
+					else if(bselected==2){
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.ARCHER);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.CROSSBOW);
+							}
+						}
+					}
+					else if(bselected==3){
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.MEDIC);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.SHAMAN);
+							}
 						}
 					}
 				}
