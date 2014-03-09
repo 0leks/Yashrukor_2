@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Unit extends Thing  implements Serializable{
-	public final static int WORKER = 1;
 	public final static int WARRIOR = 2;
 	public final static int ARCHER = 3;
 	public final static int KNIGHT = 4;
@@ -23,19 +22,11 @@ public class Unit extends Thing  implements Serializable{
 	private int unitType;
 	
 	public Unit(int unitType, int x, int y, Player p){
-		super(x,y, width, height);
+		super(x,y, width, height, 0);
 		this.x = x;
 		this.y = y;
 		myPlayer = p;
 		this.unitType = unitType; 
-		if(unitType == WORKER){
-			hp = 50;
-			MAXHEALTH = 50;
-			damage =0;
-			isRanged = false;
-			range = 0;
-			speed = 7;
-		}
 		if(unitType == WARRIOR){
 			hp = 100;
 			MAXHEALTH = 50;
@@ -108,20 +99,10 @@ public class Unit extends Thing  implements Serializable{
 				if (todo.target != null) {
 					attack(todo.target);
 				}
-			} else if (todo.command == Command.BUILD) {
-				if (todo.target != null) {
-					if (unitType == WORKER && todo.target != null) {
-						if (distanceTo(todo.target) > 40 + todo.target.width) {
-							moveToward(todo.target.x, todo.target.y);
-							commandList.add(0, todo);
-						} else {
-							buildBuilding((Building) todo.target);
-						}
-					}
-				}
-			} else if (todo.command == Command.MOVE) {
+			} 
+			else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
-				if (this.x != todo.x || this.y != todo.y) {
+				if (Math.abs(this.x-todo.x) >speed || Math.abs(this.y-todo.y) >speed) {
 					System.out.println("Command x: " + todo.x + " y: " + todo.y);
 					commandList.add(0, todo);
 				}

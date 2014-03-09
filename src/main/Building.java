@@ -2,14 +2,14 @@ package main;
 
 public class Building extends Thing {
 	Player myPlayer;
-	public final int BASE = 1;
-	public final int FARM = 2;
-	public final int QUARRY = 3;
-	public final int LUMBERMILL = 4;
-	public final int TOWER = 5;
-	public final int BARRACKS = 6;
-	public final int RANGE = 7;
-	public final int HOSPITAL = 8; 
+	public final static int BASE = 0;
+	public final static int FARM = 1;
+	public final static int QUARRY = 2;
+	public final static int LUMBERMILL = 3;
+	public final static int TOWER = 4;
+	public final static int BARRACKS = 5;
+	public final static int RANGE = 6;
+	public final static int HOSPITAL = 7;
 	private int type;
 	private int timetic=0;
 	private int unittic=0;
@@ -29,7 +29,7 @@ public class Building extends Thing {
 	
 	private boolean creatingunits=false;
 	public Building(int x, int y, int type, Player p) {
-		super(x, y, 100, 100);
+		super(x, y, 100, 100 ,0);
 		myPlayer=p;
 		this.type=type;
 		if(type == BASE)
@@ -50,9 +50,27 @@ public class Building extends Thing {
 			buildTime = 200;
 		
 	}
+	public static Resource getResource(int type) {
+		if(type==Building.FARM) {
+			return new Resource(-10,-10,-40,0);
+		} else if(type==Building.QUARRY) {
+			return new Resource(-10,0,-50,0);
+		} else if(type==Building.LUMBERMILL) {
+			return new Resource(-50,-0,-0,0);
+		} else if(type==Building.TOWER) {
+			return new Resource(-100,-80,-40,0);
+		} else if(type==Building.BARRACKS) {
+			return new Resource(-30,-50,-30,0);
+		} else if(type==Building.RANGE) {
+			return new Resource(-30,-30,-50,0);
+		} else if(type==Building.HOSPITAL) {
+			return new Resource(-40,-50,-50,0);
+		} else {
+			return new Resource(0, 0, 0, 0);
+		}
+	}
 	public void tic(){
-		if(underConstruction == false)
-		{
+		if(underConstruction == false){
 			if(type==BASE){
 				timetic++;
 				if(timetic==20){
@@ -89,30 +107,27 @@ public class Building extends Thing {
 				}
 			}
 		}
-		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
+		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
 			if(creatingunits==true){
 				unittic++;
 				if(unittic==unitreq){
 					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					if(unittomake==Unit.WORKER){
-						myPlayer.resource().add(worker);
-					}
-					else if(unittomake==Unit.WARRIOR){
+					if(unittomake==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
 						myPlayer.resource().add(warrior);
 					}
-					else if(unittomake==Unit.ARCHER){
+					else if(unittomake==Unit.ARCHER&&myPlayer.resource().check(archer)){
 						myPlayer.resource().add(archer);
 					}
-					else if(unittomake==Unit.KNIGHT){
+					else if(unittomake==Unit.KNIGHT&&myPlayer.resource().check(knight)){
 						myPlayer.resource().add(knight);
 					}
-					else if(unittomake==Unit.CROSSBOW){
+					else if(unittomake==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
 						myPlayer.resource().add(crossbow);
 					}
-					else if(unittomake==Unit.MEDIC){
+					else if(unittomake==Unit.MEDIC&&myPlayer.resource().check(medic)){
 						myPlayer.resource().add(medic);
 					}
-					else if(unittomake==Unit.SHAMAN){
+					else if(unittomake==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
 						myPlayer.resource().add(shaman);
 					}
 				}
@@ -147,14 +162,10 @@ public class Building extends Thing {
 	public Player getPlayer(){
 		return myPlayer;
 	}
+	public int getType(){
+		return type;
+	}
 	public void createUnit(int unit){
-		if (type==1){
-			if(unit ==Unit.WORKER){
-				unitreq=20*5;
-				unittomake=unit;
-				creatingunits=true;
-			}
-		}
 		if (type==6){
 			if(unit ==Unit.WARRIOR){
 				unitreq=20*10;

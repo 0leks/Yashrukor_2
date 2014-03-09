@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import main.Building;
 import main.Command;
 import main.Player;
 import main.Thing;
@@ -49,6 +50,11 @@ public class Connection implements Runnable{
 					c.setX(mv.target.x);
 					c.setY(mv.target.y);
 					thing.addCommand(c);
+				}
+				if(read instanceof BuildCommand) {
+					BuildCommand bc = (BuildCommand)read;
+					Building bob = new Building(bc.location.x, bc.location.y, bc.type, me);
+					server.theworld.addBuilding(bob);
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
