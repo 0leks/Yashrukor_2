@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class Client implements Runnable{
 	private boolean movecameradown;
 	private int cameraspeed = 20;
 	private Timer timer;
+	private Point mousepress;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
@@ -216,6 +219,26 @@ public class Client implements Runnable{
 				}
 			};
 			this.add(panel);
+			this.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+				}
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+				}
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					mousepress = e.getPoint();
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			this.addKeyListener(new KeyListener() {
 				@Override
 				public void keyPressed(KeyEvent e) {
