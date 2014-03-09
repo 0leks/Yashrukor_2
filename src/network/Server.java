@@ -84,6 +84,7 @@ public class Server implements Runnable{
 		public CreationFrame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			//this.setSize(500, 500);
+			this.setUndecorated(true);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle("Yashrukor Server Settings");
 			this.setVisible(true);

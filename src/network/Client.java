@@ -167,6 +167,7 @@ public class Client implements Runnable{
 		public Frame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			//this.setSize(500, 500);
+			this.setUndecorated(true);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setVisible(true);
 			panel = new JPanel() {
