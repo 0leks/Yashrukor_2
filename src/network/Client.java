@@ -17,6 +17,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.annotation.Target;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -380,9 +381,7 @@ public class Client implements Runnable {
 								&& (mousepress.y < panel.getHeight())) {
 
 						} else {
-							Rectangle selection = Util.normalizeRectangle(
-									mousepress.x, mousepress.y, e.getX(),
-									e.getY());
+							Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(),e.getY());
 							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
 							for (int a = 0; a < world.getAllThings().size(); a++) {
 								Thing t = world.getAllThings().get(a);
@@ -398,9 +397,7 @@ public class Client implements Runnable {
 //									}
 //								}
 								if (selection.intersects(t.getBounds())) {
-									possibleselect.add(world.getAllThings()
-											.get(a));
-									selected = possibleselect;
+									possibleselect.add(world.getAllThings().get(a));
 								}
 							}
 							selected = possibleselect;
@@ -444,6 +441,20 @@ public class Client implements Runnable {
 					}
 					if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						movecameraright = false;
+					}
+					if(e.getKeyCode() == KeyEvent.VK_A){
+						Point p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+						for(int a=0; a<selected.size();a++) {
+							if(selected.get(a) instanceof Unit) {
+								Unit u = (Unit)selected.get(a);
+								AttackMoveCommand ac = new AttackMoveCommand();
+								ac.id = u.id;
+								ac.target = p;
+								send(ac);
+							}
+							
+						}
+						
 					}
 					if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
 						int buildingtype = e.getKeyCode() - 48;
