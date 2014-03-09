@@ -1,9 +1,8 @@
 package main;
 
 public class Terrain extends Thing{
-	public Terrain(int x, int y, int w, int h){
-		
-		super(x,y,w,h);
+	public Terrain(int x, int y, int h, int w){
+		super(x,y,w,h, 1);
 	}
 	public int height(){
 		return height;

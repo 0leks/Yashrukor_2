@@ -56,6 +56,7 @@ public class World implements Serializable {
 				for(int a=0; a<allThings.size(); a++) {
 					allThings.get(a).tic();
 				}
+//				System.out.println(allThings.size());
 			}
 		});
 		worldtimer.start();
@@ -85,21 +86,21 @@ public class World implements Serializable {
 				g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
 				g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
-			} 
-			else if(thing instanceof Unit) {
+			} else if(thing instanceof Unit) {
 				Unit unit = (Unit)thing;
 				g.setColor(unit.myPlayer.getColor());
 				g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
 				g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			} 
-			else if(thing instanceof Terrain){
+			else if(thing instanceof Terrain) {
 				Terrain t = (Terrain)thing;
+				System.out.println("ter");
 				g.setColor(new Color (1,50,32));
 				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
 				System.out.println((t.x-lookingat.x)+" "+(t.y-lookingat.y)+" "+t.width()+" "+t.height());
 			} 
-			else{
+			else {
 				//this is temporary drawing code for representing Things on the screen
 				g.setColor(Color.black);
 				g.fillRect(thing.x-lookingat.x, thing.y-lookingat.y, 50, 50);
@@ -116,7 +117,8 @@ public class World implements Serializable {
 						foglist.add(new Fog(i,j));
 					}
 				}
-				for(Thing t:allThings){
+				for(int a=0; a<allThings.size(); a++){
+					Thing t = allThings.get(a);
 					if(t instanceof Unit){
 						Unit u=(Unit)t;
 						if(u.myPlayer.equals(player)){
@@ -227,10 +229,10 @@ public class World implements Serializable {
 		return false;
 	}
 	public void initializeTerrain(){
-		allThings.add(new Terrain(0,2300,1600,200));
-		allThings.add(new Terrain(3200,2300,1600,200));
-		allThings.add(new Terrain(2300,0,200,1600));
-		allThings.add(new Terrain(2300,3200,200,1600));
+		allThings.add(new Terrain(0,2300,200,1600));
+		allThings.add(new Terrain(3200,2300,200,1600));
+		allThings.add(new Terrain(2300,0,1600,200));
+		allThings.add(new Terrain(2300,3200,1600,200));
 		
 		allThings.add(new Terrain(1600,1600,200,200));
 		allThings.add(new Terrain(3000,3000,200,200));
@@ -251,7 +253,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,false);
+					drawEverything(g, panel, new Point(0, 0),null,true);
 				}
 			};
 			this.add(panel);
