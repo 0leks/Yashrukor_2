@@ -143,7 +143,8 @@ public class Client implements Runnable{
 			});
 			panel.add(connect);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setSize(500, 500);
+			//this.setSize(500, 500);
+			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.add(panel);
 			this.setVisible(true);
 			colortimer = new Timer(300, new ActionListener() {
