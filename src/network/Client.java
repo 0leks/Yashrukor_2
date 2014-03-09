@@ -177,8 +177,8 @@ public class Client implements Runnable {
 			send(me);
 			frame1.setVisible(false);
 			frame = new Frame();
-			lookingat.x = frame.getWidth() / 2;
-			lookingat.y = frame.getHeight() / 2;
+			lookingat.x = 2400-frame.getWidth() / 2;
+			lookingat.y = 2400-frame.getHeight() / 2;
 			thread.start();
 		}catch(SocketException e){
 			e.printStackTrace();
@@ -255,7 +255,7 @@ public class Client implements Runnable {
 		Timer colortimer;
 
 		public PlayerSelectionFrame() {
-			super("YashRukor2");
+			super("Yashrukor II");
 			red = new JSlider(JSlider.HORIZONTAL, 0, 255,
 					(int) (Math.random() * 255));
 			red.setMinorTickSpacing(10);
@@ -552,7 +552,7 @@ public class Client implements Runnable {
 									.getHeight() - 244))));
 						}
 						else{
-							p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+							p = new Point(currentmouse.x - lookingat.x,currentmouse.y - lookingat.y);
 						}
 						for(int a=0; a<selected.size();a++) {
 							if(selected.get(a) instanceof Unit) {
