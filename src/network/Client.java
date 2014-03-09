@@ -274,7 +274,6 @@ public class Client implements Runnable{
 								lookingat.x=4800-frame.getWidth();
 							}
 						}
-							
 					}
 					if(e.getButton()==MouseEvent.BUTTON3) {
 						System.out.println("Pressed Button 3");

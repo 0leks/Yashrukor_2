@@ -94,7 +94,9 @@ public class World implements Serializable {
 			else if(thing instanceof Terrain){
 				Terrain t = (Terrain)thing;
 				g.setColor(new Color (1,50,32));
-				g.fillRect(t.x-lookingat.x, t.y-lookingat.y, t.width(), t.height());
+				g.setColor(Color.white);
+				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
+				System.out.println(t.x-lookingat.x);
 			} 
 			else{
 				//this is temporary drawing code for representing Things on the screen
