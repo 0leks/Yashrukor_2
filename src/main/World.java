@@ -124,6 +124,9 @@ public class World implements Serializable {
 		
 		allThings.add(new Terrain(2350,2350,100,100));
 	}
+	public ArrayList<Thing> getAllThings() {
+		return allThings;
+	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
 		public TempFrameForTestingOnly() {

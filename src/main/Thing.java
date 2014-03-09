@@ -1,23 +1,29 @@
 package main;
 
+import java.awt.Point;
 import java.io.Serializable;
 
 public class Thing implements Serializable{
 	protected int x;
 	protected int y;
 	int MAXHEALTH;
+	int width;
+	int height; 
 	int hp;
 	private boolean destroyed;
 	public static World myWorld;
-	public Thing(){
-		destroyed = false; 
-	}
-	public Thing(int x, int y)
+	private static int idcounter = 0;
+	public final int id;
+	public Thing(int x, int y, int width, int height)
 	{
+		id = idcounter++;
 		destroyed = false;
 		this.x = x;
 		this.y = y;
 	}	
+	public Point getLocation() {
+		return new Point(x, y);
+	}
 	public void tic()
 	{
 		if(hp <= 0)

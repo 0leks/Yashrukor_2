@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import main.Player;
+import main.Thing;
+import main.Util;
 import main.World;
 
 public class Client implements Runnable{
@@ -46,7 +50,7 @@ public class Client implements Runnable{
 	private boolean movecameraup;
 	private boolean movecameradown;
 	private int cameraspeed = 20;
-	private Timer timer;
+	private Timer timer; 
 	private Point mousepress;
 	public Client() {
 		thread = new Thread(this);
@@ -255,12 +259,27 @@ public class Client implements Runnable{
 				}
 				@Override
 				public void mousePressed(MouseEvent e) {
-					mousepress = e.getPoint();
+					if(e.getButton()==MouseEvent.BUTTON1) {
+						mousepress = e.getPoint();
+					}
+					if(e.getButton()==MouseEvent.BUTTON3) {
+						
+					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
+					Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
+					ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+					for(int a=0; a<world.getAllThings().size(); a++) {
+						Thing t = world.getAllThings().get(a);
+						if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
+							if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+								possibleselect.add(world.getAllThings().get(a));
+							}
+						}
+					}
+					System.out.println("Selected things:"+possibleselect.size());
+					//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 				}
 			});
 			this.addKeyListener(new KeyListener() {
