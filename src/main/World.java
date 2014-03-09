@@ -80,7 +80,7 @@ public class World implements Serializable {
 	public void initializeAllThings() {
 		allThings = new ArrayList<Thing>();
 		try {
-			ii = ImageIO.read(new File("src/Warrior.gif"));
+			ii = ImageIO.read(new File("Warrior.gif"));
 			arch = ImageIO.read(new File("Archer.gif"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -427,7 +427,7 @@ public class Client implements Runnable {
 								&& (mousepress.y < panel.getHeight())) {
 
 						} else {
-							Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()-lookingat.x,e.getY()-lookingat.y);
+							Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()+lookingat.x,e.getY()+lookingat.y);
 							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
 							for (int a = 0; a < world.getAllThings().size(); a++) {
 								Thing t = world.getAllThings().get(a);
