@@ -33,7 +33,7 @@ public class World implements Serializable {
 	transient BufferedImage ii;
 	transient BufferedImage arch;
 	transient BufferedImage med;
-	TempFrameForTestingOnly asdf;
+//	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
 	public World(Server serv) {
@@ -117,9 +117,12 @@ public class World implements Serializable {
 //	1=barracks
 //	2=range
 //	3=hospital
-	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected) {
+	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected, ArrayList<Thing> selected) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
+//		if(selected!=null) {
+//			System.out.println(selected.size()+" things selected");
+//		}
 		if(allThings!=null) {
 			for(int a=0; a<allThings.size(); a++) {
 				Thing thing = allThings.get(a);
@@ -137,6 +140,13 @@ public class World implements Serializable {
 					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 					if(building.creatingunits) {
 						g.drawString(building.unittic+"/"+building.unitreq, thing.x-lookingat.x, thing.y-lookingat.y+40);
+					}
+					if(selected!=null) {
+						if(selected.contains(thing)) {
+							System.out.println("adsfasdfasdf contains");
+							g.setColor(Color.green);
+							g.drawRect(building.x-lookingat.x, building.y-lookingat.y, building.width,building.height);
+						}
 					}
 				} else if(thing instanceof Unit) {
 					Unit unit = (Unit)thing;
@@ -175,6 +185,13 @@ public class World implements Serializable {
 							g.drawRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							g.setColor(Color.white);
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+						}
+						if(selected!=null) {
+							if(selected.contains(thing)) {
+								System.out.println("adsfasdfasdf contains");
+								g.setColor(Color.green);
+								g.drawRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height);
+							}
 						}
 				} 
 				else if(thing instanceof Terrain) {
@@ -459,28 +476,28 @@ public class World implements Serializable {
 	public ArrayList<Thing> getAllThings() {
 		return allThings;
 	}
-	public class TempFrameForTestingOnly extends JFrame {
-		JPanel panel;
-		public TempFrameForTestingOnly() {
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//this.setSize(xsize,ysize);
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			this.setVisible(true);
-			panel = new JPanel() {
-				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,true,0);
-				}
-			};
-			this.add(panel);
-		}
-	}
-	public void testDraw() {
-		asdf = new TempFrameForTestingOnly();
-	}
-	public static void main(String[] args) {
-		World w = new World(null);
-		w.testDraw();
-	}
+//	public class TempFrameForTestingOnly extends JFrame {
+//		JPanel panel;
+//		public TempFrameForTestingOnly() {
+//			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			//this.setSize(xsize,ysize);
+//			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//			this.setVisible(true);
+//			panel = new JPanel() {
+//				public void paintComponent(Graphics g) {
+//					drawEverything(g, panel, new Point(0, 0),null,true,0, null);
+//				}
+//			};
+//			this.add(panel);
+//		}
+//	}
+//	public void testDraw() {
+//		asdf = new TempFrameForTestingOnly();
+//	}
+//	public static void main(String[] args) {
+//		World w = new World(null);
+//		w.testDraw();
+//	}
 	public Thing findcollision(Unit unit, Rectangle rectangle) {
 		for(int a=0; a<allThings.size(); a++) {
 			if(allThings.get(a).collides(rectangle) && allThings.get(a)!=unit) {
