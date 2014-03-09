@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -69,6 +70,8 @@ public class Client implements Runnable {
 		timer = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				//mouseOnSide(currentmouse);
 				if (movecameraup) {
 					lookingat.y -= cameraspeed;
 					if (lookingat.y < 0) {
@@ -103,7 +106,27 @@ public class Client implements Runnable {
 		});
 		timer.start();
 	}
-
+	public void mouseOnSide(Point mouse)
+	{
+		if(mouse.x >= frame.getWidth()-5)
+			movecameraright = true;
+		else
+			movecameraright = false;
+		if(mouse.x <= 5)
+			movecameraleft = true;
+		else
+			movecameraleft = false;
+		if(mouse.y <= 5)
+			movecameraup = true;
+		else
+			movecameraup = false;
+		if(mouse.y >= frame.getHeight()-5)
+			movecameradown = true;
+		else
+			movecameradown = false;
+		
+		
+	}
 	public void connect(String ip) {
 
 		InetAddress hostIP = null;
@@ -144,7 +167,7 @@ public class Client implements Runnable {
 		Client c = new Client();
 		// c.start();
 	}
-
+	
 	public void send(Object o) {
 		try {
 			out.writeUnshared(o);
@@ -152,7 +175,7 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void read() {
 		while (true) {
 			try {
@@ -296,6 +319,8 @@ public class Client implements Runnable {
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					currentmouse = e.getPoint();
+					mouseOnSide(currentmouse);
+					
 				}
 			});
 			this.addMouseListener(new MouseListener() {
@@ -526,7 +551,6 @@ public class Client implements Runnable {
 			});
 		}
 	}
-
 	public int updateUI(ArrayList<Thing> selected) {
 		boolean all = true;
 		ArrayList<Building> bs = new ArrayList<Building>();
