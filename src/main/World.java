@@ -14,9 +14,6 @@ import network.Server;
 public class World implements Serializable {
 	ArrayList<Building> allBuildigs = new ArrayList<Building>();
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
-	Toolkit tk = Toolkit.getDefaultToolkit();
-	int xsize=(int) tk.getScreenSize().getWidth();
-	int ysize=(int) tk.getScreenSize().getHeight();
 	int worldx=4800;
 	int worldy=4800;
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
