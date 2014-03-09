@@ -121,28 +121,28 @@ public class Building extends Thing {
 				}
 				if(unittic==unitreq){
 					if(unittomake==Unit.WARRIOR){
-						myWorld.getAllThings().add(new Unit(1,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(2,x+width,y+height,myPlayer));
 						System.out.println("MADE");
 						myPlayer.resource().add(warrior);
 					}
 					else if(unittomake==Unit.ARCHER){
-						myWorld.getAllThings().add(new Unit(2,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(3,x+width,y+height,myPlayer));
 						myPlayer.resource().add(archer);
 					}
 					else if(unittomake==Unit.KNIGHT){
-						myWorld.getAllThings().add(new Unit(3,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(4,x+width,y+height,myPlayer));
 						myPlayer.resource().add(knight);
 					}
 					else if(unittomake==Unit.CROSSBOW){
-						myWorld.getAllThings().add(new Unit(4,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(5,x+width,y+height,myPlayer));
 						myPlayer.resource().add(crossbow);
 					}
 					else if(unittomake==Unit.MEDIC){
-						myWorld.getAllThings().add(new Unit(5,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(6,x+width,y+height,myPlayer));
 						myPlayer.resource().add(medic);
 					}
 					else if(unittomake==Unit.SHAMAN){
-						myWorld.getAllThings().add(new Unit(6,x+width,y+height,myPlayer));
+						myWorld.getAllThings().add(new Unit(7,x+width,y+height,myPlayer));
 						myPlayer.resource().add(shaman);
 					}
 					unittic=0;
