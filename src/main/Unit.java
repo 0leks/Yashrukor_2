@@ -29,47 +29,47 @@ public class Unit extends Thing  implements Serializable{
 		myPlayer = p;
 		this.unitType = unitType; 
 		if(unitType == WARRIOR){
-			hp = 100;
-			MAXHEALTH = 50;
-			damage = 2;
+			hp = 1000;
+			MAXHEALTH = 1000;
+			damage = 5;
 			isRanged = false;
-			range = 40;
+			range = 20;
 			speed = 6;
 		}
 		if(unitType == ARCHER){
-			hp = 60;
-			MAXHEALTH = 60;
-			damage = 1;
+			hp = 600;
+			MAXHEALTH = 600;
+			damage = 4;
 			isRanged = true;
 			range = 160;
 			speed = 6;
 		}
 		if(unitType == KNIGHT){
-			hp = 200;
-			MAXHEALTH = 200;
-			damage = 4;
+			hp = 2000;
+			MAXHEALTH = 2000;
+			damage = 6;
 			isRanged = false;
-			range = 40;
+			range = 25;
 			speed = 10;
 		}
 		if(unitType == CROSSBOW){
-			hp = 100;
-			MAXHEALTH = 100;
-			damage = 3;
+			hp = 1000;
+			MAXHEALTH = 1000;
+			damage = 4;
 			isRanged = true;
 			range = 200;
 			speed = 5;
 		}
 		if(unitType == MEDIC){
-			hp = 80;
-			MAXHEALTH = 80;
+			hp = 800;
+			MAXHEALTH = 800;
 			damage = 0; //heals 5 for closest ally
 			isRanged = true;
 			range = 160;
 			speed = 4;
 		}
 		if(unitType == SHAMAN){
-			hp = 80;
+			hp = 800;
 			damage = 0; //heals 5 for allies in range
 			isRanged = true;
 			range = 160;
@@ -77,11 +77,11 @@ public class Unit extends Thing  implements Serializable{
 		}
 		if(isRanged)
 		{
-			range = 400;
+			range = 200;
 		}
 		else
 		{
-			range = 60; 
+			range = 20; 
 		}
 	}
 	public void tic(){
@@ -138,7 +138,25 @@ public class Unit extends Thing  implements Serializable{
 					if(todo.target.hp > 0)
 						commandList.add(0,todo);
 				}
-			} 
+			}
+			else if(todo.command == Command.HEALSINGLE)
+			{
+				if(this.unitType == MEDIC)
+				{
+					if(todo.target != null && todo.target instanceof Unit && ((Unit)todo.target).myPlayer.equals(myPlayer) )
+					{
+						if(this.euclidianDistanceFrom(new Point(todo.target.x, todo.target.y)) < range+todo.target.width)
+						{
+							todo.target.hp += 2;
+						}
+						else
+						{
+							moveToward(todo.target.x, todo.target.y);
+							commandList.add(0,todo);
+						}
+					}
+				}
+			}
 			else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
 				if (Math.abs(this.x-todo.x) >speed || Math.abs(this.y-todo.y) >speed) {
