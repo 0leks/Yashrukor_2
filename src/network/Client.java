@@ -236,7 +236,7 @@ public class Client implements Runnable{
 					if(world!=null) {
 						world.drawEverything(g, panel, lookingat, me,false);
 					} else {
-						System.out.println("World is null!");
+//						System.out.println("World is null!");
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);

@@ -121,7 +121,7 @@ public class Unit extends Thing  implements Serializable{
 				}
 			} else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
-				if (this.x != todo.x || this.y != todo.y) {
+				if (Math.abs(this.x-todo.x) >speed || Math.abs(this.y-todo.y) >speed) {
 					System.out.println("Command x: " + todo.x + " y: " + todo.y);
 					commandList.add(0, todo);
 				}
