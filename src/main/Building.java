@@ -70,11 +70,11 @@ public class Building extends Thing {
 		}
 	}
 	public void tic(){
-		if(underConstruction == false)
-		{
+		if(underConstruction == false){
 			if(type==BASE){
 				timetic++;
 				if(timetic==20){
+					System.out.println(myPlayer.resource().gold());
 					myPlayer.resource().addGold(2);
 					timetic=0;
 				}
@@ -113,22 +113,22 @@ public class Building extends Thing {
 				unittic++;
 				if(unittic==unitreq){
 					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					if(unittomake==Unit.WARRIOR){
+					if(unittomake==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
 						myPlayer.resource().add(warrior);
 					}
-					else if(unittomake==Unit.ARCHER){
+					else if(unittomake==Unit.ARCHER&&myPlayer.resource().check(archer)){
 						myPlayer.resource().add(archer);
 					}
-					else if(unittomake==Unit.KNIGHT){
+					else if(unittomake==Unit.KNIGHT&&myPlayer.resource().check(knight)){
 						myPlayer.resource().add(knight);
 					}
-					else if(unittomake==Unit.CROSSBOW){
+					else if(unittomake==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
 						myPlayer.resource().add(crossbow);
 					}
-					else if(unittomake==Unit.MEDIC){
+					else if(unittomake==Unit.MEDIC&&myPlayer.resource().check(medic)){
 						myPlayer.resource().add(medic);
 					}
-					else if(unittomake==Unit.SHAMAN){
+					else if(unittomake==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
 						myPlayer.resource().add(shaman);
 					}
 				}
