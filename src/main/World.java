@@ -80,15 +80,10 @@ public class World implements Serializable {
 		});
 		worldtimer.start();
 	}
-	public void addBuilding(Building b) {
-		allThings.add(b);
-	}
-	/**
-	 * ONLY FOR USE BY CLIENT
-	 */
-	public void initializeAllThings() {
-		allThings = new ArrayList<Thing>();
+	public void initializeImages() {
+		
 		try {
+			System.out.println("loading imnages");
 			ii = ImageIO.read(new File("Warrior.gif"));
 			arch = ImageIO.read(new File("Archer.gif"));
 			med=ImageIO.read(new File("Medic.gif"));
@@ -104,6 +99,16 @@ public class World implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void addBuilding(Building b) {
+		allThings.add(b);
+	}
+	
+	/**
+	 * ONLY FOR USE BY CLIENT
+	 */
+	public void initializeAllThings() {
+		allThings = new ArrayList<Thing>();
 	}
 	public Thing getThing(int id) {
 		for(int a=0; a<allThings.size(); a++) {
@@ -135,6 +140,9 @@ public class World implements Serializable {
 //	3=hospital
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected, ArrayList<Thing> selected) {
 		g.setColor(new Color(0,128,0));
+		if(grass==null) {
+			initializeImages();
+		}
 		int imageW = grass.getWidth();  
 		int imageH = grass.getHeight();  
    
