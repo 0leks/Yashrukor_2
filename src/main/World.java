@@ -6,15 +6,17 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import network.Server;
 
 public class World implements Serializable {
-	ArrayList<Building> allBuildigs = new ArrayList<Building>();
-	ArrayList<Unit> allUnits = new ArrayList<Unit>();
+	
 	int worldx=4800;
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -22,14 +24,15 @@ public class World implements Serializable {
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
+	Timer worldtimer;
 	public World(Server serv) {
 		Thing.myWorld = this;
 		initializeTerrain();
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Unit(1, 0, 50, server.connections.get(0).getPlayer()));
-				allThings.add(new Building(50, 50, 1,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(1, 50, 50, server.connections.get(0).getPlayer()));
+				allThings.add(new Building(100, 50, 1,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
 				allThings.add(new Unit(1, 4650, 4700, server.connections.get(1).getPlayer()));
@@ -45,6 +48,23 @@ public class World implements Serializable {
 			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
+		worldtimer = new Timer(50, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int a=0; a<allThings.size(); a++) {
+					allThings.get(a).tic();
+				}
+			}
+		});
+		worldtimer.start();
+	}
+	public Thing getThing(int id) {
+		for(int a=0; a<allThings.size(); a++) {
+			if(allThings.get(a).id==id) {
+				return allThings.get(a);
+			}
+		}
+		return null;
 	}
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player) {
 		g.setColor(new Color(0,128,0));
@@ -134,7 +154,34 @@ public class World implements Serializable {
 		
 	}
 
+<<<<<<< HEAD
 	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat, ArrayList<Fog> fog) {
+=======
+	public Thing thingInPoint(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return t;
+			}
+		}
+		return null;
+	}
+	public boolean pointOccupied(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
+>>>>>>> bc2c0756e57f645c12a0ee4005fc558a71af7902
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
 		g.setColor(new Color(0,128,0));

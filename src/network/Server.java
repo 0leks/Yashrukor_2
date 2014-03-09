@@ -26,7 +26,7 @@ public class Server implements Runnable{
 	public ServerSocket server;
 	public Thread thread;
 	public ArrayList<Connection> connections;
-	private World world;
+	public World world;
 	public CreationFrame asdf;
 	boolean drawworld;
 	public Timer timer;
@@ -82,7 +82,7 @@ public class Server implements Runnable{
 				out.flush();
 				System.out.println("Creating ObjectInputStream");
 				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-				Connection c = new Connection(in, out);
+				Connection c = new Connection(in, out, this);
 				c.send("asdf");
 				c.start();
 				connections.add(c);

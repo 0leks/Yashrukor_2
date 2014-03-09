@@ -93,58 +93,88 @@ public class Unit extends Thing  implements Serializable{
 		}
 	}
 	public void tic(){
-		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
-		if(todo.command == Command.ATTACKMOVE){
-			if(todo.target != null)
-			{
-				if(distanceTo(todo.target) >40)
-				{
-					moveToward(todo.target.x, todo.target.y);
-					commandList.set(0,todo);
-				}
-				else
-					attack(todo.target);
-			}
-		}
-		else if(todo.command == Command.ATTACK)
-		{
-			if(todo.target != null)
-			{
-				attack(todo.target);
-			}
-		}
-		else if(todo.command == Command.BUILD){
-			if(todo.target != null)
-			{
-				if(unitType == WORKER && todo.target != null)
-				{
-					if(distanceTo(todo.target) > 40)
-					{
+		if (commandList.size() > 0) {
+			Command todo = commandList.get(0);// gets and does the next command
+												// that the unit needs to do
+			if (todo.command == Command.ATTACKMOVE) {
+				if (todo.target != null) {
+					if (distanceTo(todo.target) > 40 + todo.target.width) {
 						moveToward(todo.target.x, todo.target.y);
-						commandList.set(0,todo);
-					}
-					else
-					{
-						buildBuilding((Building)todo.target);
+						commandList.add(0, todo);
+					} else
+						attack(todo.target);
+				}
+			} else if (todo.command == Command.ATTACK) {
+				if (todo.target != null) {
+					attack(todo.target);
+				}
+			} else if (todo.command == Command.BUILD) {
+				if (todo.target != null) {
+					if (unitType == WORKER && todo.target != null) {
+						if (distanceTo(todo.target) > 40 + todo.target.width) {
+							moveToward(todo.target.x, todo.target.y);
+							commandList.add(0, todo);
+						} else {
+							buildBuilding((Building) todo.target);
+						}
 					}
 				}
-			}	
-		}
-		else if(todo.command == Command.MOVE){
-			moveToward(todo.x, todo.y);
-			if(this.x != todo.x || this.y != todo.y)
-			{
-				commandList.set(0,todo);
+			} else if (todo.command == Command.MOVE) {
+				moveToward(todo.x, todo.y);
+				if (this.x != todo.x || this.y != todo.y) {
+					System.out.println("Command x: " + todo.x + " y: " + todo.y);
+					commandList.add(0, todo);
+				}
 			}
+			commandList.remove(0);
 		}
-		commandList.remove(0);
 	}
-	
+	ArrayList<ArrayList> Paths;
+	ArrayList<Point> somePointList;
+	int pathCounter = 0;
+	public ArrayList<Point> findPath(int x, int y, ArrayList<Point> pointList)
+	{
+		if(pathCounter < 1)
+		{
+			Paths = new ArrayList<ArrayList>();
+			pointList = new ArrayList<Point>();	
+			Paths.add(pointList);
+			pointList.add(new Point(this.x, this.y));
+		}
+		int dx = x-pointList.get(pointList.size()-1).x;
+		int dy = y-pointList.get(pointList.size()-1).y;
+		int angle = (int) directionToward(new Point(x,y), pointList.get(pointList.size()-1));
+		if(!(myWorld.pointOccupied(getNextPointInAngle(pointList.get(pointList.size()-1),angle))))
+		{
+			pointList.add(getNextPointInAngle(pointList.get(pointList.size()-1),angle));
+		}
+		else
+		{
+			
+		}
+		return null;
+	}
+
+	Point getNextPointInAngle(Point p,int angle)
+	{
+		int x = (int) (speed*Math.cos(angle));
+		int y = (int) (speed*Math.sin(angle));
+		return new Point(p.x+x,p.y+y);
+	}
+	double directionToward(Point ip, Point fp)
+	{
+		int dy = fp.y - ip.y;
+		int dx = fp.x - ip.x;
+		return Math.atan2(dx, dy);
+	}
+//	ArrayList<ArrayList> Paths;
 //	public ArrayList<Point> findPath(int x, int y)
 //	{
 //		
 //	}
-	
+	public void addCommand(Command c) {
+		commandList.add(c);
+	}
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
 		int dx = x-this.x;
@@ -153,21 +183,29 @@ public class Unit extends Thing  implements Serializable{
 		{
 			if(dx < 0)
 				this.setPosition(this.x - speed , this.y);
+			else if( dx == 0)
+			{
+				return;
+			}
 			else
 				this.setPosition(this.x + speed, this.y);
 		}
-		if(dx == 0)
+		else if(dx == 0)
 		{
 			if(dy < 0)
 				this.setPosition(this.x, this.y - speed);
+			else if(dy == 0)
+				return;
 			else
 				this.setPosition(this.x, this.y + speed);
 		}
-		
-		int ang = (int) Math.atan2(dy,dx);
-		int changex = (int) (Math.cos(ang)*getSpeed());
-		int changey = (int) (Math.sin(ang)*getSpeed());
-		this.setPosition(this.x+changex, this.y+changey);
+		else
+		{
+			double ang = directionToward(new Point(this.x,this.y), new Point (x,y));
+			int changex = (int) (Math.cos(ang)*getSpeed());
+			int changey = (int) (Math.sin(ang)*getSpeed());
+			this.setPosition(this.x+changex, this.y+changey);
+		}	
 	}
 	public int getSpeed()
 	{
