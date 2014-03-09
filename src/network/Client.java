@@ -234,7 +234,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 //					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat, me,false);
+						world.drawEverything(g, panel, lookingat, me,true);
 					} else {
 //						System.out.println("World is null!");
 					}
@@ -265,13 +265,13 @@ public class Client implements Runnable{
 								lookingat.y=0;
 							}
 							else if(lookingat.y+frame.getHeight()>4800){
-								lookingat.y=4800;
+								lookingat.y=4800-frame.getHeight();
 							}
 							if(lookingat.x<0){
 								lookingat.x=0;
 							}
 							else if(lookingat.x+frame.getWidth()>4800){
-								lookingat.x=4800;
+								lookingat.x=4800-frame.getWidth();
 							}
 						}
 							

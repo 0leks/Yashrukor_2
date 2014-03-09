@@ -92,6 +92,7 @@ public class World implements Serializable {
 			} 
 			else if(thing instanceof Terrain) {
 				Terrain t = (Terrain)thing;
+				System.out.println("ter");
 				g.setColor(new Color (1,50,32));
 				g.fillRect(t.x-lookingat.x, t.y-lookingat.y, t.width(), t.height());
 			} 
@@ -155,7 +156,7 @@ public class World implements Serializable {
 			g.fillRect(0, 0, drawingon.getWidth(), 20);
 			g.fillRect(0, drawingon.getHeight()-120, drawingon.getWidth(), 120);
 			g.setColor(Color.white);
-			g.drawString("Gold: "+player.resource().gold()+"| Wood: "+player.resource().wood()+"| Stone: "+player.resource().stone()+"| Food: "+player.resource().food(),10,12);
+			g.drawString("Gold: "+player.resource().gold()+"  Wood: "+player.resource().wood()+"  Stone: "+player.resource().stone()+"  Food: "+player.resource().food(),10,12);
 			drawMinimap(g, drawingon,lookingat,foglist,fowon);
 		}
 		
@@ -247,7 +248,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,false);
+					drawEverything(g, panel, new Point(0, 0),null,true);
 				}
 			};
 			this.add(panel);
