@@ -89,20 +89,42 @@ public class Unit extends Thing  implements Serializable{
 		{
 			if(todo.target != null)
 			{
-				
+				attack(todo.target);
 			}
 		}
 		else if(todo.command == Command.BUILD){
-			
+			if(unitType == WORKER && todo.target != null)
+			{
+				if(distanceTo(todo.target) > 40)
+				{
+					moveToward(todo.target.x, todo.target.y);
+					commandList.set(0,todo);
+				}
+				else
+				{
+					
+				}
+			}
 		}
 		else if(todo.command == Command.MOVE){
 			
 		}
 		commandList.remove(0);
 	}
-	public void attack(Thing target)
+	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
 		
+	}
+	public void buildBuilding(Building b)
+	{
+		
+	}
+	public void attack(Thing target)
+	{
+		if(distanceTo(target) < range)
+		{
+			target.getAttacked(damage);
+		}
 	}
 	public int distanceTo(Thing target)
 	{
