@@ -78,7 +78,7 @@ public class World implements Serializable {
 		}
 		return null;
 	}
-	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, boolean workercommands) {
+	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 		for(int a=0; a<allThings.size(); a++) {
@@ -165,17 +165,15 @@ public class World implements Serializable {
 			g.fillRect(0, drawingon.getHeight()-120, drawingon.getWidth(), 120);
 			g.setColor(Color.white);
 			g.drawString("Gold: "+player.resource().gold()+"  Wood: "+player.resource().wood()+"  Stone: "+player.resource().stone()+"  Food: "+player.resource().food(),10,12);
-			if(workercommands==true){
-				int w=(drawingon.getWidth()-360)/7;
-				g.setColor(Color.white);
-				g.fillRect(10, drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
-			}
+			int w=(drawingon.getWidth()-360)/7;
+			g.setColor(Color.white);
+			g.fillRect(10, drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
+			g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
 			drawMinimap(g, drawingon,lookingat,foglist,fowon);
 		}
 		
@@ -267,7 +265,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,true,false);
+					drawEverything(g, panel, new Point(0, 0),null,true);
 				}
 			};
 			this.add(panel);
