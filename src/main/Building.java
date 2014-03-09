@@ -15,6 +15,15 @@ public class Building extends Thing {
 	private int unittic=0;
 	private int unitreq;
 	private int unittomake;
+	
+	private Resource worker=new Resource(-10,0,0,-10);
+	private Resource warrior=new Resource(-20,-20,-20,-20);
+	private Resource archer=new Resource(-30,-20,-10,-20);
+	private Resource knight=new Resource(-40,-30,-30,-60);
+	private Resource crossbow=new Resource(-60,-50,-30,-40);
+	private Resource medic = new Resource(-30,-20,-10,-20);
+	private Resource shaman=new Resource(-100,-50,-50,-100);
+	
 	private boolean creatingunits=false;
 	public Building(int x, int y, int type){
 		this.x = x;
@@ -62,6 +71,27 @@ public class Building extends Thing {
 				unittic++;
 				if(unittic==unitreq){
 					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					if(unittomake==Unit.WORKER){
+						myPlayer.resource().add(worker);
+					}
+					else if(unittomake==Unit.WARRIOR){
+						myPlayer.resource().add(warrior);
+					}
+					else if(unittomake==Unit.ARCHER){
+						myPlayer.resource().add(archer);
+					}
+					else if(unittomake==Unit.KNIGHT){
+						myPlayer.resource().add(knight);
+					}
+					else if(unittomake==Unit.CROSSBOW){
+						myPlayer.resource().add(crossbow);
+					}
+					else if(unittomake==Unit.MEDIC){
+						myPlayer.resource().add(medic);
+					}
+					else if(unittomake==Unit.SHAMAN){
+						myPlayer.resource().add(shaman);
+					}
 					unittic=0;
 					unitreq=0;
 					creatingunits=false;

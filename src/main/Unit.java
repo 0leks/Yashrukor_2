@@ -74,24 +74,19 @@ public class Unit extends Thing  implements Serializable{
 	}
 	public void tic(){
 		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
-		if(todo.command == Command.ATTACKMOVE)
-		{
+		if(todo.command == Command.ATTACKMOVE){
 			
 		}
-		else if(todo.command == Command.ATTACK)
-		{
+		else if(todo.command == Command.ATTACK){
 			
 		}
-		else if(todo.command == Command.BUILD)
-		{
+		else if(todo.command == Command.BUILD){
 			
 		}
-		else if(todo.command == Command.MOVE)
-		{
+		else if(todo.command == Command.MOVE){
 			
 		}
 		commandList.remove(0);
-		
 	}
 	public boolean isRanged(){
 		return isRanged;
@@ -102,5 +97,4 @@ public class Unit extends Thing  implements Serializable{
 	public void move(){
 		
 	}
-	
 }

@@ -13,6 +13,12 @@ public class Resource implements Serializable{
 		stone=50;
 		food=50;
 	}
+	public Resource (int g, int w, int s, int f){
+		gold=g;
+		wood=w;
+		stone=s;
+		food=f;
+	}
 	public void addGold(int g){
 		gold+=g;
 	}
