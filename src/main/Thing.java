@@ -7,12 +7,14 @@ public class Thing implements Serializable{
 	protected int x;
 	protected int y;
 	int MAXHEALTH;
+	int width;
+	int height; 
 	int hp;
 	private boolean destroyed;
 	public static World myWorld;
 	private static int idcounter = 0;
 	public final int id;
-	public Thing(int x, int y)
+	public Thing(int x, int y, int width, int height)
 	{
 		id = idcounter++;
 		destroyed = false;

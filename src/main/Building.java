@@ -28,8 +28,8 @@ public class Building extends Thing {
 	private Resource shaman=new Resource(-100,-50,-50,-100);
 	
 	private boolean creatingunits=false;
-	public Building(int x, int y, int type, Player p){
-		super(x, y);
+	public Building(int x, int y, int type, Player p) {
+		super(x, y, 100, 100);
 		myPlayer=p;
 		this.type=type;
 		if(type == BASE)

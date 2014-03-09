@@ -50,7 +50,7 @@ public class Client implements Runnable{
 	private boolean movecameraup;
 	private boolean movecameradown;
 	private int cameraspeed = 20;
-	private Timer timer;
+	private Timer timer; 
 	private Point mousepress;
 	public Client() {
 		thread = new Thread(this);
@@ -61,15 +61,27 @@ public class Client implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				if(movecameraup) {
 					lookingat.y-=cameraspeed;
+					if(lookingat.y<0){
+						lookingat.y=0;
+					}
 				}
 				if(movecameradown) {
 					lookingat.y+=cameraspeed;
+					if(lookingat.y+frame.getHeight()>4800){
+						lookingat.y=4800;
+					}
 				}
 				if(movecameraleft) {
 					lookingat.x-=cameraspeed;
+					if(lookingat.x<0){
+						lookingat.x=0;
+					}
 				}
 				if(movecameraright) {
 					lookingat.x+=cameraspeed;
+					if(lookingat.x+frame.getWidth()>4800){
+						lookingat.x=4800;
+					}
 				}
 				if(frame!=null)  {
 					frame.repaint();

@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,11 +17,15 @@ public class Unit extends Thing  implements Serializable{
 	private int speed; 
 	Player myPlayer;
 	private int range;
+	static int width = 50;
+	static int height = 50;
 	private ArrayList<Command> commandList = new ArrayList<Command>();
 	private int unitType;
 	
 	public Unit(int unitType, int x, int y, Player p){
-		super(x, y);
+		super(x,y, width, height);
+		this.x = x;
+		this.y = y;
 		myPlayer = p;
 		this.unitType = unitType; 
 		if(unitType == WORKER){
@@ -134,6 +139,12 @@ public class Unit extends Thing  implements Serializable{
 		}
 		commandList.remove(0);
 	}
+	
+//	ArrayList<ArrayList> Paths;
+//	public ArrayList<Point> findPath(int x, int y)
+//	{
+//		
+//	}
 	
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
