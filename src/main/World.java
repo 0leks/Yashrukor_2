@@ -32,6 +32,7 @@ public class World implements Serializable {
 	transient ArrayList<Thing> allThings;
 	transient BufferedImage ii;
 	transient BufferedImage arch;
+	transient BufferedImage med;
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -82,6 +83,7 @@ public class World implements Serializable {
 		try {
 			ii = ImageIO.read(new File("Warrior.gif"));
 			arch = ImageIO.read(new File("Archer.gif"));
+			med=ImageIO.read(new File("Medic.gif"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,7 +147,8 @@ public class World implements Serializable {
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 						}
 						else if(unit.unitType()==6||unit.unitType()==7){
-							g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							//g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.drawImage(med, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							g.setColor(Color.white);
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 						}
