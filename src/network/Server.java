@@ -60,11 +60,19 @@ public class Server implements Runnable{
 					lookingat.x+=cameraspeed;
 				}
 				if(theworld!=null) {
+					System.out.println("World:");
+					for(Thing t : theworld.getAllThings()) {
+						System.out.println(t);
+					}
+					System.out.println(":World");
+				}
+				if(theworld!=null) {
 					sendtoall(theworld);
 					for(int a=0; a<theworld.getAllThings().size(); a++) {
-						if(theworld.getAllThings().get(a) instanceof Thing) {
+//						if(theworld.getAllThings().get(a)) {
+						System.out.println("Sending Object "+theworld.getAllThings().get(a));
 							sendtoall(theworld.getAllThings().get(a));
-						}
+//						}
 					}
 				}
 				for(int a=0; a<connections.size(); a++) {
@@ -83,6 +91,7 @@ public class Server implements Runnable{
 	}
 	public void sendtoall(Object o) {
 		for(int a=0; a<connections.size(); a++) {
+			System.out.println("Sending "+o+" to "+connections.get(a).getPlayer());
 			connections.get(a).send(o);
 		}
 	}
@@ -103,6 +112,10 @@ public class Server implements Runnable{
 				c.send("asdf");
 				c.start();
 				connections.add(c);
+				System.out.println("--------------");
+				for(int a=0; a<connections.size(); a++) {
+					System.out.println("A Connection is in the list");
+				}
 				asdf.repaint();
 			}
 		} catch (IOException e) {

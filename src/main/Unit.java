@@ -31,7 +31,7 @@ public class Unit extends Thing  implements Serializable{
 		if(unitType == WARRIOR){
 			hp = 100;
 			MAXHEALTH = 50;
-			damage = 20;
+			damage = 2;
 			isRanged = false;
 			range = 40;
 			speed = 6;
@@ -39,7 +39,7 @@ public class Unit extends Thing  implements Serializable{
 		if(unitType == ARCHER){
 			hp = 60;
 			MAXHEALTH = 60;
-			damage = 10;
+			damage = 1;
 			isRanged = true;
 			range = 160;
 			speed = 6;
@@ -47,7 +47,7 @@ public class Unit extends Thing  implements Serializable{
 		if(unitType == KNIGHT){
 			hp = 200;
 			MAXHEALTH = 200;
-			damage = 40;
+			damage = 4;
 			isRanged = false;
 			range = 40;
 			speed = 10;
@@ -55,7 +55,7 @@ public class Unit extends Thing  implements Serializable{
 		if(unitType == CROSSBOW){
 			hp = 100;
 			MAXHEALTH = 100;
-			damage = 30;
+			damage = 3;
 			isRanged = true;
 			range = 200;
 			speed = 5;
@@ -456,7 +456,8 @@ public class Unit extends Thing  implements Serializable{
 		cur.x = newx;
 		cur.y = newy;
 		boolean colli=false;
-		for(Thing t:myWorld.getAllThings()){
+		for(int a=0; a<myWorld.getAllThings().size(); a++){
+			Thing t=myWorld.getAllThings().get(a);
 			if(t!=this && t.collides(cur)){
 				colli=true;
 			}
