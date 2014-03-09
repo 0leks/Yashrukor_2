@@ -17,6 +17,8 @@ public class World implements Serializable {
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
 	int worldx=4800;
 	int worldy=4800;
+	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
@@ -106,6 +108,8 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 			}
 		}
+		g.setColor(new Color(107,68,35));
+		g.drawRect(drawingon.getWidth()-244+lookingat.x/20, drawingon.getHeight()-244+lookingat.y/20, screenw/20, screenh/20);
 	}
 	public void initializeTerrain(){
 		allThings.add(new Terrain(0,2300,200,1600));
