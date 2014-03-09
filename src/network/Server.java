@@ -67,7 +67,7 @@ public class Server implements Runnable{
 		sendtoall("GAME STARTING");
 		world = new World();
 		drawworld = true;
-		timer = new Timer(100, new ActionListener() {
+		timer = new Timer(150, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sendtoall(world);

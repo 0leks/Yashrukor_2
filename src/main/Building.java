@@ -66,6 +66,11 @@ public class Building extends Thing {
 				timetic=0;
 			}
 		}
+		else if(type==BARRACKS){
+			
+		}
+		else if(type==RANGE){
+		}
 		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
 			if(creatingunits==true){
 				unittic++;
