@@ -143,7 +143,7 @@ public class Unit extends Thing  implements Serializable{
 					}
 					Command killThis = new Command(Command.ATTACK);
 					killThis.setTarget(tempo);
-					commandList.add(1,killThis);
+					commandList.add(killThis);
 				}
 				else
 				{
