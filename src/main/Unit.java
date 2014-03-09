@@ -141,7 +141,9 @@ public class Unit extends Thing  implements Serializable{
 							distance = this.euclidianDistanceFrom(new Point(th.x,th.y));
 						}
 					}
-					attack(tempo);
+					Command killThis = new Command(Command.ATTACK);
+					killThis.setTarget(tempo);
+					commandList.add(1,killThis);
 				}
 				else
 				{
