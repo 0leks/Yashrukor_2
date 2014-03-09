@@ -13,6 +13,7 @@ public class Unit extends Thing  implements Serializable{
 	public final static int SHAMAN = 7;
 	private boolean isRanged;
 	private int damage;
+	private int speed; 
 	Player myPlayer;
 	private int range;
 	private ArrayList<Command> commandList = new ArrayList<Command>();
@@ -29,6 +30,7 @@ public class Unit extends Thing  implements Serializable{
 			damage =0;
 			isRanged = false;
 			range = 0;
+			speed = 7;
 		}
 		if(unitType == WARRIOR){
 			hp = 100;
@@ -36,6 +38,7 @@ public class Unit extends Thing  implements Serializable{
 			damage = 20;
 			isRanged = false;
 			range = 0;
+			speed = 6;
 		}
 		if(unitType == ARCHER){
 			hp = 60;
@@ -43,6 +46,7 @@ public class Unit extends Thing  implements Serializable{
 			damage = 10;
 			isRanged = true;
 			range = 4;
+			speed = 6;
 		}
 		if(unitType == KNIGHT){
 			hp = 200;
@@ -50,6 +54,7 @@ public class Unit extends Thing  implements Serializable{
 			damage = 40;
 			isRanged = false;
 			range = 0;
+			speed = 10;
 		}
 		if(unitType == CROSSBOW){
 			hp = 100;
@@ -57,6 +62,7 @@ public class Unit extends Thing  implements Serializable{
 			damage = 30;
 			isRanged = true;
 			range = 5;
+			speed = 5;
 		}
 		if(unitType == MEDIC){
 			hp = 80;
@@ -64,12 +70,14 @@ public class Unit extends Thing  implements Serializable{
 			damage = 0; //heals 5 for closest ally
 			isRanged = true;
 			range = 4;
+			speed = 4;
 		}
 		if(unitType == SHAMAN){
 			hp = 80;
 			damage = 0; //heals 5 for allies in range
 			isRanged = true;
 			range = 4;
+			speed = 4;
 		}
 		if(isRanged)
 		{
@@ -111,9 +119,19 @@ public class Unit extends Thing  implements Serializable{
 		}
 		commandList.remove(0);
 	}
+	
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
-		
+		int dx = x-this.x;
+		int dy = y-this.y;
+		int ang = (int) Math.atan2(dy,dx);
+		int changex = (int) (Math.cos(ang)*getSpeed());
+		int changey = (int) (Math.sin(ang)*getSpeed());
+		this.setPosition(this.x+changex, this.y+changey);
+	}
+	public int getSpeed()
+	{
+		return speed;
 	}
 	public void buildBuilding(Building b)
 	{
