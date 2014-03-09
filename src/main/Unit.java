@@ -104,7 +104,7 @@ public class Unit extends Thing  implements Serializable{
 				if (todo.target != null) {
 					if (distanceTo(todo.target) > 40 + todo.target.width) {
 						moveToward(todo.target.x, todo.target.y);
-						commandList.set(0, todo);
+						commandList.add(0, todo);
 					} else
 						attack(todo.target);
 				}
@@ -117,7 +117,7 @@ public class Unit extends Thing  implements Serializable{
 					if (unitType == WORKER && todo.target != null) {
 						if (distanceTo(todo.target) > 40 + todo.target.width) {
 							moveToward(todo.target.x, todo.target.y);
-							commandList.set(0, todo);
+							commandList.add(0, todo);
 						} else {
 							buildBuilding((Building) todo.target);
 						}
@@ -126,7 +126,8 @@ public class Unit extends Thing  implements Serializable{
 			} else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
 				if (this.x != todo.x || this.y != todo.y) {
-					commandList.set(0, todo);
+					System.out.println("Command x: " + todo.x + " y: " + todo.y);
+					commandList.add(0, todo);
 				}
 			}
 			commandList.remove(0);
@@ -178,6 +179,10 @@ public class Unit extends Thing  implements Serializable{
 		{
 			if(dx < 0)
 				this.setPosition(this.x - speed , this.y);
+			else if( dx == 0)
+			{
+				return;
+			}
 			else
 				this.setPosition(this.x + speed, this.y);
 		}
@@ -185,6 +190,8 @@ public class Unit extends Thing  implements Serializable{
 		{
 			if(dy < 0)
 				this.setPosition(this.x, this.y - speed);
+			else if(dy == 0)
+				return;
 			else
 				this.setPosition(this.x, this.y + speed);
 		}
