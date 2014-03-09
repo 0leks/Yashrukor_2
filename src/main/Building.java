@@ -18,8 +18,8 @@ public class Building extends Thing {
 	private int buildTime;
 	private int unittomake;
 	private boolean underConstruction;
-	int width = 50;
-	int height = 50;
+	static int width = 50;
+	static int height = 50;
 	
 	private Resource worker=new Resource(-10,0,0,-10);
 	private Resource warrior=new Resource(-20,-20,-20,-20);
@@ -29,8 +29,11 @@ public class Building extends Thing {
 	private Resource medic = new Resource(-30,-20,-10,-20);
 	private Resource shaman=new Resource(-100,-50,-50,-100);
 	
+	
 	private boolean creatingunits=false;
 	public Building(int x, int y, int type, Player p){
+		
+		super(x,y,width,height);
 		myPlayer=p;
 		this.x = x;
 		this.y = y;

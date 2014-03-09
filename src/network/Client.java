@@ -46,7 +46,7 @@ public class Client implements Runnable{
 	private boolean movecameraup;
 	private boolean movecameradown;
 	private int cameraspeed = 20;
-	private Timer timer;
+	private Timer timer; 
 	private Point mousepress;
 	public Client() {
 		thread = new Thread(this);
