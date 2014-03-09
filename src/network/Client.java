@@ -254,7 +254,7 @@ public class Client implements Runnable {
 			ipaddress = new JTextField("localhost");
 			ipaddress.setMinimumSize(new Dimension(200, 20));
 			ipaddress.setPreferredSize(new Dimension(200, 20));
-			panel = new JPanel() {
+			panel = new JPanel() { 
 				@Override
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
