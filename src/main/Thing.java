@@ -30,7 +30,6 @@ public class Thing implements Serializable{
 		this.y = y;
 		this.width=width;
 		this.height=height;
-//		myWorld.allThings.add(this);
 	}	
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
@@ -45,6 +44,18 @@ public class Thing implements Serializable{
 			myWorld.allThings.remove(this);
 			System.out.println("destroy");
 			destroyed = true;
+		}
+		if(x<0){
+			x=0;
+		}
+		if(y<0){
+			y=0;
+		}
+		if((x+width)>4800){
+			x=4800-width;
+		}
+		if((y+height)>4800){
+			y=4800-height;
 		}
 	}
 	public void getAttacked(int damage)

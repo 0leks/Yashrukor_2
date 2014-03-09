@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,9 @@ public class World implements Serializable {
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	transient ArrayList<Thing> allThings;
-	transient Image ii=new ImageIcon("src/Archer.gif").getImage();
+	transient BufferedImage ii;
+	transient BufferedImage arch;
+	transient BufferedImage med;
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -77,6 +80,14 @@ public class World implements Serializable {
 	 */
 	public void initializeAllThings() {
 		allThings = new ArrayList<Thing>();
+		try {
+			ii = ImageIO.read(new File("Warrior.gif"));
+			arch = ImageIO.read(new File("Archer.gif"));
+			med=ImageIO.read(new File("Medic.gif"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public Thing getThing(int id) {
 		for(int a=0; a<allThings.size(); a++) {
@@ -126,17 +137,21 @@ public class World implements Serializable {
 					
 						g.setColor(unit.myPlayer.getColor());
 						if(unit.unitType()==2||unit.unitType()==4){
-							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							//g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							
+							g.drawImage(ii, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							g.setColor(Color.white);
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 						}
 						else if(unit.unitType()==3||unit.unitType()==5){
-							g.fillOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							//g.fillOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.drawImage(arch, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							g.setColor(Color.white);
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 						}
 						else if(unit.unitType()==6||unit.unitType()==7){
-							g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							//g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.drawImage(med, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							g.setColor(Color.white);
 							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 						}
@@ -154,6 +169,7 @@ public class World implements Serializable {
 					g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 				}
 			}
+			
 			//fog of war
 			if(player!=null){
 				ArrayList<Fog> foglist=new ArrayList<Fog>();
@@ -202,6 +218,8 @@ public class World implements Serializable {
 					}
 					
 				}	
+				g.setColor(Color.black);
+				g.drawRect(0-lookingat.x, 0-lookingat.y, 4800, 4800);
 				//UI
 				g.setColor(new Color(52,52,52));
 				g.fillRect(0, 0, drawingon.getWidth(), 20);
