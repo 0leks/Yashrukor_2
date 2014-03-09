@@ -75,10 +75,12 @@ public class World implements Serializable {
 		g.fillRect(3200-lookingat.x, 2300-lookingat.y, 1600, 200);
 		g.fillRect(2300-lookingat.x, 0-lookingat.y, 200, 1600);
 		g.fillRect(2300-lookingat.x, 3200-lookingat.y, 200, 1600);
-		g.fillRect(1800-lookingat.x, 1800-lookingat.y, 200, 200);
-		g.fillRect(2700-lookingat.x, 2700-lookingat.y, 200, 200);
-		g.fillRect(2700-lookingat.x, 1800-lookingat.y, 200, 200);
-		g.fillRect(1800-lookingat.x, 2700-lookingat.y, 200, 200);
+		
+		g.fillRect(1600-lookingat.x, 1600-lookingat.y, 200, 200);
+		g.fillRect(3000-lookingat.x, 3000-lookingat.y, 200, 200);
+		g.fillRect(3000-lookingat.x, 1600-lookingat.y, 200, 200);
+		g.fillRect(1600-lookingat.x, 3000-lookingat.y, 200, 200);
+		g.fillRect(2350-lookingat.x, 2350-lookingat.y, 100, 100);
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
