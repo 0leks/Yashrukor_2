@@ -100,8 +100,8 @@ public class World implements Serializable {
 		//fog of war
 		if(player!=null){
 			ArrayList<Fog> foglist=new ArrayList<Fog>();
-			for(int i=0;i<4800;i+=200){
-				for(int j=0;j<4800;j+=200){
+			for(int i=0;i<4800;i+=100){
+				for(int j=0;j<4800;j+=100){
 					foglist.add(new Fog(i,j));
 				}
 			}
@@ -137,9 +137,9 @@ public class World implements Serializable {
 					}
 				}
 			}
-			g.setColor(new Color(211,211,211));
+			g.setColor(new Color(192,192,192));
 			for(Fog f:foglist){
-				g.fillRect(f.x-lookingat.x, f.y-lookingat.y, 200, 200);
+				g.fillRect(f.x-lookingat.x, f.y-lookingat.y, 100, 100);
 			}
 			//UI
 			g.setColor(new Color(52,52,52));
@@ -183,9 +183,9 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 			}
 		}
-		g.setColor(new Color(211,211,211));
+		g.setColor(new Color(192,192,192));
 		for(Fog f:fog){
-			g.fillRect(drawingon.getWidth()-244+f.x/20, drawingon.getHeight()-244+f.y/20, 10, 10);
+			g.fillRect(drawingon.getWidth()-244+f.x/20, drawingon.getHeight()-244+f.y/20, 5, 5);
 		}
 		g.setColor(new Color(107,68,35));
 		g.drawRect(drawingon.getWidth()-244+lookingat.x/20, drawingon.getHeight()-244+lookingat.y/20, screenw/20, screenh/20);
