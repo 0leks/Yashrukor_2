@@ -91,7 +91,16 @@ public class Unit extends Thing  implements Serializable{
 	public void tic(){
 		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
 		if(todo.command == Command.ATTACKMOVE){
-			
+			if(todo.target != null)
+			{
+				if(distanceTo(todo.target) >40)
+				{
+					moveToward(todo.target.x, todo.target.y);
+					commandList.set(0,todo);
+				}
+				else
+					attack(todo.target);
+			}
 		}
 		else if(todo.command == Command.ATTACK)
 		{
@@ -101,21 +110,28 @@ public class Unit extends Thing  implements Serializable{
 			}
 		}
 		else if(todo.command == Command.BUILD){
-			if(unitType == WORKER && todo.target != null)
+			if(todo.target != null)
 			{
-				if(distanceTo(todo.target) > 40)
+				if(unitType == WORKER && todo.target != null)
 				{
-					moveToward(todo.target.x, todo.target.y);
-					commandList.set(0,todo);
+					if(distanceTo(todo.target) > 40)
+					{
+						moveToward(todo.target.x, todo.target.y);
+						commandList.set(0,todo);
+					}
+					else
+					{
+						buildBuilding((Building)todo.target);
+					}
 				}
-				else
-				{
-					buildBuilding((Building)todo.target);
-				}
-			}
+			}	
 		}
 		else if(todo.command == Command.MOVE){
-			
+			moveToward(todo.x, todo.y);
+			if(this.x != todo.x || this.y != todo.y)
+			{
+				commandList.set(0,todo);
+			}
 		}
 		commandList.remove(0);
 	}
@@ -124,6 +140,21 @@ public class Unit extends Thing  implements Serializable{
 	{
 		int dx = x-this.x;
 		int dy = y-this.y;
+		if(dy == 0)
+		{
+			if(dx < 0)
+				this.setPosition(this.x - speed , this.y);
+			else
+				this.setPosition(this.x + speed, this.y);
+		}
+		if(dx == 0)
+		{
+			if(dy < 0)
+				this.setPosition(this.x, this.y - speed);
+			else
+				this.setPosition(this.x, this.y + speed);
+		}
+		
 		int ang = (int) Math.atan2(dy,dx);
 		int changex = (int) (Math.cos(ang)*getSpeed());
 		int changey = (int) (Math.sin(ang)*getSpeed());
