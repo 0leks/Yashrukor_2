@@ -136,8 +136,30 @@ public class World implements Serializable {
 					g.setColor(Color.black);
 					g.drawRect(building.x-lookingat.x, building.y-lookingat.y-10, building.width, 10);
 					g.setColor(Color.white);
-					
-					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+					if(building.getType()==Building.BASE){
+						g.drawString("Base", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.FARM){
+						g.drawString("Farm", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.QUARRY){
+						g.drawString("Quarry", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.LUMBERMILL){
+						g.drawString("Lumbermill", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.TOWER){
+						g.drawString("Tower", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.BARRACKS){
+						g.drawString("Barracks", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.RANGE){
+						g.drawString("Range", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
+					else if(building.getType()==Building.HOSPITAL){
+						g.drawString("Hospial", thing.x-lookingat.x, thing.y-lookingat.y+20);
+					}
 					if(building.creatingunits) {
 						g.drawString(building.unittic+"/"+building.unitreq, thing.x-lookingat.x, thing.y-lookingat.y+40);
 					}
