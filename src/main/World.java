@@ -33,6 +33,7 @@ public class World implements Serializable {
 	transient BufferedImage ii;
 	transient BufferedImage arch;
 	transient BufferedImage med;
+	transient BufferedImage grass;
 //	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -84,6 +85,7 @@ public class World implements Serializable {
 			ii = ImageIO.read(new File("Warrior.gif"));
 			arch = ImageIO.read(new File("Archer.gif"));
 			med=ImageIO.read(new File("Medic.gif"));
+			grass = ImageIO.read(new File("grass.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,7 +121,16 @@ public class World implements Serializable {
 //	3=hospital
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected, ArrayList<Thing> selected) {
 		g.setColor(new Color(0,128,0));
-		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
+		int imageW = grass.getWidth();  
+		int imageH = grass.getHeight();  
+   
+		// Tile the image to fill our area.  
+		for (int x = 0; x < worldx; x += imageW) {  
+		    for (int y = 0; y < worldy; y += imageH) {  
+		        g.drawImage(grass, x, y, null);  
+		    }  
+		}
+//		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 //		if(selected!=null) {
 //			System.out.println(selected.size()+" things selected");
 //		}
