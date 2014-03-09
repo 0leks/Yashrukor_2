@@ -90,7 +90,7 @@ public class Server implements Runnable{
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(drawworld) {
-						world.drawEverything(g);
+						world.drawEverything(g, panel);
 					}
 				}
 			};

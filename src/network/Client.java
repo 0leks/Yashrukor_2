@@ -172,7 +172,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g);
+						world.drawEverything(g, panel);
 					}
 				}
 			};

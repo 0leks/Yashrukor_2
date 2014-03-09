@@ -45,9 +45,9 @@ public class World implements Serializable {
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
-	public void drawEverything(Graphics g) {
+	public void drawEverything(Graphics g, JPanel drawingon) {
 		g.setColor(new Color(0,128,0));
-		g.fillRect(0, 0, xsize, ysize);
+		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 		for(int a=0; a<allThings.size(); a++) {
 			Thing thing = allThings.get(a);
 			if(thing instanceof Building){
@@ -72,16 +72,18 @@ public class World implements Serializable {
 		}
 	}
 	public class TempFrameForTestingOnly extends JFrame {
+		JPanel panel;
 		public TempFrameForTestingOnly() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			//this.setSize(xsize,ysize);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setVisible(true);
-			this.add(new JPanel() {
+			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g);
+					drawEverything(g, panel);
 				}
-			});
+			};
+			this.add(panel);
 		}
 	}
 	public void testDraw() {
