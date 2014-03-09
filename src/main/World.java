@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.Serializable;
@@ -39,17 +40,20 @@ public class World implements Serializable {
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Building(100, 50, Building.BASE,server.connections.get(0).getPlayer()));
-				allThings.add(new Unit(Unit.MEDIC,200,200,server.connections.get(0).getPlayer()));
+				allThings.add(new Building(150, 150, Building.BASE,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(Unit.WARRIOR,100,400,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
 				allThings.add(new Building(4700, 4700, Building.BASE,server.connections.get(1).getPlayer()));
+				allThings.add(new Unit(Unit.WARRIOR,4500,4500,server.connections.get(1).getPlayer()));
 			}
 			if(server.connections.size()>2){
 				allThings.add(new Building(50, 4700, Building.BASE,server.connections.get(2).getPlayer()));
+				allThings.add(new Unit(Unit.WARRIOR,100,4500,server.connections.get(2).getPlayer()));
 			}
 			if(server.connections.size()>3){
 				allThings.add(new Building(4700, 50, Building.BASE,server.connections.get(3).getPlayer()));
+				allThings.add(new Unit(Unit.WARRIOR,4500,100,server.connections.get(3).getPlayer()));
 			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
@@ -434,5 +438,16 @@ public class World implements Serializable {
 	public static void main(String[] args) {
 		World w = new World(null);
 		w.testDraw();
+	}
+	public Thing findcollision(Unit unit, Rectangle rectangle) {
+		for(int a=0; a<allThings.size(); a++) {
+			if(allThings.get(a).collides(rectangle) && allThings.get(a)!=unit) {
+				return allThings.get(a);
+			}
+		}
+		if(rectangle.x<-2400 || rectangle.x+rectangle.width>2400 || rectangle.y<-2400 || rectangle.y+rectangle.height>2400) {
+			return new Thing(true);
+		}
+		return null;
 	}
 }

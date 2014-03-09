@@ -15,6 +15,13 @@ public class Thing implements Serializable{
 	public static World myWorld;
 	private static int idcounter = 0;
 	public final int id;
+	/**
+	 * only for use in Korshak's pathfinding
+	 * @param bob
+	 */
+	public Thing(boolean bob) {
+		id = -100;
+	}
 	public Thing(int x, int y, int width, int height, int health){
 		hp = health;
 		id = idcounter++;
@@ -70,8 +77,12 @@ public class Thing implements Serializable{
 		return (int)(Math.sqrt(dx*dx+dy*dy));
 
 	}
+	public String toString() {
+		return "Thing("+x+","+y+","+width+","+height+")";
+	}
 
-	public boolean collides (Rectangle t){
+	public boolean collides(Rectangle t) {
+		// return this.getBounds().intersects(t);
 		if(((t.x>x)&&(t.x<(x+width)))||(((t.x+t.width)>x)&&((t.x+t.width)<(x+width)))){
 			if(((t.y>y)&&(t.y<(y+height)))||(((t.y+t.height)>y)&&((t.y+t.height)<(y+height)))){
 				return true;

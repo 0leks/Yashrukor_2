@@ -94,7 +94,7 @@ public class Unit extends Thing  implements Serializable{
 			if (todo.command == Command.ATTACKMOVE) {
 				Command attacktheloser = null;
 				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), myWorld.FOGOFWAR);
-				System.out.println(inRange);
+//				System.out.println(inRange);
 				for(Thing t : inRange)
 				{
 					//System.out.println("Runs this");
@@ -142,7 +142,7 @@ public class Unit extends Thing  implements Serializable{
 			else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
 				if (Math.abs(this.x-todo.x) >speed || Math.abs(this.y-todo.y) >speed) {
-					System.out.println("Command x: " + todo.x + " y: " + todo.y);
+//					System.out.println("Command x: " + todo.x + " y: " + todo.y);
 					commandList.add(0, todo);
 				}
 //				System.out.println(this.x+" "+this.y);
@@ -262,42 +262,196 @@ public class Unit extends Thing  implements Serializable{
 		commandList.clear();
 		commandList.add(c);
 	}
-	
+	public Thing findcollisioninline(int x1, int y1, int x2, int y2) {
+		int dx = x2-x1;
+		int dy = y2-y1;
+		double distance = Math.sqrt(dx*dx+dy*dy);
+		double deltax = dx/distance;
+		double deltay = dy/distance;
+		double xc = x1;
+		double yc = y1;
+		for(int a=0; a<distance; a++) {
+			xc = xc+deltax;
+			yc = yc+deltay;
+			int x = (int)xc;
+			int y = (int)yc;
+			Thing coll = myWorld.findcollision(this, new Rectangle(x, y, width, height));
+			if(coll==null) {
+				
+			} else {
+//				System.out.println("FOUND COLLISION");
+				return coll;
+			}
+		}
+		return null;
+	}
+	public Thing find(Node n1, Node n2) {
+		return findcollisioninline(n1.x, n1.y, n2.x, n2.y);
+	}
 	public void moveToward(int x, int y){ //Need to implement, moves the Unit, one unit in the direction 
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		Node beg = new Node(this.x, this.y);
+		Node end = new Node(x, y);
+		beg.next = end;
+		end.prev = beg;
+		nodes.add(beg);
+		nodes.add(end);
+		for(int a=0; a<nodes.size()-1 && nodes.size()<100; a++) {
+			System.out.println("Nodes:"+nodes.size());
+			Node cur = nodes.get(a);
+			if(cur.next==null) {
+				
+			} else {
+				Node next = cur.next;
+				Thing coll = findcollisioninline(cur.x, cur.y, next.x, next.y);
+				System.out.println("Next:"+next);
+				System.out.println("Collision:"+coll);
+				if(coll!=null && coll.id==-100) {
+					System.out.println("Off the Map");
+				} else if(coll!=null) {
+					System.out.println(coll);
+					Node tl = new Node(coll.x-this.width-20, coll.y-this.height-20);
+					Node tr = new Node(coll.x+coll.width+20, coll.y-this.height-20);
+					Node bl = new Node(coll.x-this.width-20, coll.y+coll.height+20);
+					Node br = new Node(coll.x+coll.width+20, coll.y+coll.height+20);
+					tl.next = tr;
+					tl.prev = bl;
+					tr.next = br;
+					tr.prev = tl;
+					br.next = bl;
+					br.prev = tr;
+					bl.next = tl;
+					bl.prev = br;
+//					ArrayList<Node> temp = new ArrayList<Node>();
+					
+					if(findcollisioninline(cur.x, cur.y, tl.x, tl.y)==null){
+						tl.entrance = true;
+						System.out.println("Entrance:"+tl);
+					}
+					Thing inter = find(tl, next);
+					if(inter!=coll) {
+						tl.exit = true;
+						System.out.println("Exit:"+tl);
+					}
+					if(findcollisioninline(cur.x, cur.y, tr.x, tr.y)==null){
+						tr.entrance = true;
+						System.out.println("Entrance:"+tr);
+					}
+					inter = find(tr, next);
+					if(inter!=coll) {
+						tr.exit = true;
+						System.out.println("Exit:"+tr);
+					}
+					if(findcollisioninline(cur.x, cur.y, bl.x, bl.y)==null){
+						bl.entrance = true;
+						System.out.println("Entrance:"+bl);
+					}
+					inter = find(bl, next);
+					if(inter!=coll) {
+						bl.exit = true;
+						System.out.println("Exit:"+bl);
+					}
+					if(findcollisioninline(cur.x, cur.y, br.x, br.y)==null){
+						br.entrance = true;
+						System.out.println("Entrance:"+br);
+					}
+					inter = find(br, next);
+					if(inter!=coll) {
+						br.exit = true;
+						System.out.println("Exit:"+br);
+					}
+					Node use = null;
+					if(tl.both())
+						use = tl;
+					if(tr.both())
+						use = tr;
+					if(bl.both())
+						use = bl;
+					if(br.both())
+						use = br;
+					if(use!=null) {
+						cur.next = use;
+						next.prev = use;
+						nodes.add(use);
+					} else {
+						Node enter = null;
+						if(tl.entrance)
+							enter = tl;
+						if(tr.entrance)
+							enter = tr;
+						if(bl.entrance)
+							enter = bl;
+						if(br.entrance)
+							enter = br;
+						Node exit = null;
+						if(enter!=null) {
+							if(enter.next.exit)
+								exit = enter.next;
+							if(enter.prev.exit) 
+								exit = enter.prev;
+							if(exit!=null) {
+								cur.next = enter;
+								enter.next = exit;
+								next.prev = exit;
+								nodes.add(enter);
+								nodes.add(exit);
+							}
+						}
+					}
+					
+					
+//					temp.add(tr);
+//					temp.add(bl);
+//					temp.add(br);
+//					for(int b=0; a<temp.size(); b++) {
+//						
+//					}
+//					System.out.println(tl+" "+tr+" "+bl+" "+br);
+				}
+				
+			}
+		}
+//		System.out.println(coll);
+//		
+//		if(dy == 0)
+//		{
+//			if(dx < 0)
+//				newx = this.x - speed;
+//			else if( dx == 0)
+//			{
+//				return;
+//			}
+//			else
+//				newx = this.x + speed;
+//		}
+//		else if(dx == 0)
+//		{
+//			if(dy < 0)
+//				newy = this.y - speed;
+//			else if(dy == 0)
+//				return;
+//			else
+//				newy = this.y + speed;
+//		}
+//		else
+//		{
+		System.out.println("Nodes:");
+		for(Node n : nodes) {
+			System.out.println(n);
+		}
+		System.out.println(":Nodes");
 		int newx = this.x;
 		int newy = this.y;
-		int dx = x-this.x;
-		int dy = y-this.y;
-		if(dy == 0)
-		{
-			if(dx < 0)
-				newx = this.x - speed;
-			else if( dx == 0)
-			{
-				return;
-			}
-			else
-				newx = this.x + speed;
-		}
-		else if(dx == 0)
-		{
-			if(dy < 0)
-				newy = this.y - speed;
-			else if(dy == 0)
-				return;
-			else
-				newy = this.y + speed;
-		}
-		else
-		{
-			double ang = directionToward((new Point(this.x,this.y)), (new Point (x,y)));
-			int changex = (int) (Math.cos(ang)*getSpeed());
-			int changey = (int) (Math.sin(ang)*getSpeed());
-			System.out.println(getSpeed());
-			
-			newx = this.x+changex;
-			newy = this.y+changey;
-		}	
+		int targetx = beg.next.x;
+		int targety = beg.next.y;
+		double ang = directionToward((new Point(this.x,this.y)), (new Point (targetx,targety)));
+		int changex = (int) (Math.cos(ang)*getSpeed());
+		int changey = (int) (Math.sin(ang)*getSpeed());
+		System.out.println(getSpeed());
+		
+		newx = this.x+changex;
+		newy = this.y+changey;
+//		}	
 		Rectangle cur = getBounds();
 		cur.x = newx;
 		cur.y = newy;
@@ -309,6 +463,25 @@ public class Unit extends Thing  implements Serializable{
 		}
 		if(!colli)
 			this.setPosition(newx, newy);
+//		double ang = directionToward((new Point(this.x,this.y)), (new Point (x,y)));
+//		int changex = (int) (Math.cos(ang)*getSpeed());
+//		int changey = (int) (Math.sin(ang)*getSpeed());
+//		System.out.println(getSpeed());
+//		
+//		newx = this.x+changex;
+//		newy = this.y+changey;
+////		}	
+//		Rectangle cur = getBounds();
+//		cur.x = newx;
+//		cur.y = newy;
+//		boolean colli=false;
+//		for(Thing t:myWorld.getAllThings()){
+//			if(t!=this && t.collides(cur)){
+//				colli=true;
+//			}
+//		}
+//		if(!colli)
+//			this.setPosition(newx, newy);
 	}	
 	public int getSpeed()
 	{
