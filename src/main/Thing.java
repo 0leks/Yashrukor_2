@@ -10,8 +10,7 @@ public class Thing implements Serializable{
 	private boolean isBeingAttacked;
 	private boolean destroyed;
 	public static World myWorld;
-	public Thing()
-	{
+	public Thing(){
 		destroyed = false; 
 	}
 	public Thing(int x, int y)
