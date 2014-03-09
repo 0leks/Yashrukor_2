@@ -202,7 +202,7 @@ public class Unit extends Thing  implements Serializable{
 		}
 		else
 		{
-			double ang  = Math.atan2(dy,dx);
+			double ang = directionToward(new Point(this.x,this.y), new Point (x,y));
 			int changex = (int) (Math.cos(ang)*getSpeed());
 			int changey = (int) (Math.sin(ang)*getSpeed());
 			this.setPosition(this.x+changex, this.y+changey);

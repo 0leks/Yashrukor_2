@@ -16,4 +16,10 @@ public class Player implements Serializable{
 	public Resource resource(){
 		return resource;
 	}
+	public boolean equals(Player p){
+		if (color.equals(p.color)){
+			return true;
+		}
+		return false;
+	}
 }
