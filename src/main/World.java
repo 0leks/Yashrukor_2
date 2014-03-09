@@ -191,6 +191,51 @@ public class World implements Serializable {
 					g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
+					g.setColor(Color.black);
+					g.drawString("1: Farm", 10, drawingon.getHeight()-100);
+					g.drawString("Produces food", 10, drawingon.getHeight()-90);
+					g.drawString("10 gold", 10, drawingon.getHeight()-60);
+					g.drawString("40 wood", 10, drawingon.getHeight()-50);
+					g.drawString("10 stone", 10, drawingon.getHeight()-40);
+					
+					g.drawString("2: Quarry", 10+1*(w+10), drawingon.getHeight()-100);
+					g.drawString("Produces stone", 10+1*(w+10), drawingon.getHeight()-90);
+					g.drawString("10 gold", 10+1*(w+10), drawingon.getHeight()-60);
+					g.drawString("50 wood", 10+1*(w+10), drawingon.getHeight()-50);
+					g.drawString("0 stone", 10+1*(w+10), drawingon.getHeight()-40);
+					
+					g.drawString("3: Lumbermill", 10+2*(w+10), drawingon.getHeight()-100);
+					g.drawString("Produces stone", 10+2*(w+10), drawingon.getHeight()-90);
+					g.drawString("50 gold", 10+2*(w+10), drawingon.getHeight()-60);
+					g.drawString("0 wood", 10+2*(w+10), drawingon.getHeight()-50);
+					g.drawString("0 stone", 10+2*(w+10), drawingon.getHeight()-40);
+					
+					g.drawString("4: Tower", 10+3*(w+10), drawingon.getHeight()-100);
+					g.drawString("Attacks nearby enemies", 10+3*(w+10), drawingon.getHeight()-90);
+					g.drawString("100 gold", 10+3*(w+10), drawingon.getHeight()-60);
+					g.drawString("40 wood", 10+3*(w+10), drawingon.getHeight()-50);
+					g.drawString("80 stone", 10+3*(w+10), drawingon.getHeight()-40);
+					
+					g.drawString("5: Barracks", 10+4*(w+10), drawingon.getHeight()-100);
+					g.drawString("Produces warriors", 10+4*(w+10), drawingon.getHeight()-90);
+					g.drawString("and knights", 10+4*(w+10), drawingon.getHeight()-80);
+					g.drawString("30 gold", 10+4*(w+10), drawingon.getHeight()-60);
+					g.drawString("30 wood", 10+4*(w+10), drawingon.getHeight()-50);
+					g.drawString("50 stone", 10+4*(w+10), drawingon.getHeight()-40);
+					
+					g.drawString("6: Range", 10+5*(w+10), drawingon.getHeight()-100);
+					g.drawString("Produces archers", 10+5*(w+10), drawingon.getHeight()-90);
+					g.drawString("and crossbowmen", 10+5*(w+10), drawingon.getHeight()-80);
+					g.drawString("30 gold", 10+5*(w+10), drawingon.getHeight()-60);
+					g.drawString("50 wood", 10+5*(w+10), drawingon.getHeight()-50);
+					g.drawString("30 stone", 10+5*(w+10), drawingon.getHeight()-40);
+					
+					g.drawString("7: Hospital", 10+6*(w+10), drawingon.getHeight()-100);
+					g.drawString("Produces medics", 10+6*(w+10), drawingon.getHeight()-90);
+					g.drawString("and shamans", 10+6*(w+10), drawingon.getHeight()-80);
+					g.drawString("40 gold", 10+6*(w+10), drawingon.getHeight()-60);
+					g.drawString("50 wood", 10+6*(w+10), drawingon.getHeight()-50);
+					g.drawString("50 stone", 10+6*(w+10), drawingon.getHeight()-40);
 				}
 				else if(bselected==1){
 					g.fillRect(10, drawingon.getHeight()-110, w, 100);
