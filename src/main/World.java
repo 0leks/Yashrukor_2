@@ -8,20 +8,27 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import network.Server;
+
 public class World implements Serializable {
 	ArrayList<Building> allBuildigs = new ArrayList<Building>();
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
-	Player temp = new Player();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
-	public World() {
+	transient Server server;
+	public World(Server serv) {
+		if(serv!=null) {
+			server = serv;
+			for(int a=0; a<server.connections.size(); a++) {
+				allThings.add(new Unit(1, (int)(Math.random()*500), (int)(Math.random()*500), server.connections.get(a).getPlayer()));
+			}
+		}
 		Thing.myWorld = this;
-		allThings.add(new Unit(1, 50, 50, new Player()));
+		//allThings.add(new Unit(1, 50, 50, new Player(Color.orange)));
 		allThings.add(new Building(150, 50, 1));
 		allThings.add(new Thing(150, 150));
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
-	
 	public void drawEverything(Graphics g) {
 		for(int a=0; a<allThings.size(); a++) {
 			Thing thing = allThings.get(a);
@@ -31,6 +38,7 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 				g.drawString("Building #"+a, thing.x, thing.y+20);
 			} else if(thing instanceof Unit) {
+				Unit unit = (Unit)thing;
 				g.setColor(new Color(200, 40, 60));
 				g.fillRect(thing.x, thing.y, 50, 50);
 				g.setColor(Color.white);
@@ -60,7 +68,7 @@ public class World implements Serializable {
 		asdf = new TempFrameForTestingOnly();
 	}
 	public static void main(String[] args) {
-		World w = new World();
+		World w = new World(null);
 		w.testDraw();
 	}
 }

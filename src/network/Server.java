@@ -65,7 +65,7 @@ public class Server implements Runnable{
 	public void startGame() {
 		System.out.println("GAME STARTING");
 		sendtoall("GAME STARTING");
-		world = new World();
+		world = new World(this);
 		drawworld = true;
 		timer = new Timer(150, new ActionListener() {
 			@Override
@@ -100,7 +100,9 @@ public class Server implements Runnable{
 			start.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					panel.remove(start);
 					startGame();
+					panel.repaint();
 				}
 			});
 			panel.add(start);
