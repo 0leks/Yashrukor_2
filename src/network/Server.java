@@ -123,7 +123,7 @@ public class Server implements Runnable{
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(drawworld) {
-						world.drawEverything(g, panel, lookingat);
+						world.drawEverything(g, panel, lookingat,null);
 						g.setColor(Color.white);
 						g.drawString("lookingat: "+lookingat, 50, 50);
 					}

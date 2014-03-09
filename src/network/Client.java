@@ -229,21 +229,10 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 					
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat);
+						world.drawEverything(g, panel, lookingat,me);
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
-
-					//UI
-					g.setColor(new Color(52,52,52));
-					g.fillRect(0, 0, panel.getWidth(), 20);
-					g.fillRect(0, panel.getHeight()-120, panel.getWidth(), 120);
-					g.setColor(Color.white);
-					g.drawString("Gold: "+me.resource().gold()+"| Wood: "+me.resource().wood()+"| Stone: "+me.resource().stone()+"| Food: "+me.resource().food(),10,12);
-					
-					if(world!=null) {
-						world.drawMinimap(g, panel, lookingat);
-					}
 				}
 			};
 			this.add(panel);
