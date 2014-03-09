@@ -32,12 +32,19 @@ public class Client implements Runnable{
 	public void run() {
 		InetAddress hostIP = null;
 		try {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4ab8e75bbae0c8643a66af5d58a34f26a6972a6b
 			String ip = JOptionPane.showInputDialog("IP:");
 			if(ip==null) {
 				ip = "localhost";
 			}
+<<<<<<< HEAD
 			hostIP = InetAddress.getByName(ip);
+=======
+			hostIP = InetAddress.getByName("localhost");
+>>>>>>> 4ab8e75bbae0c8643a66af5d58a34f26a6972a6b
 			if (hostIP == null) {
 				return;
 			}
