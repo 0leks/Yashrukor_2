@@ -16,8 +16,7 @@ import javax.swing.Timer;
 import network.Server;
 
 public class World implements Serializable {
-	ArrayList<Building> allBuildigs = new ArrayList<Building>();
-	ArrayList<Unit> allUnits = new ArrayList<Unit>();
+	
 	int worldx=4800;
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -98,8 +97,31 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
-		drawMinimap(g,drawingon,lookingat);
 	}
+
+	public Thing thingInPoint(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return t;
+			}
+		}
+		return null;
+	}
+	public boolean pointOccupied(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);

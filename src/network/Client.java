@@ -226,11 +226,23 @@ public class Client implements Runnable{
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
+					
 					if(world!=null) {
 						world.drawEverything(g, panel, lookingat);
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
+
+					//UI
+					g.setColor(new Color(52,52,52));
+					g.fillRect(0, 0, panel.getWidth(), 20);
+					g.fillRect(0, panel.getHeight()-120, panel.getWidth(), 120);
+					g.setColor(Color.white);
+					g.drawString("Gold: "+me.resource().gold()+"| Wood: "+me.resource().wood()+"| Stone: "+me.resource().stone()+"| Food: "+me.resource().food(),10,12);
+					
+					if(world!=null) {
+						world.drawMinimap(g, panel, lookingat);
+					}
 				}
 			};
 			this.add(panel);
@@ -248,6 +260,24 @@ public class Client implements Runnable{
 				public void mousePressed(MouseEvent e) {
 					if(e.getButton()==MouseEvent.BUTTON1) {
 						mousepress = e.getPoint();
+						if((mousepress.x>panel.getWidth()-244)&&(mousepress.x<panel.getWidth())&&
+							(mousepress.y>panel.getHeight()-244)&&(mousepress.y<panel.getHeight())){
+							lookingat.x=20*(mousepress.x-(panel.getWidth()-244))-panel.getWidth()/2;
+							lookingat.y=20*(mousepress.y-(panel.getHeight()-244))-panel.getHeight()/2;
+							if(lookingat.y<0){
+								lookingat.y=0;
+							}
+							else if(lookingat.y+frame.getHeight()>4800){
+								lookingat.y=4800;
+							}
+							if(lookingat.x<0){
+								lookingat.x=0;
+							}
+							else if(lookingat.x+frame.getWidth()>4800){
+								lookingat.x=4800;
+							}
+						}
+							
 					}
 					if(e.getButton()==MouseEvent.BUTTON3) {
 						System.out.println("Pressed Button 3");
