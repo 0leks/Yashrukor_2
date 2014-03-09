@@ -2,13 +2,19 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -22,6 +28,7 @@ public class World implements Serializable {
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	transient ArrayList<Thing> allThings;
+	transient Image ii=new ImageIcon("src/Archer.gif").getImage();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -33,7 +40,7 @@ public class World implements Serializable {
 			server = serv;
 			if(server.connections.size()>0){
 				allThings.add(new Building(100, 50, Building.BASE,server.connections.get(0).getPlayer()));
-				allThings.add(new Unit(Unit.WARRIOR,200,200,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(Unit.MEDIC,200,200,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
 				allThings.add(new Building(4700, 4700, Building.BASE,server.connections.get(1).getPlayer()));
@@ -109,10 +116,23 @@ public class World implements Serializable {
 					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 				} else if(thing instanceof Unit) {
 					Unit unit = (Unit)thing;
-					g.setColor(unit.myPlayer.getColor());
-					g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
-					g.setColor(Color.white);
-					g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+					
+						g.setColor(unit.myPlayer.getColor());
+						if(unit.unitType()==2||unit.unitType()==4){
+							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.setColor(Color.white);
+							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+						}
+						else if(unit.unitType()==3||unit.unitType()==5){
+							g.fillOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.setColor(Color.white);
+							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+						}
+						else if(unit.unitType()==6||unit.unitType()==7){
+							g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
+							g.setColor(Color.white);
+							g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+						}
 				} 
 				else if(thing instanceof Terrain) {
 					Terrain t = (Terrain)thing;
@@ -191,6 +211,7 @@ public class World implements Serializable {
 					g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
+					
 					g.setColor(Color.black);
 					g.drawString("1: Farm", 10, drawingon.getHeight()-100);
 					g.drawString("Produces food", 10, drawingon.getHeight()-90);
