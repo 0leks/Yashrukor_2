@@ -34,6 +34,13 @@ public class World implements Serializable {
 	transient BufferedImage arch;
 	transient BufferedImage med;
 	transient BufferedImage grass;
+	transient BufferedImage tcenter;
+	transient BufferedImage range;
+	transient BufferedImage mine;
+	transient BufferedImage barracks;
+	transient BufferedImage farm;
+	transient BufferedImage hospital;
+	transient BufferedImage watchtower;
 //	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -86,6 +93,13 @@ public class World implements Serializable {
 			arch = ImageIO.read(new File("Archer.gif"));
 			med=ImageIO.read(new File("Medic.gif"));
 			grass = ImageIO.read(new File("grass.png"));
+			tcenter = ImageIO.read(new File("towncenter.jpg"));
+			range = ImageIO.read(new File("range.jpg"));
+			mine = ImageIO.read(new File("mine.jpg"));
+			barracks = ImageIO.read(new File("barracks.jpg"));
+			farm = ImageIO.read(new File("farm.jpg"));
+			hospital = ImageIO.read(new File("hospital.jpg"));
+			watchtower = ImageIO.read(new File("watchtower.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,9 +139,9 @@ public class World implements Serializable {
 		int imageH = grass.getHeight();  
    
 		// Tile the image to fill our area.  
-		for (int x = 0; x < worldx; x += imageW) {  
-		    for (int y = 0; y < worldy; y += imageH) {  
-		        g.drawImage(grass, x, y, null);  
+		for (int x = -1; x <= worldx; x += imageW) {  
+		    for (int y = -1; y <= worldy; y += imageH) {  
+		        g.drawImage(grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);  
 		    }  
 		}
 //		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
@@ -149,27 +163,35 @@ public class World implements Serializable {
 					g.setColor(Color.white);
 					if(building.getType()==Building.BASE){
 						g.drawString("Base", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(tcenter,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.FARM){
 						g.drawString("Farm", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(farm,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.QUARRY){
 						g.drawString("Quarry", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.LUMBERMILL){
 						g.drawString("Lumbermill", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.TOWER){
 						g.drawString("Tower", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(watchtower,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.BARRACKS){
 						g.drawString("Barracks", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(barracks,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.RANGE){
 						g.drawString("Range", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(range,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.HOSPITAL){
-						g.drawString("Hospial", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawString("hospital", thing.x-lookingat.x, thing.y-lookingat.y+20);
+						g.drawImage(hospital,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					if(building.creatingunits) {
 						g.drawString(building.unittic+"/"+building.unitreq, thing.x-lookingat.x, thing.y-lookingat.y+40);

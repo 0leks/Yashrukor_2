@@ -108,6 +108,8 @@ public class Unit extends Thing  implements Serializable{
 				Command attacktheloser = null;
 				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), myWorld.FOGOFWAR);
 //				System.out.println(inRange);
+				//Command attacktheloser = null;
+				ArrayList<Thing> enemies = new ArrayList<Thing>();
 				for(Thing t : inRange)
 				{
 					//System.out.println("Runs this");
@@ -115,31 +117,40 @@ public class Unit extends Thing  implements Serializable{
 					{
 						if(!(((Unit)t).myPlayer.equals(myPlayer)))
 						{
-							attacktheloser = new Command(Command.ATTACK);
-							attacktheloser.setTarget(t);
-							this.addCommand(attacktheloser);
-							break;
+							enemies.add(t);
 						}
 					}
 					if( t instanceof Building )
 					{
 						if(!(((Building)t).myPlayer.equals(myPlayer)))
 						{
-							attacktheloser = new Command(Command.ATTACK);
-							attacktheloser.setTarget(t);
-							this.addCommand(attacktheloser);
-							break;
+							enemies.add(t);
 						}
 					}
 					
 				}
-				if(attacktheloser == null)
+				int distance = Integer.MAX_VALUE;
+				Thing tempo = null;
+				if(enemies.size() > 0)
+				{
+					for(Thing th : enemies)
+					{
+						if((this.euclidianDistanceFrom(new Point(th.x,th.y)) < distance))
+						{
+							tempo = th;
+							distance = this.euclidianDistanceFrom(new Point(th.x,th.y));
+						}
+					}
+					attack(tempo);
+				}
+				else
 				{
 					System.out.println("AttackMove Moving Toward " + x + ", " + y);
 					moveToward(todo.x, todo.y);
 					commandList.add(0,todo);
 				}
-			} else if (todo.command == Command.ATTACK) {
+			} 
+			else if (todo.command == Command.ATTACK) {
 				System.out.println("Attack Target: " + todo.target);
 				if (todo.target != null) {
 					if(this.euclidianDistanceFrom(new Point(todo.target.x, todo.target.y)) > range+todo.target.width)

@@ -177,8 +177,8 @@ public class Client implements Runnable {
 			send(me);
 			frame1.setVisible(false);
 			frame = new Frame();
-			lookingat.x = frame.getWidth() / 2;
-			lookingat.y = frame.getHeight() / 2;
+			lookingat.x = 2400-frame.getWidth() / 2;
+			lookingat.y = 2400-frame.getHeight() / 2;
 			thread.start();
 		}catch(SocketException e){
 			e.printStackTrace();
