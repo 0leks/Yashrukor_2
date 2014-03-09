@@ -87,6 +87,16 @@ public class Unit extends Thing  implements Serializable{
 	public void tic(){
 		
 		super.tic();
+		if(unitType == SHAMAN)
+		{
+			for(Thing t : myWorld.thingsInRange(new Point(this.x, this.y), 80))
+			{
+				if(t instanceof Unit && ((Unit)t).myPlayer.equals(myPlayer) )
+				{
+					t.hp += 2; 
+ 				}
+			}
+		}
 		if (commandList.size() > 0) {
 			Command todo = commandList.remove(0);// gets and does the next command
 												// that the unit needs to do
