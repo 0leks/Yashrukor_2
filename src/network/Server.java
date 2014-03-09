@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import main.Building;
+import main.Player;
 import main.Thing;
 import main.Unit;
 import main.Util;
@@ -94,6 +96,37 @@ public class Server implements Runnable{
 //			System.out.println("Sending "+o+" to "+connections.get(a).getPlayer());
 			connections.get(a).send(o);
 		}
+	}
+	public Player checkForWin() {
+		Player winner = null;
+		for(int a=1; a<theworld.getAllThings().size(); a++) {
+			Thing t = theworld.getAllThings().get(a);
+			if(t instanceof Unit) {
+				Unit u = (Unit)t;
+				if(winner==null) {
+					winner = u.getPlayer();
+				} else {
+					if(winner.equals(u.getPlayer())) {
+						
+					} else {
+						return null;
+					}
+				}
+			}
+			if(t instanceof Building) {
+				Building u = (Building)t;
+				if(winner==null) {
+					winner = u.getPlayer();
+				} else {
+					if(winner.equals(u.getPlayer())) {
+						
+					} else {
+						return null;
+					}
+				}
+			}
+		}
+		return winner;
 	}
 	@Override
 	public void run() {
