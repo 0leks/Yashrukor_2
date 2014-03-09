@@ -115,8 +115,13 @@ public class World implements Serializable {
    
 		// Tile the image to fill our area.  
 		for (int x = -1; x <= worldx; x += imageW) {  
-		    for (int y = -1; y <= worldy; y += imageH) {  
-		        g.drawImage(Client.grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);  
+		    for (int y = -1; y <= worldy; y += imageH) {
+//		    	double rand = Math.random()*10;
+//		    	if(rand <= 5){
+		    		g.drawImage(Client.grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);
+//		    	}else{
+//		    		g.drawImage(Client.grass1, x-lookingat.x%imageW, y-lookingat.y%imageH, null);
+//		    	}
 		    }  
 		}
 //		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());

@@ -78,6 +78,7 @@ public class Client implements Runnable {
 	public static BufferedImage arch;
 	public static BufferedImage med;
 	public static BufferedImage grass;
+	public static BufferedImage grass1;
 	public static BufferedImage tcenter;
 	public static BufferedImage range;
 	public static BufferedImage mine;
@@ -158,6 +159,7 @@ public class Client implements Runnable {
 			arch = ImageIO.read(new File("Archer.gif"));
 			med=ImageIO.read(new File("Medic.gif"));
 			grass = ImageIO.read(new File("grass.png"));
+			grass = ImageIO.read(new File("grass0.png"));
 			tcenter = ImageIO.read(new File("towncenter.jpg"));
 			range = ImageIO.read(new File("range.jpg"));
 			mine = ImageIO.read(new File("mine.jpg"));
