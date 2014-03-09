@@ -9,8 +9,7 @@ public class Thing implements Serializable{
 	int hp;
 	private boolean destroyed;
 	public static World myWorld;
-	public Thing()
-	{
+	public Thing(){
 		destroyed = false; 
 	}
 	public Thing(int x, int y)
