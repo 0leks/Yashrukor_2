@@ -36,7 +36,7 @@ public class Client implements Runnable{
 			if(ip==null) {
 				ip = "localhost";
 			}
-			hostIP = InetAddress.getByName("localhost");
+			hostIP = InetAddress.getByName(ip);
 			if (hostIP == null) {
 				return;
 			}
