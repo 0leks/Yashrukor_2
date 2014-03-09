@@ -55,4 +55,7 @@ public class Resource implements Serializable{
 	public int food(){
 		return food;
 	}
+	public String toString() {
+		return "Resource("+gold+","+wood+","+stone+","+food+")";
+	}
 }

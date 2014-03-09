@@ -22,6 +22,7 @@ import javax.swing.Timer;
 
 import main.Thing;
 import main.Unit;
+import main.Util;
 import main.World;
 
 public class Server implements Runnable{
@@ -96,6 +97,7 @@ public class Server implements Runnable{
 				c.send("asdf");
 				c.start();
 				connections.add(c);
+				asdf.repaint();
 			}
 		} catch (IOException e) {
 			System.out.println("Error Creating Server");
@@ -116,19 +118,24 @@ public class Server implements Runnable{
 		JPanel panel;
 		public CreationFrame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//this.setSize(500, 500);
-			this.setUndecorated(true);
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			this.setSize(500, 500);
 			this.setTitle("Yashrukor Server Settings");
 			this.setVisible(true);
 
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					if(drawworld) {
-						theworld.drawEverything(g, panel, lookingat, null,true);
-						g.setColor(Color.white);
-						g.drawString("lookingat: "+lookingat, 50, 50);
+//					if(drawworld) {
+//						theworld.drawEverything(g, panel, lookingat, null,true);
+//					}
+					g.setColor(Color.black);
+					for(int a=0; a<connections.size(); a++) {
+						if(connections.get(a).getPlayer()!=null) {
+							g.setColor(connections.get(a).getPlayer().getColor());
+							g.fillRect(30, 100+40*a-16, 440, 20);
+							g.setColor(Util.inverseColor(connections.get(a).getPlayer().getColor()));
+							g.drawString(connections.get(a).getPlayer().toString(), 30, 100+40*a);
+						}
 					}
 				}
 			};
@@ -140,7 +147,6 @@ public class Server implements Runnable{
 				public void actionPerformed(ActionEvent arg0) {
 					panel.remove(start);
 					startGame();
-//					panel.repaint();
 				}
 			});
 			panel.add(start);

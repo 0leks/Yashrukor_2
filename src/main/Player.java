@@ -22,4 +22,7 @@ public class Player implements Serializable{
 		}
 		return false;
 	}
+	public String toString() {
+		return "Player("+color+" "+resource+")";
+	}
 }
