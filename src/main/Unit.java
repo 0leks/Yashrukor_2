@@ -94,7 +94,7 @@ public class Unit extends Thing  implements Serializable{
 	}
 	public void tic(){
 		if (commandList.size() > 0) {
-			Command todo = commandList.get(0);// gets and does the next command
+			Command todo = commandList.remove(0);// gets and does the next command
 												// that the unit needs to do
 			if (todo.command == Command.ATTACKMOVE) {
 				if (todo.target != null) {
@@ -125,8 +125,9 @@ public class Unit extends Thing  implements Serializable{
 					System.out.println("Command x: " + todo.x + " y: " + todo.y);
 					commandList.add(0, todo);
 				}
+//				System.out.println(this.x+" "+this.y);
 			}
-			commandList.remove(0);
+//			commandList.remove(0);
 		}
 	}
 	ArrayList<ArrayList> Paths;
@@ -221,6 +222,7 @@ public class Unit extends Thing  implements Serializable{
 			int changex = (int) (Math.cos(ang)*getSpeed());
 			int changey = (int) (Math.sin(ang)*getSpeed());
 			this.setPosition(this.x+changex, this.y+changey);
+//			System.out.println(ang+" "+changex+" "+changey);
 		}	
 	}
 	public int getSpeed()

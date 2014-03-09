@@ -21,7 +21,7 @@ public class World implements Serializable {
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	ArrayList<Thing> allThings = new ArrayList<Thing>();
+	transient ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -58,6 +58,12 @@ public class World implements Serializable {
 		});
 		worldtimer.start();
 	}
+	/**
+	 * ONLY FOR USE BY CLIENT
+	 */
+	public void initializeAllThings() {
+		allThings = new ArrayList<Thing>();
+	}
 	public Thing getThing(int id) {
 		for(int a=0; a<allThings.size(); a++) {
 			if(allThings.get(a).id==id) {
@@ -66,7 +72,7 @@ public class World implements Serializable {
 		}
 		return null;
 	}
-	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat) {
+	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 		for(int a=0; a<allThings.size(); a++) {
@@ -97,32 +103,66 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
+		//fog of war
+		if(player!=null){
+			ArrayList<Fog> foglist=new ArrayList<Fog>();
+			if(fowon==true){
+				for(int i=0;i<4800;i+=100){
+					for(int j=0;j<4800;j+=100){
+						foglist.add(new Fog(i,j));
+					}
+				}
+				for(Thing t:allThings){
+					if(t instanceof Unit){
+						Unit u=(Unit)t;
+						if(u.myPlayer.equals(player)){
+							for(int i=0;i<foglist.size();i+=0){
+								Fog f=foglist.get(i);
+								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
+								if(d<1000){
+									foglist.remove(f);
+								}
+								else{
+									i++;
+								}
+							}
+						}
+					}
+					if(t instanceof Building){
+						Building u=(Building)t;
+						if(u.myPlayer.equals(player)){
+							for(int i=0;i<foglist.size();i+=0){
+								Fog f=foglist.get(i);
+								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
+								if(d<1000){
+									foglist.remove(f);
+								}
+								else{
+									i++;
+								}
+							}
+						}
+					}
+				}
+				g.setColor(new Color(192,192,192));
+				for(Fog f:foglist){
+					g.fillRect(f.x-lookingat.x, f.y-lookingat.y, 100, 100);
+				}
+				
+			}	
+			//UI
+			g.setColor(new Color(52,52,52));
+			g.fillRect(0, 0, drawingon.getWidth(), 20);
+			g.fillRect(0, drawingon.getHeight()-120, drawingon.getWidth(), 120);
+			g.setColor(Color.white);
+			g.drawString("Gold: "+player.resource().gold()+"| Wood: "+player.resource().wood()+"| Stone: "+player.resource().stone()+"| Food: "+player.resource().food(),10,12);
+			drawMinimap(g, drawingon,lookingat,foglist,fowon);
+		}
+		
+		
 	}
 
-	public Thing thingInPoint(Point p)
-	{
-		for(Thing t : allThings)
-		{
-			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
-			{
-				return t;
-			}
-		}
-		return null;
-	}
-	public boolean pointOccupied(Point p)
-	{
-		for(Thing t : allThings)
-		{
-			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
+	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat, ArrayList<Fog> fog, boolean fowon) {
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
 		g.setColor(new Color(0,128,0));
@@ -151,8 +191,36 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 			}
 		}
+		if(fowon==true){
+			g.setColor(new Color(192,192,192));
+			for(Fog f:fog){
+				g.fillRect(drawingon.getWidth()-244+f.x/20, drawingon.getHeight()-244+f.y/20, 5, 5);
+			}
+		}
 		g.setColor(new Color(107,68,35));
 		g.drawRect(drawingon.getWidth()-244+lookingat.x/20, drawingon.getHeight()-244+lookingat.y/20, screenw/20, screenh/20);
+	}
+	public Thing thingInPoint(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return t;
+			}
+		}
+		return null;
+	}
+	public boolean pointOccupied(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	public void initializeTerrain(){
 		allThings.add(new Terrain(0,2300,200,1600));
@@ -179,7 +247,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0));
+					drawEverything(g, panel, new Point(0, 0),null,false);
 				}
 			};
 			this.add(panel);

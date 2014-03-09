@@ -83,6 +83,7 @@ public class Client implements Runnable{
 					}
 				}
 				if(frame!=null)  {
+//					System.out.println("repainting frame");
 					frame.repaint();
 				}
 			}
@@ -141,9 +142,14 @@ public class Client implements Runnable{
 //				System.out.println("Read Object:"+o);
 				//this.send("Read Object:"+o);
 				if(o instanceof World) {
+					world = null;
 					world = (World)o;
-//					System.out.println("Read World!");
-					frame.panel.repaint();
+					world.initializeAllThings();
+//					System.out.println("Read World! things:"+world.getAllThings().size());
+					frame.repaint();
+				}
+				if(o instanceof Thing) {
+					world.getAllThings().add((Thing)o);
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -226,23 +232,14 @@ public class Client implements Runnable{
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					
+//					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat);
+						world.drawEverything(g, panel, lookingat, me,false);
+					} else {
+						System.out.println("World is null!");
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
-
-					//UI
-					g.setColor(new Color(52,52,52));
-					g.fillRect(0, 0, panel.getWidth(), 20);
-					g.fillRect(0, panel.getHeight()-120, panel.getWidth(), 120);
-					g.setColor(Color.white);
-					g.drawString("Gold: "+me.resource().gold()+"| Wood: "+me.resource().wood()+"| Stone: "+me.resource().stone()+"| Food: "+me.resource().food(),10,12);
-					
-					if(world!=null) {
-						world.drawMinimap(g, panel, lookingat);
-					}
 				}
 			};
 			this.add(panel);

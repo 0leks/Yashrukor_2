@@ -44,7 +44,7 @@ public class Connection implements Runnable{
 				}
 				if(read instanceof MoveCommand) {
 					MoveCommand mv = (MoveCommand)read;
-					Unit thing = (Unit)server.world.getThing(mv.id);
+					Unit thing = (Unit)server.theworld.getThing(mv.id);
 					Command c = new Command(Command.MOVE);
 					c.setX(mv.target.x);
 					c.setY(mv.target.y);

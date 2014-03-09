@@ -20,13 +20,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import main.Thing;
+import main.Unit;
 import main.World;
 
 public class Server implements Runnable{
 	public ServerSocket server;
 	public Thread thread;
 	public ArrayList<Connection> connections;
-	public World world;
+	public World theworld;
 	public CreationFrame asdf;
 	boolean drawworld;
 	public Timer timer;
@@ -55,6 +57,14 @@ public class Server implements Runnable{
 				}
 				if(movecameraright) {
 					lookingat.x+=cameraspeed;
+				}
+				if(theworld!=null) {
+					sendtoall(theworld);
+					for(int a=0; a<theworld.getAllThings().size(); a++) {
+						if(theworld.getAllThings().get(a) instanceof Thing) {
+							sendtoall(theworld.getAllThings().get(a));
+						}
+					}
 				}
 				asdf.repaint();
 			}
@@ -95,15 +105,8 @@ public class Server implements Runnable{
 	public void startGame() {
 		System.out.println("GAME STARTING");
 		sendtoall("GAME STARTING");
-		world = new World(this);
+		theworld = new World(this);
 		drawworld = true;
-		timer = new Timer(150, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				sendtoall(world);
-//				asdf.panel.repaint();
-			}
-		});
 		timer.start();
 	}
 	
@@ -123,7 +126,7 @@ public class Server implements Runnable{
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(drawworld) {
-						world.drawEverything(g, panel, lookingat);
+						theworld.drawEverything(g, panel, lookingat, null,false);
 						g.setColor(Color.white);
 						g.drawString("lookingat: "+lookingat, 50, 50);
 					}
