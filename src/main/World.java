@@ -240,14 +240,62 @@ public class World implements Serializable {
 				else if(bselected==1){
 					g.fillRect(10, drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+					g.setColor(Color.black);
+					g.drawString("1: Warrior", 10, drawingon.getHeight()-100);
+					g.drawString("100 health", 10, drawingon.getHeight()-90);
+					g.drawString("20 damage", 10, drawingon.getHeight()-80);
+					g.drawString("20 gold", 10, drawingon.getHeight()-60);
+					g.drawString("20 wood", 10, drawingon.getHeight()-50);
+					g.drawString("20 stone", 10, drawingon.getHeight()-40);
+					g.drawString("20 food", 10, drawingon.getHeight()-30);
+					
+					g.drawString("2: Knight", 10+1*(w+10), drawingon.getHeight()-100);
+					g.drawString("200 health", 10+1*(w+10), drawingon.getHeight()-90);
+					g.drawString("40 damage", 10+1*(w+10), drawingon.getHeight()-80);
+					g.drawString("40 gold", 10+1*(w+10), drawingon.getHeight()-60);
+					g.drawString("30 wood", 10+1*(w+10), drawingon.getHeight()-50);
+					g.drawString("30 stone", 10+1*(w+10), drawingon.getHeight()-40);
+					g.drawString("60 food", 10+1*(w+10), drawingon.getHeight()-30);
 				}
 				else if(bselected==2){
 					g.fillRect(10, drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+					g.setColor(Color.black);
+					g.drawString("1: Archer", 10, drawingon.getHeight()-100);
+					g.drawString("60 health", 10, drawingon.getHeight()-90);
+					g.drawString("10 damage", 10, drawingon.getHeight()-80);
+					g.drawString("30 gold", 10, drawingon.getHeight()-60);
+					g.drawString("20 wood", 10, drawingon.getHeight()-50);
+					g.drawString("10 stone", 10, drawingon.getHeight()-40);
+					g.drawString("20 food", 10, drawingon.getHeight()-30);
+					
+					g.drawString("2: Crossbowman", 10+1*(w+10), drawingon.getHeight()-100);
+					g.drawString("100 health", 10+1*(w+10), drawingon.getHeight()-90);
+					g.drawString("30 damage", 10+1*(w+10), drawingon.getHeight()-80);
+					g.drawString("60 gold", 10+1*(w+10), drawingon.getHeight()-60);
+					g.drawString("50 wood", 10+1*(w+10), drawingon.getHeight()-50);
+					g.drawString("30 stone", 10+1*(w+10), drawingon.getHeight()-40);
+					g.drawString("40 food", 10+1*(w+10), drawingon.getHeight()-30);
 				}
 				else if(bselected==3){
 					g.fillRect(10, drawingon.getHeight()-110, w, 100);
 					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+					g.setColor(Color.black);
+					g.drawString("1: Medic", 10, drawingon.getHeight()-100);
+					g.drawString("80 health", 10, drawingon.getHeight()-90);
+					g.drawString("5 heal", 10, drawingon.getHeight()-80);
+					g.drawString("30 gold", 10, drawingon.getHeight()-60);
+					g.drawString("20 wood", 10, drawingon.getHeight()-50);
+					g.drawString("10 stone", 10, drawingon.getHeight()-40);
+					g.drawString("20 food", 10, drawingon.getHeight()-30);
+					
+					g.drawString("2: Shaman", 10+1*(w+10), drawingon.getHeight()-100);
+					g.drawString("80 health", 10+1*(w+10), drawingon.getHeight()-90);
+					g.drawString("5 heal", 10+1*(w+10), drawingon.getHeight()-80);
+					g.drawString("100 gold", 10+1*(w+10), drawingon.getHeight()-60);
+					g.drawString("50 wood", 10+1*(w+10), drawingon.getHeight()-50);
+					g.drawString("50 stone", 10+1*(w+10), drawingon.getHeight()-40);
+					g.drawString("100 food", 10+1*(w+10), drawingon.getHeight()-30);
 				}
 				drawMinimap(g, drawingon,lookingat,foglist,fowon);
 			}

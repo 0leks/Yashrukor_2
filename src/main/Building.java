@@ -19,7 +19,6 @@ public class Building extends Thing {
 	private int unittomake;
 	private boolean underConstruction;
 	
-	private Resource worker=new Resource(-10,0,0,-10);
 	private Resource warrior=new Resource(-20,-20,-20,-20);
 	private Resource archer=new Resource(-30,-20,-10,-20);
 	private Resource knight=new Resource(-40,-30,-30,-60);
