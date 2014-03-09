@@ -404,36 +404,47 @@ public class Client implements Runnable{
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
 						movecameraright = false;
 					}
-//					if(workercommands==true){
-						if(e.getKeyCode()>=49 && e.getKeyCode()<=56) {
-							int buildingtype = e.getKeyCode()-48;
-							BuildCommand bc = new BuildCommand();
-							bc.type = buildingtype;
-							bc.location = new Point(currentmouse.x+lookingat.x, currentmouse.y+lookingat.y);
-							if(world.spotCloseEnough(bc.location, me)) {
-								if(bc.type==1){
-									me.resource().add(farm);
-								}
-								else if(bc.type==2){
-									me.resource().add(quarry);
-								}
-								else if(bc.type==3){
-									me.resource().add(lumbermill);
-								}
-								else if(bc.type==4){
-									me.resource().add(tower);
-								}
-								else if(bc.type==5){
-									me.resource().add(barracks);
-								}
-								else if(bc.type==6){
-									me.resource().add(range);
-								}
-								else if(bc.type==7){
-									me.resource().add(hospital);
-								}
+					if(e.getKeyCode()>=49 && e.getKeyCode()<=56) {
+						int buildingtype = e.getKeyCode()-48;
+						BuildCommand bc = new BuildCommand();
+						bc.type = buildingtype;
+						bc.location = new Point(currentmouse.x+lookingat.x, currentmouse.y+lookingat.y);
+						boolean cansend=false;
+						if(world.spotCloseEnough(bc.location, me)) {
+							if(bc.type==1&&me.resource().check(farm)){
+								me.resource().add(farm);
+								cansend=true;
+							}
+							else if(bc.type==2&&me.resource().check(quarry)){
+								me.resource().add(quarry);
+								cansend=true;
+							}
+							else if(bc.type==3&&me.resource().check(lumbermill)){
+								me.resource().add(lumbermill);
+								cansend=true;
+							}
+							else if(bc.type==4&&me.resource().check(tower)){
+								me.resource().add(tower);
+								cansend=true;
+							}
+							else if(bc.type==5&&me.resource().check(barracks)){
+								me.resource().add(barracks);
+								cansend=true;
+							}
+							else if(bc.type==6&&me.resource().check(range)){
+								me.resource().add(range);
+								cansend=true;
+							}
+							else if(bc.type==7&&me.resource().check(hospital)){
+								me.resource().add(hospital);
+								cansend=true;
+							}
+							if (cansend){
 								send(bc);
-							} else {
+							}
+								
+						}
+						else {
 								errormessage = "Too far from your buildings";
 								errortic = 20;
 							}
@@ -454,34 +465,18 @@ public class Client implements Runnable{
 				bs.add((Building)t);
 			}
 		}
-		for(Building b:bs){
-			if(b.getType()!=Building.BARRACKS){
-				all=false;
+		int type  = 4;
+		if(bs.size()>0) {
+			type  = bs.get(0).getType();
+			for(int a=1; a<bs.size(); a++) {
+				if(type!=bs.get(a).getType() || type<5 || type>7) {
+					all = false;
+				}
 			}
 		}
-		if(all==true){
-			bselected=1;
-			return bselected;
-		}
-		for(Building b:bs){
-			if(b.getType()!=Building.RANGE){
-				all=false;
-			}
-		}
-		if(all==true){
-			bselected=2;
-			return bselected;
-		}
-		for(Building b:bs){
-			if(b.getType()!=Building.HOSPITAL){
-				all=false;
-			}
-		}
-		if(all==true){
-			bselected=3;
-			return bselected;
-		}
-		bselected=0;
+		if(!all)
+			type = 4;
+		bselected = type-4;
 		return bselected;
 	}
 	public void start() {

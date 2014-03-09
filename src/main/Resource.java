@@ -19,6 +19,23 @@ public class Resource implements Serializable{
 		stone=s;
 		food=f;
 	}
+	public boolean check(Resource r){
+		Resource ths=new Resource(gold,wood,stone,food);
+		ths.add(r);
+		if(gold<0){
+			return false;
+		}
+		if(wood<0){
+			return false;
+		}
+		if(stone<0){
+			return false;
+		}
+		if(food<0){
+			return false;
+		}
+		return true;
+	}
 	public void addGold(int g){
 		gold+=g;
 	}
