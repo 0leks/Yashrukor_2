@@ -83,6 +83,7 @@ public class Client implements Runnable{
 					}
 				}
 				if(frame!=null)  {
+					System.out.println("repainting frame");
 					frame.repaint();
 				}
 			}
@@ -141,9 +142,14 @@ public class Client implements Runnable{
 //				System.out.println("Read Object:"+o);
 				//this.send("Read Object:"+o);
 				if(o instanceof World) {
+					world = null;
 					world = (World)o;
-//					System.out.println("Read World!");
-					frame.panel.repaint();
+					world.initializeAllThings();
+//					System.out.println("Read World! things:"+world.getAllThings().size());
+					frame.repaint();
+				}
+				if(o instanceof Thing) {
+					world.getAllThings().add((Thing)o);
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -226,9 +232,11 @@ public class Client implements Runnable{
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					
+//					System.out.println("repainting");
 					if(world!=null) {
 						world.drawEverything(g, panel, lookingat);
+					} else {
+						System.out.println("World is null!");
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);

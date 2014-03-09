@@ -21,7 +21,7 @@ public class World implements Serializable {
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	ArrayList<Thing> allThings = new ArrayList<Thing>();
+	transient ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -57,6 +57,12 @@ public class World implements Serializable {
 			}
 		});
 		worldtimer.start();
+	}
+	/**
+	 * ONLY FOR USE BY CLIENT
+	 */
+	public void initializeAllThings() {
+		allThings = new ArrayList<Thing>();
 	}
 	public Thing getThing(int id) {
 		for(int a=0; a<allThings.size(); a++) {
