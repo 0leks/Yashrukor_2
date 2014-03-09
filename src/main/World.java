@@ -68,6 +68,7 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x, thing.y+20);
 			}
 		}
+		
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
