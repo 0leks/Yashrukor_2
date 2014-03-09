@@ -19,14 +19,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.annotation.Target;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -156,7 +159,7 @@ public class Client implements Runnable {
 		
 	}
 	public void connect(String ip) {
-
+		JLabel cinfo = new JLabel();;
 		InetAddress hostIP = null;
 		try {
 			if (ip == null) {
@@ -179,7 +182,9 @@ public class Client implements Runnable {
 			lookingat.x = frame.getWidth() / 2;
 			lookingat.y = frame.getHeight() / 2;
 			thread.start();
-		} catch (UnknownHostException e) {
+		}catch(ConnectException e){
+			System.out.println("Connection Error: "+e.getMessage());
+		}catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -243,11 +248,13 @@ public class Client implements Runnable {
 		JPanel panel;
 		JSlider red, green, blue;
 		JTextField ipaddress;
+		JLabel connectioninfo;
 		GroupLayout fl;
 		JButton connect;
 		Timer colortimer;
 
 		public PlayerSelectionFrame() {
+			super("YashRukor2");
 			red = new JSlider(JSlider.HORIZONTAL, 0, 255,
 					(int) (Math.random() * 255));
 			red.setMinorTickSpacing(10);
@@ -265,7 +272,7 @@ public class Client implements Runnable {
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
 					g.setColor(new Color(red.getValue(), green.getValue(), blue.getValue()));
-					g.fillRect(1, 1, 20, 20);
+					g.fillRect(225, 10, 80, 80);
 				}
 			};
 			panel.setLayout(null);
@@ -275,8 +282,8 @@ public class Client implements Runnable {
 			green.setLocation(10, 40);
 			green.setSize(200, 20);
 			panel.add(green);
-			red.setLocation(10, 70);
-			red.setSize(200, 20);
+			blue.setLocation(10, 70);
+			blue.setSize(200, 20);
 			panel.add(blue);
 			ipaddress.setLocation(10, 100);
 			ipaddress.setSize(200, 20);
@@ -295,16 +302,18 @@ public class Client implements Runnable {
 			});
 			panel.add(connect);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			// this.setSize(500, 500);
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			this.setSize(325, 200);
+//			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.add(panel);
 			this.setVisible(true);
+			this.setLocationRelativeTo(null);
 			colortimer = new Timer(300, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					panel.repaint();
 				}
 			});
+			
 			colortimer.start();
 		}
 
