@@ -427,7 +427,7 @@ public class Client implements Runnable {
 								&& (mousepress.y < panel.getHeight())) {
 
 						} else {
-							Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(),e.getY());
+							Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()-lookingat.x,e.getY()-lookingat.y);
 							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
 							for (int a = 0; a < world.getAllThings().size(); a++) {
 								Thing t = world.getAllThings().get(a);
@@ -443,12 +443,11 @@ public class Client implements Runnable {
 //									}
 //								}
 								if (selection.intersects(t.getBounds())) {
-									possibleselect.add(world.getAllThings().get(a));
+									possibleselect.add(t);
 								}
 							}
 							
 							selected = possibleselect;
-							System.out.println("Selected things:" + possibleselect.size());
 							updateUI(selected);
 							// IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER,
 							// TEMPORARY PASUE HERE
