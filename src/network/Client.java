@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -35,9 +38,11 @@ public class Client implements Runnable{
 	private Frame frame;
 	private PlayerSelectionFrame frame1;
 	private Player me;
+	private Point lookingat;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
+		lookingat = new Point(0, 0);
 	}
 	public void connect(String ip) {
 
@@ -60,6 +65,8 @@ public class Client implements Runnable{
 			send(me);
 			frame1.setVisible(false);
 			frame = new Frame();
+			lookingat.x = frame.getWidth()/2;
+			lookingat.y = frame.getHeight()/2;
 			thread.start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -168,14 +175,41 @@ public class Client implements Runnable{
 		public Frame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			//this.setSize(500, 500);
+			this.setUndecorated(true);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setVisible(true);
+			this.addKeyListener(new KeyListener() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_UP) {
+						lookingat.y-=10;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+						lookingat.y+=10;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+						lookingat.x-=10;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+						lookingat.x+=10;
+					}
+					System.out.println(lookingat);
+				}
+				@Override
+				public void keyReleased(KeyEvent e) {
+					
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+				}
+			});
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel);
+						world.drawEverything(g, panel, lookingat);
 					}
+					g.setColor(Color.white);
+					g.drawString("lookingat:"+lookingat, 50, 50);
 				}
 			};
 			this.add(panel);

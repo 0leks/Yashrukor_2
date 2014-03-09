@@ -2,6 +2,7 @@ package network;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,9 +27,11 @@ public class Server implements Runnable{
 	public CreationFrame asdf;
 	boolean drawworld;
 	public Timer timer;
+	public Point lookingat;
 	public Server() {
 		connections = new ArrayList<Connection>();
 		asdf = new CreationFrame();
+		lookingat = new Point(asdf.getWidth()/2, asdf.getHeight()/2);
 		thread = new Thread(this);
 	}
 	public void start() {
@@ -84,6 +87,7 @@ public class Server implements Runnable{
 		public CreationFrame() {
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			//this.setSize(500, 500);
+			this.setUndecorated(true);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle("Yashrukor Server Settings");
 			this.setVisible(true);
@@ -91,7 +95,7 @@ public class Server implements Runnable{
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(drawworld) {
-						world.drawEverything(g, panel);
+						world.drawEverything(g, panel, lookingat);
 					}
 				}
 			};
