@@ -157,13 +157,10 @@ public class Client implements Runnable {
 		while (true) {
 			try {
 				Object o = in.readUnshared();
-				// System.out.println("Read Object:"+o);
-				// this.send("Read Object:"+o);
 				if (o instanceof World) {
 					world = null;
 					world = (World) o;
 					world.initializeAllThings();
-					// System.out.println("Read World! things:"+world.getAllThings().size());
 					frame.repaint();
 				}
 				if (o instanceof Thing) {
@@ -174,7 +171,6 @@ public class Client implements Runnable {
 				}
 				if(o instanceof Resource) {
 					Resource p = (Resource)o;
-//					System.out.println("Read Resource:"+p);
 					me.setResource(p);
 				}
 			} catch (ClassNotFoundException e) {
@@ -211,8 +207,7 @@ public class Client implements Runnable {
 				@Override
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					g.setColor(new Color(red.getValue(), green.getValue(), blue
-							.getValue()));
+					g.setColor(new Color(red.getValue(), green.getValue(), blue.getValue()));
 					g.fillRect(1, 1, 20, 20);
 				}
 			};
@@ -277,12 +272,10 @@ public class Client implements Runnable {
 
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					// System.out.println("repainting");
 					if (world != null) {
 						world.drawEverything(g, panel, lookingat, me, true,
 								bselected);
 					} else {
-						// System.out.println("World is null!");
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:" + lookingat, 50, 50);
@@ -401,8 +394,7 @@ public class Client implements Runnable {
 								}
 							}
 							selected = possibleselect;
-							System.out.println("Selected things:"
-									+ possibleselect.size());
+							System.out.println("Selected things:" + possibleselect.size());
 							updateUI(selected);
 							// IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER,
 							// TEMPORARY PASUE HERE
@@ -425,7 +417,6 @@ public class Client implements Runnable {
 					if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						movecameraright = true;
 					}
-					// System.out.println(lookingat);
 				}
 
 				@Override
