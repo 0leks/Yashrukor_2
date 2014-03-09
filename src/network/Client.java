@@ -103,25 +103,25 @@ public class Client implements Runnable {
 				if (smovecameraup) {
 					lookingat.y -= 4*cameraspeed;
 					if (lookingat.y < 0) {
-						lookingat.y = 0;
+						lookingat.y = 0-frame.getHeight()/2;
 					}
 				}
 				if (smovecameradown) {
 					lookingat.y += 4*cameraspeed;
-					if (lookingat.y + frame.getHeight() > 4800) {
-						lookingat.y = 4800;
+					if (lookingat.y + frame.getHeight()/2 > 4800) {
+						lookingat.y = 4800+frame.getHeight()/2;
 					}
 				}
 				if (smovecameraleft) {
 					lookingat.x -=4*cameraspeed;
 					if (lookingat.x < 0) {
-						lookingat.x = 0;
+						lookingat.x = 0-frame.getWidth()/2;
 					}
 				}
 				if (smovecameraright) {
 					lookingat.x += 4*cameraspeed;
-					if (lookingat.x + frame.getWidth() > 4800) {
-						lookingat.x = 4800;
+					if (lookingat.x + frame.getWidth()/2 > 4800) {
+						lookingat.x = 4800+frame.getWidth()/2;
 					}
 				}
 				if (errortic-- < 0) {
@@ -379,14 +379,14 @@ public class Client implements Runnable {
 									* (mousepress.y - (panel.getHeight() - 244))
 									- panel.getHeight() / 2;
 							if (lookingat.y < 0) {
-								lookingat.y = 0;
-							} else if (lookingat.y + frame.getHeight() > 4800) {
-								lookingat.y = 4800 - frame.getHeight();
+								lookingat.y = 0-frame.getHeight()/2;
+							} else if (lookingat.y + frame.getHeight()/2 > 4800) {
+								lookingat.y = 4800 + frame.getHeight()/2;
 							}
 							if (lookingat.x < 0) {
-								lookingat.x = 0;
-							} else if (lookingat.x + frame.getWidth() > 4800) {
-								lookingat.x = 4800 - frame.getWidth();
+								lookingat.x = 0-frame.getWidth()/2;
+							} else if (lookingat.x + frame.getWidth()/2 > 4800) {
+								lookingat.x = 4800+ frame.getWidth()/2;
 							}
 						}
 					}
