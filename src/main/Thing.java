@@ -16,6 +16,7 @@ public class Thing implements Serializable{
 		destroyed = false;
 		this.x = x;
 		this.y = y;
+		myWorld.allThings.add(this);
 	}	
 	public void tic()
 	{
