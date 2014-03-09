@@ -81,6 +81,10 @@ public class World implements Serializable {
 		g.fillRect(3000-lookingat.x, 1600-lookingat.y, 200, 200);
 		g.fillRect(1600-lookingat.x, 3000-lookingat.y, 200, 200);
 		g.fillRect(2350-lookingat.x, 2350-lookingat.y, 100, 100);
+		g.setColor(new Color(107,68,35));
+		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
+		g.setColor(new Color(0,128,0));
+		g.fillRect(drawingon.getWidth()-244, drawingon.getHeight()-244, 240, 240);
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
