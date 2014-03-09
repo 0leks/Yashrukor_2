@@ -55,6 +55,10 @@ public class Client implements Runnable {
 	private boolean movecameraleft;
 	private boolean movecameraup;
 	private boolean movecameradown;
+	private boolean smovecameraright;
+	private boolean smovecameraleft;
+	private boolean smovecameraup;
+	private boolean smovecameradown;
 	private int cameraspeed = 20;
 	private Timer timer;
 	private Point mousepress;
@@ -96,6 +100,30 @@ public class Client implements Runnable {
 						lookingat.x = 4800;
 					}
 				}
+				if (smovecameraup) {
+					lookingat.y -= 4*cameraspeed;
+					if (lookingat.y < 0) {
+						lookingat.y = 0;
+					}
+				}
+				if (smovecameradown) {
+					lookingat.y += 4*cameraspeed;
+					if (lookingat.y + frame.getHeight() > 4800) {
+						lookingat.y = 4800;
+					}
+				}
+				if (smovecameraleft) {
+					lookingat.x -=4*cameraspeed;
+					if (lookingat.x < 0) {
+						lookingat.x = 0;
+					}
+				}
+				if (smovecameraright) {
+					lookingat.x += 4*cameraspeed;
+					if (lookingat.x + frame.getWidth() > 4800) {
+						lookingat.x = 4800;
+					}
+				}
 				if (errortic-- < 0) {
 					errormessage = null;
 				}
@@ -109,21 +137,21 @@ public class Client implements Runnable {
 	public void mouseOnSide(Point mouse)
 	{
 		if(mouse.x >= frame.getWidth()-5)
-			movecameraright = true;
+			smovecameraright = true;
 		else
-			movecameraright = false;
+			smovecameraright = false;
 		if(mouse.x <= 5)
-			movecameraleft = true;
+			smovecameraleft = true;
 		else
-			movecameraleft = false;
+			smovecameraleft = false;
 		if(mouse.y <= 5)
-			movecameraup = true;
+			smovecameraup = true;
 		else
-			movecameraup = false;
+			smovecameraup = false;
 		if(mouse.y >= frame.getHeight()-5)
-			movecameradown = true;
+			smovecameradown = true;
 		else
-			movecameradown = false;
+			smovecameradown = false;
 		
 		
 	}
