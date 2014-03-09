@@ -16,7 +16,7 @@ public class Test {
 		 u = new Unit(1, 50, 50, new Player(Color.red));
 		 t = new Unit(2,400,400, new Player(Color.blue));
 		w.allThings.add(u);
-		Command c = new Command(Command.ATTACKMOVE);
+		Command c = new Command(Command.MOVE);
 		c.setX(400);
 		c.setY(400);
 		c.setTarget(t);

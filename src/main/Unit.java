@@ -114,24 +114,6 @@ public class Unit extends Thing  implements Serializable{
 	ArrayList<ArrayList> Paths;
 	ArrayList<Point> somePointList;
 	int pathCounter = 0;
-	public void moveToward(int x, int y)
-	{
-		Point mePoint = new Point(this.x,this.y);
-		Point toGo = new Point(x,y);
-		while(!myWorld.pointOccupied(getNextPointInAngle(mePoint,(int) directionToward(mePoint,toGo))) || mePoint == toGo){
-			moveTowards(x,y);
-			//setPosition(getNextPointInAngle(mePoint,(int) directionToward(mePoint,toGo)))
-		}
-		
-		
-//		
-//		if(directionToward(mePoint,toGo) > Math.PI/4 && directionToward(mePoint,toGo) < Math.PI/4){
-//			//set yo position to be northwest bro
-//		}else if(directionToward(mePoint,toGo) < Math.PI/4 && directionToward(mePoint,toGo) > Math.PI/2){
-//			and now to be dat northeast
-//		}else if(directionToward(mePoint,toGo) < Math.PI/4 && directionToward(mePoint,toGo) > Math.PI/2)
-//		
-	}
 	public ArrayList<PathPoint> findPaths(int x, int y)
 	{
 		Point toGet = new PathPoint(x,y);
@@ -241,30 +223,7 @@ public class Unit extends Thing  implements Serializable{
 		commandList.add(c);
 	}
 	
-	public void moveTowardss(int x, int y)
-	{
-		ArrayList<PathPoint> movePoints = findPaths(x, y);
-		System.out.println(movePoints);
-		double diff = Integer.MAX_VALUE;
-		PathPoint temp = null;
-		for(PathPoint pop : movePoints)
-		{
-			if(Math.abs(distanceBetween(new Point(this.x, this.y), pop)- speed) < diff)
-			{
-				temp = pop;
-				diff = Math.abs(distanceBetween(new Point(this.x, this.y), pop)- speed);
-			}
-		}
-		if( temp != null)
-			setPosition(temp.x, temp.y);
-		else
-		{
-			moveTowards(x, y);
-		}
-			
-		
-	}
-	public void moveTowards(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
+	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
 		int dx = x-this.x;
 		int dy = y-this.y;
