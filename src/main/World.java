@@ -33,6 +33,7 @@ public class World implements Serializable {
 			server = serv;
 			if(server.connections.size()>0){
 				allThings.add(new Building(100, 50, 0,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(4,200,200,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
 				allThings.add(new Building(4700, 4700, 0,server.connections.get(1).getPlayer()));

@@ -57,5 +57,12 @@ public class Thing implements Serializable{
 		int dy = other.y-y;
 		return (int)(Math.sqrt(dx*dx+dy*dy));
 	}
-	
+	public boolean collides (Thing t){
+		if(((t.x>x)&&(t.x<(x+width)))||(((t.x+t.width)>x)&&((t.x+t.width)<(x+width)))){
+			if(((t.y>y)&&(t.y<(y+height)))||(((t.y+t.height)>y)&&((t.y+t.height)<(y+height)))){
+				return true;
+			}
+		}
+		return false;
+	}
 }
