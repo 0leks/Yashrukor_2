@@ -330,8 +330,8 @@ public class Client implements Runnable {
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if (world != null) {
-						world.drawEverything(g, panel, lookingat, me, true,
-								bselected);
+						
+						world.drawEverything(g, panel, lookingat, me, true, bselected, selected);
 					} else {
 					}
 					g.setColor(Color.white);
@@ -340,6 +340,11 @@ public class Client implements Runnable {
 						g.setColor(Color.red);
 						g.setFont(new Font("Nyala", Font.PLAIN, 50));
 						g.drawString(errormessage, 100, getHeight() / 2);
+					}
+					if(mousepress!=null) {
+						g.setColor(Color.green);
+						Rectangle sele = Util.normalizeRectangle(mousepress.x, mousepress.y, currentmouse.x, currentmouse.y);
+						g.drawRect(sele.x, sele.y, sele.width, sele.height);
 					}
 				}
 			};
@@ -402,22 +407,51 @@ public class Client implements Runnable {
 							System.out.println("Selected not null size:"+ selected.size());
 							for (int a = 0; a < selected.size(); a++) {
 								if (selected.get(a) instanceof Unit) {
-									MoveCommand temp = new MoveCommand();
-									temp.id = selected.get(a).id;
-									int targetx = e.getX() + lookingat.x;
-									int targety = e.getY() + lookingat.y;
-									if ((e.getX() > panel.getWidth() - 244)
-											&& (e.getX() < panel.getWidth())
-											&& (e.getY() > panel.getHeight() - 244)
-											&& (e.getY() < panel.getHeight())) {
-										targetx = 20 * (e.getX() - (panel
-												.getWidth() - 244));
-										targety = 20 * (e.getY() - (panel
-												.getHeight() - 244));
+									Unit un = (Unit)(selected.get(a));
+									if(un.unitType()==Unit.MEDIC) {
+										Point onmap = new Point(e.getX()+lookingat.x, e.getY()+lookingat.y);
+										Thing t = world.thingInPoint(onmap);
+										if(t!=null) {
+											HealCommand hc = new HealCommand();
+											hc.id = un.id;
+											hc.target = t;
+											send(hc);
+										} else {
+											MoveCommand temp = new MoveCommand();
+											temp.id = selected.get(a).id;
+											int targetx = e.getX() + lookingat.x;
+											int targety = e.getY() + lookingat.y;
+											if ((e.getX() > panel.getWidth() - 244)
+													&& (e.getX() < panel.getWidth())
+													&& (e.getY() > panel.getHeight() - 244)
+													&& (e.getY() < panel.getHeight())) {
+												targetx = 20 * (e.getX() - (panel
+														.getWidth() - 244));
+												targety = 20 * (e.getY() - (panel
+														.getHeight() - 244));
+											}
+											temp.target = new Point(targetx, targety);
+											send(temp);
+											System.out.println("Sending Move Command");
+										}
+									} else {
+										MoveCommand temp = new MoveCommand();
+										temp.id = selected.get(a).id;
+										int targetx = e.getX() + lookingat.x;
+										int targety = e.getY() + lookingat.y;
+										if ((e.getX() > panel.getWidth() - 244)
+												&& (e.getX() < panel.getWidth())
+												&& (e.getY() > panel.getHeight() - 244)
+												&& (e.getY() < panel.getHeight())) {
+											targetx = 20 * (e.getX() - (panel
+													.getWidth() - 244));
+											targety = 20 * (e.getY() - (panel
+													.getHeight() - 244));
+										}
+										temp.target = new Point(targetx, targety);
+										send(temp);
+										System.out.println("Sending Move Command");
 									}
-									temp.target = new Point(targetx, targety);
-									send(temp);
-									System.out.println("Sending Move Command");
 								}
 							}
 						}
@@ -452,11 +486,10 @@ public class Client implements Runnable {
 									possibleselect.add(t);
 								}
 							}
-							
+							mousepress = null;
 							selected = possibleselect;
 							updateUI(selected);
-							// IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER,
-							// TEMPORARY PASUE HERE
+							System.out.println("selected "+selected.size());
 						}
 					}
 				}
