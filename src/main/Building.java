@@ -55,7 +55,6 @@ public class Building extends Thing {
 			if(type==BASE){
 				timetic++;
 				if(timetic==20){
-					System.out.println(myPlayer.resource().gold());
 					myPlayer.resource().addGold(2);
 					timetic=0;
 				}
@@ -89,7 +88,7 @@ public class Building extends Thing {
 				}
 			}
 		}
-		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
+		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
 			if(creatingunits==true){
 				unittic++;
 				if(unittic==unitreq){
