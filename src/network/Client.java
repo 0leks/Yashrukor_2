@@ -228,6 +228,12 @@ public class Client implements Runnable {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
+				try {
+					in.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		}
@@ -533,43 +539,88 @@ public class Client implements Runnable {
 								errortic = 20;
 							}
 						}
+					} else {
+						if(e.getKeyCode()==49) {
+							for(int a=0; a<selected.size(); a++) {
+								if(selected.get(a) instanceof Building) {
+									Building b = (Building)(selected.get(a));
+									CreateCommand cc = new CreateCommand();
+									cc.id = b.id;
+									if(b.getType()==Building.BARRACKS) {
+										cc.type = Unit.WARRIOR;
+									}
+									if(b.getType()==Building.RANGE) {
+										cc.type = Unit.ARCHER;
+									}
+									if(b.getType()==Building.HOSPITAL) {
+										cc.type = Unit.MEDIC;
+									}
+									if(cc.type!=0) {
+										send(cc);
+									}
+								}
+							}
+						}
+						if(e.getKeyCode()==50) {
+							for(int a=0; a<selected.size(); a++) {
+								if(selected.get(a) instanceof Building) {
+									Building b = (Building)(selected.get(a));
+									CreateCommand cc = new CreateCommand();
+									cc.id = b.id;
+									if(b.getType()==Building.BARRACKS) {
+										cc.type = Unit.KNIGHT;
+									}
+									if(b.getType()==Building.RANGE) {
+										cc.type = Unit.CROSSBOW;
+									}
+									if(b.getType()==Building.HOSPITAL) {
+										cc.type = Unit.SHAMAN;
+									}
+									if(cc.type!=0) {
+										send(cc);
+									}
+								}
+							}
+						}
 					}
-					else if(bselected==1){
-						if(e.getKeyCode()==49){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.WARRIOR);
-							}
-						}
-						if(e.getKeyCode()==50){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.KNIGHT);
-							}
-						}
-					}
-					else if(bselected==2){
-						if(e.getKeyCode()==49){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.ARCHER);
-							}
-						}
-						if(e.getKeyCode()==50){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.CROSSBOW);
-							}
-						}
-					}
-					else if(bselected==3){
-						if(e.getKeyCode()==49){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.MEDIC);
-							}
-						}
-						if(e.getKeyCode()==50){
-							for(Thing t:selected){
-								((Building)t).createUnit(Unit.SHAMAN);
-							}
-						}
-					}
+//					else if(bselected==1){
+//						if(e.getKeyCode()==49){
+//							for(Thing t:selected){
+//								CreateCommand cc = new CreateCommand();
+//								
+//								((Building)t).createUnit(Unit.WARRIOR);
+//							}
+//						}
+//						if(e.getKeyCode()==50){
+//							for(Thing t:selected){
+//								((Building)t).createUnit(Unit.KNIGHT);
+//							}
+//						}
+//					}
+//					else if(bselected==2){
+//						if(e.getKeyCode()==49){
+//							for(Thing t:selected){
+//								((Building)t).createUnit(Unit.ARCHER);
+//							}
+//						}
+//						if(e.getKeyCode()==50){
+//							for(Thing t:selected){
+//								((Building)t).createUnit(Unit.CROSSBOW);
+//							}
+//						}
+//					}
+//					else if(bselected==3){
+//						if(e.getKeyCode()==49){
+//							for(Thing t:selected){
+//								((Building)t).createUnit(Unit.MEDIC);
+//							}
+//						}
+//						if(e.getKeyCode()==50){
+//							for(Thing t:selected){
+//								((Building)t).createUnit(Unit.SHAMAN);
+//							}
+//						}
+//					}
 				}
 
 				@Override

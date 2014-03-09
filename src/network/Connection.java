@@ -51,6 +51,11 @@ public class Connection implements Runnable{
 					c.setY(mv.target.y);
 					thing.addCommand(c);
 				}
+				if(read instanceof CreateCommand) {
+					CreateCommand cc = (CreateCommand)read;
+					Building bob = (Building)(server.theworld.getThing(cc.id));
+					bob.createUnit(cc.type);
+				}
 				if(read instanceof BuildCommand) {
 					BuildCommand bc = (BuildCommand)read;
 					Building bob = new Building(bc.location.x, bc.location.y, bc.type, me);
@@ -68,21 +73,20 @@ public class Connection implements Runnable{
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				try {
-					in.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					in.close();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.exit(0);
-				try {
-					in.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					in.close();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
 		}
 	}

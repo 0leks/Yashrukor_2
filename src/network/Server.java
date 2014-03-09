@@ -59,18 +59,18 @@ public class Server implements Runnable{
 				if(movecameraright) {
 					lookingat.x+=cameraspeed;
 				}
-				if(theworld!=null) {
-					System.out.println("World:");
-					for(Thing t : theworld.getAllThings()) {
-						System.out.println(t);
-					}
-					System.out.println(":World");
-				}
+//				if(theworld!=null) {
+//					System.out.println("World:");
+//					for(Thing t : theworld.getAllThings()) {
+//						System.out.println(t);
+//					}
+//					System.out.println(":World");
+//				}
 				if(theworld!=null) {
 					sendtoall(theworld);
 					for(int a=0; a<theworld.getAllThings().size(); a++) {
 //						if(theworld.getAllThings().get(a)) {
-						System.out.println("Sending Object "+theworld.getAllThings().get(a));
+//						System.out.println("Sending Object "+theworld.getAllThings().get(a));
 							sendtoall(theworld.getAllThings().get(a));
 //						}
 					}
@@ -91,7 +91,7 @@ public class Server implements Runnable{
 	}
 	public void sendtoall(Object o) {
 		for(int a=0; a<connections.size(); a++) {
-			System.out.println("Sending "+o+" to "+connections.get(a).getPlayer());
+//			System.out.println("Sending "+o+" to "+connections.get(a).getPlayer());
 			connections.get(a).send(o);
 		}
 	}

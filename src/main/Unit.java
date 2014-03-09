@@ -508,6 +508,21 @@ public class Unit extends Thing  implements Serializable{
 	public boolean isRanged(){
 		return isRanged;
 	}
+	public static Resource getResource(int type) {
+		if(type==Unit.WARRIOR)
+			return new Resource(-20,-20,-20,-20);
+		if(type==Unit.ARCHER) 
+			return new Resource(-30,-20,-10,-20);
+		if(type==Unit.KNIGHT)
+			return new Resource(-40,-30,-30,-60);
+		if(type==Unit.CROSSBOW)
+			return new Resource(-60,-50,-30,-40);
+		if(type==Unit.MEDIC)
+			return new Resource(-30,-20,-10,-20);
+		if(type==Unit.SHAMAN)
+			return new Resource(-100,-50,-50,-100);
+		return new Resource(0,0,0,0);
+	}
 	public int unitType(){
 		return unitType;
 	}

@@ -118,6 +118,9 @@ public class World implements Serializable {
 					g.fillRect(building.x-lookingat.x, building.y-lookingat.y, building.width, building.height);
 					g.setColor(Color.white);
 					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+					if(building.creatingunits) {
+						g.drawString(building.unittic+"/"+building.unitreq, thing.x-lookingat.x, thing.y-lookingat.y+40);
+					}
 				} else if(thing instanceof Unit) {
 					Unit unit = (Unit)thing;
 					
