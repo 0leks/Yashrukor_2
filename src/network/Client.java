@@ -552,7 +552,7 @@ public class Client implements Runnable {
 									.getHeight() - 244))));
 						}
 						else{
-							p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+							p = new Point(currentmouse.x - lookingat.x,currentmouse.y - lookingat.y);
 						}
 						for(int a=0; a<selected.size();a++) {
 							if(selected.get(a) instanceof Unit) {
