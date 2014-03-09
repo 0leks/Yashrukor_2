@@ -218,38 +218,46 @@ public class Unit extends Thing  implements Serializable{
 		commandList.add(c);
 	}
 	
-	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
-	{
-		int dx = x-this.x;
-		int dy = y-this.y;
-		if(dy == 0)
-		{
-			if(dx < 0)
-				this.setPosition(this.x - speed , this.y);
-			else if( dx == 0)
+	public void moveToward(int x, int y){ //Need to implement, moves the Unit, one unit in the direction 
+		boolean colli=false;
+		for(Thing t:myWorld.getAllThings()){
+			if(this.collides(t)){
+				colli=true;
+			}
+		}
+		if(colli=false){
+			int dx = x-this.x;
+			int dy = y-this.y;
+			if(dy == 0)
 			{
-				return;
+				if(dx < 0)
+					this.setPosition(this.x - speed , this.y);
+				else if( dx == 0)
+				{
+					return;
+				}
+				else
+					this.setPosition(this.x + speed, this.y);
+			}
+			else if(dx == 0)
+			{
+				if(dy < 0)
+					this.setPosition(this.x, this.y - speed);
+				else if(dy == 0)
+					return;
+				else
+					this.setPosition(this.x, this.y + speed);
 			}
 			else
-				this.setPosition(this.x + speed, this.y);
+			{
+				double ang = directionToward((new Point(this.x,this.y)), (new Point (x,y)));
+				int changex = (int) (Math.cos(ang)*getSpeed());
+				int changey = (int) (Math.sin(ang)*getSpeed());
+				System.out.println(getSpeed());
+				this.setPosition(this.x+changex, this.y+changey);
+	//			System.out.println(ang+" "+changex+" "+changey);
+			}	
 		}
-		else if(dx == 0)
-		{
-			if(dy < 0)
-				this.setPosition(this.x, this.y - speed);
-			else if(dy == 0)
-				return;
-			else
-				this.setPosition(this.x, this.y + speed);
-		}
-		else
-		{
-			double ang = directionToward(new Point(this.x,this.y), new Point (x,y));
-			int changex = (int) (Math.cos(ang)*getSpeed());
-			int changey = (int) (Math.sin(ang)*getSpeed());
-			this.setPosition(this.x+changex, this.y+changey);
-//			System.out.println(ang+" "+changex+" "+changey);
-		}	
 	}
 	public int getSpeed()
 	{

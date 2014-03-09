@@ -52,17 +52,17 @@ public class Building extends Thing {
 	}
 	public static Resource getResource(int type) {
 		if(type==Building.FARM) {
-			return new Resource(-10,-10,-40,0);
+			return new Resource(-10,-40,-10,0);
 		} else if(type==Building.QUARRY) {
-			return new Resource(-10,0,-50,0);
+			return new Resource(-10,-50,0,0);
 		} else if(type==Building.LUMBERMILL) {
 			return new Resource(-50,-0,-0,0);
 		} else if(type==Building.TOWER) {
-			return new Resource(-100,-80,-40,0);
+			return new Resource(-100,-40,-80,0);
 		} else if(type==Building.BARRACKS) {
-			return new Resource(-30,-50,-30,0);
-		} else if(type==Building.RANGE) {
 			return new Resource(-30,-30,-50,0);
+		} else if(type==Building.RANGE) {
+			return new Resource(-30,-50,-30,0);
 		} else if(type==Building.HOSPITAL) {
 			return new Resource(-40,-50,-50,0);
 		} else {

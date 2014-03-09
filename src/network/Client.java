@@ -161,13 +161,14 @@ public class Client implements Runnable {
 				if (o instanceof World) {
 					world = null;
 					world = (World) o;
+					world.initializeAllThings();
 					// System.out.println("Read World! things:"+world.getAllThings().size());
 					frame.repaint();
 				}
 				if (o instanceof Thing) {
-					if (world.getAllThings() == null) {
-						world.initializeAllThings();
-					}
+//					if (world.getAllThings() == null) {
+//						world.initializeAllThings();
+//					}
 					world.getAllThings().add((Thing) o);
 				}
 				if(o instanceof Resource) {
@@ -345,8 +346,7 @@ public class Client implements Runnable {
 					if (e.getButton() == MouseEvent.BUTTON3) {
 						System.out.println("Pressed Button 3");
 						if (selected != null) {
-							System.out.println("Selected not null size:"
-									+ selected.size());
+							System.out.println("Selected not null size:"+ selected.size());
 							for (int a = 0; a < selected.size(); a++) {
 								if (selected.get(a) instanceof Unit) {
 									MoveCommand temp = new MoveCommand();
@@ -386,17 +386,17 @@ public class Client implements Runnable {
 							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
 							for (int a = 0; a < world.getAllThings().size(); a++) {
 								Thing t = world.getAllThings().get(a);
-								if (t.getLocation().x > selection.x
-										&& t.getLocation().x < selection.x
-												+ selection.width) {
-									if (t.getLocation().y > selection.y
-											&& t.getLocation().y < selection.y
-													+ selection.height) {
-										possibleselect.add(world.getAllThings()
-												.get(a));
-										selected = possibleselect;
-									}
-								}
+//								if (t.getLocation().x > selection.x
+//										&& t.getLocation().x < selection.x
+//												+ selection.width) {
+//									if (t.getLocation().y > selection.y
+//											&& t.getLocation().y < selection.y
+//													+ selection.height) {
+//										possibleselect.add(world.getAllThings()
+//												.get(a));
+//										selected = possibleselect;
+//									}
+//								}
 								if (selection.intersects(t.getBounds())) {
 									possibleselect.add(world.getAllThings()
 											.get(a));
