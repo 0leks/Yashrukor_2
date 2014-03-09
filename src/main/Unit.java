@@ -106,7 +106,7 @@ public class Unit extends Thing  implements Serializable{
 			
 			if (todo.command == Command.ATTACKMOVE) {
 				Command attacktheloser = null;
-				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), myWorld.FOGOFWAR);
+				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), range);
 //				System.out.println(inRange);
 				//Command attacktheloser = null;
 				for(Thing t : inRange) 
