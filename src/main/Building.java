@@ -110,26 +110,36 @@ public class Building extends Thing {
 		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
 			if(creatingunits==true){
 				unittic++;
+				if(unitreq>0){
+					System.out.println(unitreq);
+				}
 				if(unittic==unitreq){
-					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					if(unittomake==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
+					if(unittomake==Unit.WARRIOR){
+						myWorld.getAllThings().add(new Unit(1,x+width,y+height,myPlayer));
+						System.out.println("MADE");
 						myPlayer.resource().add(warrior);
 					}
-					else if(unittomake==Unit.ARCHER&&myPlayer.resource().check(archer)){
+					else if(unittomake==Unit.ARCHER){
+						myWorld.getAllThings().add(new Unit(2,x+width,y+height,myPlayer));
 						myPlayer.resource().add(archer);
 					}
-					else if(unittomake==Unit.KNIGHT&&myPlayer.resource().check(knight)){
+					else if(unittomake==Unit.KNIGHT){
+						myWorld.getAllThings().add(new Unit(3,x+width,y+height,myPlayer));
 						myPlayer.resource().add(knight);
 					}
-					else if(unittomake==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
+					else if(unittomake==Unit.CROSSBOW){
+						myWorld.getAllThings().add(new Unit(4,x+width,y+height,myPlayer));
 						myPlayer.resource().add(crossbow);
 					}
-					else if(unittomake==Unit.MEDIC&&myPlayer.resource().check(medic)){
+					else if(unittomake==Unit.MEDIC){
+						myWorld.getAllThings().add(new Unit(5,x+width,y+height,myPlayer));
 						myPlayer.resource().add(medic);
 					}
-					else if(unittomake==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
+					else if(unittomake==Unit.SHAMAN){
+						myWorld.getAllThings().add(new Unit(6,x+width,y+height,myPlayer));
 						myPlayer.resource().add(shaman);
 					}
+					unittic=0;
 				}
 			}	
 		}
@@ -166,37 +176,37 @@ public class Building extends Thing {
 		return type;
 	}
 	public void createUnit(int unit){
-		if (type==6){
-			if(unit ==Unit.WARRIOR){
+		if (type==5){
+			if(unit ==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
 				unitreq=20*10;
 				unittomake=unit;
 				creatingunits=true;
 			}
-			else if(unit ==Unit.KNIGHT){
+			else if(unit ==Unit.KNIGHT&&myPlayer.resource().check(knight)){
 				unitreq=20*30;
 				unittomake=unit;
 				creatingunits=true;
 			}
 		}
-		if(type==7){
-			if(unit ==Unit.ARCHER){
+		if(type==6){
+			if(unit ==Unit.ARCHER&&myPlayer.resource().check(archer)){
 				unitreq=20*10;
 				unittomake=unit;
 				creatingunits=true;
 			}
-			else if(unit ==Unit.CROSSBOW){
+			else if(unit ==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
 				unitreq=20*40;
 				unittomake=unit;
 				creatingunits=true;
 			}
 		}
-		if(type==8){
-			if(unit ==Unit.MEDIC){
+		if(type==7){
+			if(unit ==Unit.MEDIC&&myPlayer.resource().check(medic)){
 				unitreq=20*20;
 				unittomake=unit;
 				creatingunits=true;
 			}
-			else if(unit ==Unit.SHAMAN){
+			else if(unit ==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
 				unitreq=20*120;
 				unittomake=unit;
 				creatingunits=true;
