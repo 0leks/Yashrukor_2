@@ -77,8 +77,8 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
-		drawMinimap(g,drawingon,lookingat);
 	}
+
 	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);

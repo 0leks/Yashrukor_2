@@ -136,10 +136,10 @@ public class Unit extends Thing  implements Serializable{
 		commandList.remove(0);
 	}
 	
-	public int[] findPath(int x, int y)
-	{
-		
-	}
+//	public int[] findPath(int x, int y)
+//	{
+//		
+//	}
 	
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
