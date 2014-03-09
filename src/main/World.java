@@ -22,6 +22,7 @@ public class World implements Serializable {
 	transient Server server;
 	public World(Server serv) {
 		Thing.myWorld = this;
+		initializeTerrain();
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
@@ -61,6 +62,11 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 				g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			} 
+			else if(thing instanceof Terrain) {
+				Terrain t = (Terrain)thing;
+				g.setColor(new Color (1,50,32));
+				g.fillRect(t.x-lookingat.x, t.y-lookingat.y, t.width(), t.height());
+			} 
 			else {
 				//this is temporary drawing code for representing Things on the screen
 				g.setColor(Color.black);
@@ -69,22 +75,50 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
-		//MAKING TERRAIN here
-		g.setColor(new Color (1,50,32));
-		g.fillRect(0-lookingat.x, 2300-lookingat.y, 1600, 200);
-		g.fillRect(3200-lookingat.x, 2300-lookingat.y, 1600, 200);
-		g.fillRect(2300-lookingat.x, 0-lookingat.y, 200, 1600);
-		g.fillRect(2300-lookingat.x, 3200-lookingat.y, 200, 1600);
-		
-		g.fillRect(1600-lookingat.x, 1600-lookingat.y, 200, 200);
-		g.fillRect(3000-lookingat.x, 3000-lookingat.y, 200, 200);
-		g.fillRect(3000-lookingat.x, 1600-lookingat.y, 200, 200);
-		g.fillRect(1600-lookingat.x, 3000-lookingat.y, 200, 200);
-		g.fillRect(2350-lookingat.x, 2350-lookingat.y, 100, 100);
+		drawMinimap(g,drawingon,lookingat);
+	}
+	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getWidth()-244, drawingon.getHeight()-244, 240, 240);
+		for(int a=0; a<allThings.size(); a++) {
+			Thing thing = allThings.get(a);
+			if(thing instanceof Building){
+				Building building = (Building)thing;
+				g.setColor(building.myPlayer.getColor());
+				g.fillRect(drawingon.getWidth()-244+building.x/20, drawingon.getHeight()-244+building.y/20, 5,5);
+			} 
+			else if(thing instanceof Unit) {
+				Unit unit = (Unit)thing;
+				g.setColor(unit.myPlayer.getColor());
+				g.fillRect(drawingon.getWidth()-244+unit.x/20, drawingon.getHeight()-244+unit.y/20, 5, 5);
+			} 
+			else if(thing instanceof Terrain) {
+				Terrain t = (Terrain)thing;
+				g.setColor(new Color (1,50,32));
+				g.fillRect(drawingon.getWidth()-244+t.x/20, drawingon.getHeight()-244+t.y/20, t.width()/20, t.height()/20);
+			} 
+			else {
+				//this is temporary drawing code for representing Things on the screen
+				g.setColor(Color.black);
+				g.fillRect(drawingon.getWidth()-244+thing.x/20, drawingon.getHeight()-244+thing.y/20, 5, 5);
+				g.setColor(Color.white);
+			}
+		}
+	}
+	public void initializeTerrain(){
+		allThings.add(new Terrain(0,2300,200,1600));
+		allThings.add(new Terrain(3200,2300,200,1600));
+		allThings.add(new Terrain(2300,0,1600,200));
+		allThings.add(new Terrain(2300,3200,1600,200));
+		
+		allThings.add(new Terrain(1600,1600,200,200));
+		allThings.add(new Terrain(3000,3000,200,200));
+		allThings.add(new Terrain(1600,3000,200,200));
+		allThings.add(new Terrain(3000,1600,200,200));
+		
+		allThings.add(new Terrain(2350,2350,100,100));
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
