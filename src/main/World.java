@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import network.Client;
 import network.Server;
 
 public class World implements Serializable {
@@ -30,17 +31,6 @@ public class World implements Serializable {
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	transient ArrayList<Thing> allThings;
-	transient BufferedImage ii;
-	transient BufferedImage arch;
-	transient BufferedImage med;
-	transient BufferedImage grass;
-	transient BufferedImage tcenter;
-	transient BufferedImage range;
-	transient BufferedImage mine;
-	transient BufferedImage barracks;
-	transient BufferedImage farm;
-	transient BufferedImage hospital;
-	transient BufferedImage watchtower;
 //	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
@@ -79,26 +69,6 @@ public class World implements Serializable {
 			}
 		});
 		worldtimer.start();
-	}
-	public void initializeImages() {
-		
-		try {
-			System.out.println("loading imnages");
-			ii = ImageIO.read(new File("Warrior.gif"));
-			arch = ImageIO.read(new File("Archer.gif"));
-			med=ImageIO.read(new File("Medic.gif"));
-			grass = ImageIO.read(new File("grass.png"));
-			tcenter = ImageIO.read(new File("towncenter.jpg"));
-			range = ImageIO.read(new File("range.jpg"));
-			mine = ImageIO.read(new File("mine.jpg"));
-			barracks = ImageIO.read(new File("barracks.jpg"));
-			farm = ImageIO.read(new File("farm.jpg"));
-			hospital = ImageIO.read(new File("hospital.jpg"));
-			watchtower = ImageIO.read(new File("watchtower.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	public void addBuilding(Building b) {
 		allThings.add(b);
@@ -140,16 +110,13 @@ public class World implements Serializable {
 //	3=hospital
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected, ArrayList<Thing> selected) {
 		g.setColor(new Color(0,128,0));
-		if(grass==null) {
-			initializeImages();
-		}
-		int imageW = grass.getWidth();  
-		int imageH = grass.getHeight();  
+		int imageW = Client.grass.getWidth();  
+		int imageH = Client.grass.getHeight();  
    
 		// Tile the image to fill our area.  
 		for (int x = -1; x <= worldx; x += imageW) {  
 		    for (int y = -1; y <= worldy; y += imageH) {  
-		        g.drawImage(grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);  
+		        g.drawImage(Client.grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);  
 		    }  
 		}
 //		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
@@ -171,35 +138,35 @@ public class World implements Serializable {
 					g.setColor(Color.white);
 					if(building.getType()==Building.BASE){
 						g.drawString("Base", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(tcenter,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.tcenter,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.FARM){
 						g.drawString("Farm", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(farm,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.farm,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.QUARRY){
 						g.drawString("Quarry", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.LUMBERMILL){
 						g.drawString("Lumbermill", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.mine,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.TOWER){
 						g.drawString("Tower", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(watchtower,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.watchtower,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.BARRACKS){
 						g.drawString("Barracks", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(barracks,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.barracks,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.RANGE){
 						g.drawString("Range", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(range,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.range,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					else if(building.getType()==Building.HOSPITAL){
 						g.drawString("hospital", thing.x-lookingat.x, thing.y-lookingat.y+20);
-						g.drawImage(hospital,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
+						g.drawImage(Client.hospital,thing.x-lookingat.x,thing.y-lookingat.y,building.width,building.height,null);
 					}
 					if(building.creatingunits) {
 						g.drawString(building.unittic+"/"+building.unitreq, thing.x-lookingat.x, thing.y-lookingat.y+40);
@@ -218,7 +185,7 @@ public class World implements Serializable {
 						if(unit.unitType()==2||unit.unitType()==4){
 							//g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
 							
-							g.drawImage(ii, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
+							g.drawImage(Client.ii, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							
 							g.setColor(unit.myPlayer.getColor());
 							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))), 10);
@@ -230,7 +197,7 @@ public class World implements Serializable {
 						}
 						else if(unit.unitType()==3||unit.unitType()==5){
 							//g.fillOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
-							g.drawImage(arch, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
+							g.drawImage(Client.arch, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
 							g.setColor(unit.myPlayer.getColor());
 							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							g.setColor(Color.black);
@@ -241,7 +208,7 @@ public class World implements Serializable {
 						}
 						else if(unit.unitType()==6||unit.unitType()==7){
 							//g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
-							g.drawImage(med, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
+							g.drawImage(Client.med, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
 							g.setColor(unit.myPlayer.getColor());
 							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							g.setColor(Color.black);

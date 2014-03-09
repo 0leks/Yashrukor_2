@@ -15,6 +15,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,6 +29,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -71,7 +74,19 @@ public class Client implements Runnable {
 	private String errormessage;
 	private int errortic;
 	private String winner;
+	public static BufferedImage ii;
+	public static BufferedImage arch;
+	public static BufferedImage med;
+	public static BufferedImage grass;
+	public static BufferedImage tcenter;
+	public static BufferedImage range;
+	public static BufferedImage mine;
+	public static BufferedImage barracks;
+	public static BufferedImage farm;
+	public static BufferedImage hospital;
+	public static BufferedImage watchtower;
 	public Client() {
+		initializeImages();
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
 		lookingat = new Point(0, 0);
@@ -134,6 +149,26 @@ public class Client implements Runnable {
 			}
 		});
 		timer.start();
+	}
+	public void initializeImages() {
+		
+		try {
+			System.out.println("loading imnages");
+			ii = ImageIO.read(new File("Warrior.gif"));
+			arch = ImageIO.read(new File("Archer.gif"));
+			med=ImageIO.read(new File("Medic.gif"));
+			grass = ImageIO.read(new File("grass.png"));
+			tcenter = ImageIO.read(new File("towncenter.jpg"));
+			range = ImageIO.read(new File("range.jpg"));
+			mine = ImageIO.read(new File("mine.jpg"));
+			barracks = ImageIO.read(new File("barracks.jpg"));
+			farm = ImageIO.read(new File("farm.jpg"));
+			hospital = ImageIO.read(new File("hospital.jpg"));
+			watchtower = ImageIO.read(new File("watchtower.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void mouseOnSide(Point mouse)
 	{
