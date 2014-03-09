@@ -67,8 +67,21 @@ public class Connection implements Runnable{
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+				try {
+					in.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.exit(0);
+				try {
+					in.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}

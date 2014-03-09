@@ -203,4 +203,7 @@ public class Building extends Thing {
 			}
 		}
 	}
+	public String toString() {
+		return "Building("+super.toString()+")";
+	}
 }
