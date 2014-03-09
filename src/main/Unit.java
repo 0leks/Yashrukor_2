@@ -132,6 +132,8 @@ public class Unit extends Thing  implements Serializable{
 						commandList.add(0,todo);
 					}
 					attack(todo.target);
+					if(todo.target.hp > 0)
+						commandList.add(0,todo);
 				}
 			} 
 			else if (todo.command == Command.MOVE) {
