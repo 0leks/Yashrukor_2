@@ -104,13 +104,13 @@ public class World implements Serializable {
 				if(thing instanceof Building){
 					Building building = (Building)thing;
 					g.setColor(building.myPlayer.getColor());
-					g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
+					g.fillRect(building.x-lookingat.x, building.y-lookingat.y, building.width, building.height);
 					g.setColor(Color.white);
 					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 				} else if(thing instanceof Unit) {
 					Unit unit = (Unit)thing;
 					g.setColor(unit.myPlayer.getColor());
-					g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
+					g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
 					g.setColor(Color.white);
 					g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 				} 

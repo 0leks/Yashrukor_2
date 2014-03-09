@@ -57,6 +57,14 @@ public class Connection implements Runnable{
 					me.resource().add(Building.getResource(bc.type));
 					server.theworld.addBuilding(bob);
 				}
+				if(read instanceof AttackMoveCommand) {
+					AttackMoveCommand ac = (AttackMoveCommand)read;
+					Unit thing = (Unit)server.theworld.getThing(ac.id);
+					Command c = new Command(Command.ATTACKMOVE);
+					c.setX(ac.target.x);
+					c.setY(ac.target.y);
+					thing.addCommand(c);
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

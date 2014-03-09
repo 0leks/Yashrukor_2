@@ -68,9 +68,19 @@ public class Thing implements Serializable{
 		return (int)(Math.sqrt(dx*dx+dy*dy));
 
 	}
-	public boolean collides (Thing t){
+
+	public boolean collides (Rectangle t){
+//		return this.getBounds().intersects(t);
+		System.out.println(t.width);
 		if(((t.x>x)&&(t.x<(x+width)))||(((t.x+t.width)>x)&&((t.x+t.width)<(x+width)))){
 			if(((t.y>y)&&(t.y<(y+height)))||(((t.y+t.height)>y)&&((t.y+t.height)<(y+height)))){
+				System.out.println("COLLIDE");
+				return true;
+			}
+		}
+		if(((x>t.x)&&(x<(t.x+t.width)))||(((x+width)>t.x)&&((x+width)<(t.x+t.width)))){
+			if(((y>t.y)&&(y<(t.y+t.height)))||(((y+height)>t.y)&&((y+height)<(t.y+t.height)))){
+				System.out.println("COLLIDE");
 				return true;
 			}
 		}
