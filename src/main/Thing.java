@@ -30,7 +30,6 @@ public class Thing implements Serializable{
 		this.y = y;
 		this.width=width;
 		this.height=height;
-		myWorld.allThings.add(this);
 	}	
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
