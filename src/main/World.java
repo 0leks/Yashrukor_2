@@ -13,21 +13,35 @@ public class World implements Serializable {
 	ArrayList<Unit> allUnits = new ArrayList<Unit>();
 	Player temp = new Player();
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
+	TempFrameForTestingOnly asdf;
 	public World() {
 		Thing.myWorld = this;
 		allThings.add(new Unit(1, 50, 50, new Player()));
+		allThings.add(new Building(150, 50, 1));
+		allThings.add(new Thing(150, 150));
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
 	
 	public void drawEverything(Graphics g) {
 		for(int a=0; a<allThings.size(); a++) {
 			Thing thing = allThings.get(a);
-			
-			//this is temporary drawing code for representing Things on the screen
-			g.setColor(Color.black);
-			g.fillRect(thing.x, thing.y, 50, 50);
-			g.setColor(Color.white);
-			g.drawString(a+"", thing.x, thing.y+20);
+			if(thing instanceof Building) {
+				g.setColor(Color.blue);
+				g.fillRect(thing.x, thing.y, 50, 50);
+				g.setColor(Color.white);
+				g.drawString("Building #"+a, thing.x, thing.y+20);
+			} else if(thing instanceof Unit) {
+				g.setColor(new Color(200, 40, 60));
+				g.fillRect(thing.x, thing.y, 50, 50);
+				g.setColor(Color.white);
+				g.drawString("Unit #"+a, thing.x, thing.y+20);
+			} else {
+				//this is temporary drawing code for representing Things on the screen
+				g.setColor(Color.black);
+				g.fillRect(thing.x, thing.y, 50, 50);
+				g.setColor(Color.white);
+				g.drawString("Thing #"+a, thing.x, thing.y+20);
+			}
 		}
 	}
 	public class TempFrameForTestingOnly extends JFrame {
@@ -42,7 +56,11 @@ public class World implements Serializable {
 			});
 		}
 	}
+	public void testDraw() {
+		asdf = new TempFrameForTestingOnly();
+	}
 	public static void main(String[] args) {
-		new World();
+		World w = new World();
+		w.testDraw();
 	}
 }

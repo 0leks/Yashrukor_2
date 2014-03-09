@@ -17,7 +17,8 @@ public class Thing implements Serializable{
 	public Thing(int x, int y)
 	{
 		destroyed = false;
-		this.x = this.y;
+		this.x = x;
+		this.y = y;
 	}	
 	
 	public void getAttacked(int damage)
