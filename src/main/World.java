@@ -34,6 +34,7 @@ public class World implements Serializable {
 	transient BufferedImage arch;
 	transient BufferedImage med;
 	transient BufferedImage grass;
+	transient BufferedImage grass1;
 	transient BufferedImage tcenter;
 	transient BufferedImage range;
 	transient BufferedImage mine;
@@ -100,6 +101,7 @@ public class World implements Serializable {
 			farm = ImageIO.read(new File("farm.jpg"));
 			hospital = ImageIO.read(new File("hospital.jpg"));
 			watchtower = ImageIO.read(new File("watchtower.jpg"));
+			grass1 = ImageIO.read(new File("grass1.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,8 +142,14 @@ public class World implements Serializable {
    
 		// Tile the image to fill our area.  
 		for (int x = -1; x <= worldx; x += imageW) {  
-		    for (int y = -1; y <= worldy; y += imageH) {  
-		        g.drawImage(grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);  
+		    for (int y = -1; y <= worldy; y += imageH) {
+		    	double rand = Math.random()*10;
+		    	if(rand <= 5){
+		    		g.drawImage(grass, x-lookingat.x%imageW, y-lookingat.y%imageH, null);
+		    	}else{
+		    		g.drawImage(grass1, x-lookingat.x%imageW, y-lookingat.y%imageH, null);
+		    	}
+		        
 		    }  
 		}
 //		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
