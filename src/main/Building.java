@@ -69,7 +69,11 @@ public class Building extends Thing {
 		}
 	}
 	public void tic(){
-		System.out.println("Under Construction: " + underConstruction);
+		if(hp <= 0)
+		{
+			myWorld.allThings.remove(this);
+			super.destroyed = true;
+		}
 		if(underConstruction == false){
 			if(type==BASE){
 				timetic++;
