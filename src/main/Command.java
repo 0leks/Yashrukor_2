@@ -7,6 +7,8 @@ public class Command {
 	public final static int BUILD = 3;
 	int command;
 	Thing target;
+	int x;
+	int y;
 	
 	public Command (int command){
 		this.command = command;
@@ -18,6 +20,14 @@ public class Command {
 	public void setTarget(Thing t)
 	{
 		target = t; 
+	}
+	public void setX(int tx)
+	{
+		x = tx;
+	}
+	public void setY(int ty)
+	{
+		y = ty;
 	}
 	
 }

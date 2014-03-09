@@ -71,6 +71,14 @@ public class Unit extends Thing  implements Serializable{
 			isRanged = true;
 			range = 4;
 		}
+		if(isRanged)
+		{
+			range = 400;
+		}
+		else
+		{
+			range = 50; 
+		}
 	}
 	public void tic(){
 		Command todo = commandList.get(0);//gets and does the next command that the unit needs to do
@@ -80,7 +88,10 @@ public class Unit extends Thing  implements Serializable{
 		}
 		else if(todo.command == Command.ATTACK)
 		{
-			
+			if(todo.target != null)
+			{
+				
+			}
 		}
 		else if(todo.command == Command.BUILD)
 		{
@@ -92,6 +103,14 @@ public class Unit extends Thing  implements Serializable{
 		}
 		commandList.remove(0);
 		
+	}
+	public void attack(Thing target)
+	{
+		
+	}
+	public int distanceTo(Thing target)
+	{
+		return (int) Math.sqrt((target.y-this.y)*(target.y-this.y) + (target.x-this.x)*(target.x-this.x));
 	}
 	public boolean isRanged(){
 		return isRanged;

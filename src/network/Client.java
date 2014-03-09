@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import main.World;
@@ -31,7 +32,12 @@ public class Client implements Runnable{
 	public void run() {
 		InetAddress hostIP = null;
 		try {
-			hostIP = InetAddress.getByName("192.168.83.139");
+
+			String ip = JOptionPane.showInputDialog("IP:");
+			if(ip==null) {
+				ip = "localhost";
+			}
+			hostIP = InetAddress.getByName(ip);
 			if (hostIP == null) {
 				return;
 			}
