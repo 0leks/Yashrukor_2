@@ -32,17 +32,17 @@ public class World implements Serializable {
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Building(100, 50, 0,server.connections.get(0).getPlayer()));
-				allThings.add(new Unit(4,200,200,server.connections.get(0).getPlayer()));
+				allThings.add(new Building(100, 50, Building.BASE,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(Unit.WARRIOR,200,200,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
-				allThings.add(new Building(4700, 4700, 0,server.connections.get(1).getPlayer()));
+				allThings.add(new Building(4700, 4700, Building.BASE,server.connections.get(1).getPlayer()));
 			}
 			if(server.connections.size()>2){
-				allThings.add(new Building(50, 4700, 0,server.connections.get(2).getPlayer()));
+				allThings.add(new Building(50, 4700, Building.BASE,server.connections.get(2).getPlayer()));
 			}
 			if(server.connections.size()>3){
-				allThings.add(new Building(4700, 50, 0,server.connections.get(3).getPlayer()));
+				allThings.add(new Building(4700, 50, Building.BASE,server.connections.get(3).getPlayer()));
 			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
