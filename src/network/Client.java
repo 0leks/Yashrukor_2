@@ -182,16 +182,16 @@ public class Client implements Runnable{
 				@Override
 				public void keyPressed(KeyEvent e) {
 					if(e.getKeyCode()==KeyEvent.VK_UP) {
-						lookingat.y-=10;
+						lookingat.y-=100;
 					}
 					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
-						lookingat.y+=10;
+						lookingat.y+=100;
 					}
 					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-						lookingat.x-=10;
+						lookingat.x-=100;
 					}
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-						lookingat.x+=10;
+						lookingat.x+=100;
 					}
 					System.out.println(lookingat);
 				}
