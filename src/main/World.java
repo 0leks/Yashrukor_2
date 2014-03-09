@@ -32,19 +32,15 @@ public class World implements Serializable {
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Unit(1, 50, 50, server.connections.get(0).getPlayer()));
 				allThings.add(new Building(100, 50, 1,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
-				allThings.add(new Unit(1, 4650, 4700, server.connections.get(1).getPlayer()));
 				allThings.add(new Building(4700, 4700, 1,server.connections.get(1).getPlayer()));
 			}
 			if(server.connections.size()>2){
-				allThings.add(new Unit(1, 0, 4700, server.connections.get(2).getPlayer()));
 				allThings.add(new Building(50, 4700, 1,server.connections.get(2).getPlayer()));
 			}
 			if(server.connections.size()>3){
-				allThings.add(new Unit(1, 4700, 0, server.connections.get(3).getPlayer()));
 				allThings.add(new Building(4700, 50, 1,server.connections.get(3).getPlayer()));
 			}
 		}
@@ -78,7 +74,11 @@ public class World implements Serializable {
 		}
 		return null;
 	}
-	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon) {
+//		bselected: 0 = none (creation UI)
+//				1=barracks
+//				2=range
+//				3=hospital
+	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 		for(int a=0; a<allThings.size(); a++) {
@@ -167,13 +167,27 @@ public class World implements Serializable {
 			g.drawString("Gold: "+player.resource().gold()+"  Wood: "+player.resource().wood()+"  Stone: "+player.resource().stone()+"  Food: "+player.resource().food(),10,12);
 			int w=(drawingon.getWidth()-360)/7;
 			g.setColor(Color.white);
-			g.fillRect(10, drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
-			g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
+			if(bselected==0){
+				g.fillRect(10, drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
+			}
+			else if(bselected==1){
+				g.fillRect(10, drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+			}
+			else if(bselected==2){
+				g.fillRect(10, drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+			}
+			else if(bselected==3){
+				g.fillRect(10, drawingon.getHeight()-110, w, 100);
+				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+			}
 			drawMinimap(g, drawingon,lookingat,foglist,fowon);
 		}
 		
@@ -265,7 +279,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,true);
+					drawEverything(g, panel, new Point(0, 0),null,true,0);
 				}
 			};
 			this.add(panel);
