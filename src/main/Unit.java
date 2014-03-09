@@ -226,11 +226,12 @@ public class Unit extends Thing  implements Serializable{
 	public void moveToward(int x, int y){ //Need to implement, moves the Unit, one unit in the direction 
 		boolean colli=false;
 		for(Thing t:myWorld.getAllThings()){
+			System.out.println(myWorld.getAllThings().size());
 			if(this.collides(t)){
 				colli=true;
 			}
 		}
-		if(colli=false){
+		if(colli==false){
 			int dx = x-this.x;
 			int dy = y-this.y;
 			if(dy == 0)
