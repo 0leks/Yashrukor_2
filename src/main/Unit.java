@@ -23,7 +23,6 @@ public class Unit extends Thing  implements Serializable{
 	private int unitType;
 	
 	public Unit(int unitType, int x, int y, Player p){
-		
 		super(x,y, width, height);
 		this.x = x;
 		this.y = y;
@@ -133,7 +132,6 @@ public class Unit extends Thing  implements Serializable{
 			commandList.remove(0);
 		}
 	}
-	
 	ArrayList<ArrayList> Paths;
 	ArrayList<Point> somePointList;
 	int pathCounter = 0;
@@ -159,7 +157,7 @@ public class Unit extends Thing  implements Serializable{
 		}
 		
 	}
-	
+
 	Point getNextPointInAngle(Point p,int angle)
 	{
 		int x = (int) (speed*Math.cos(angle));

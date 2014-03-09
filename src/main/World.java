@@ -76,8 +76,8 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
-		drawMinimap(g,drawingon,lookingat);
 	}
+
 	public Thing thingInPoint(Point p)
 	{
 		for(Thing t : allThings)
@@ -100,6 +100,7 @@ public class World implements Serializable {
 		}
 		return false;
 	}
+
 	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
@@ -144,6 +145,9 @@ public class World implements Serializable {
 		allThings.add(new Terrain(3000,1600,200,200));
 		
 		allThings.add(new Terrain(2350,2350,100,100));
+	}
+	public ArrayList<Thing> getAllThings() {
+		return allThings;
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;

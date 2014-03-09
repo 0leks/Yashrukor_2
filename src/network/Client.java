@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import main.Player;
+import main.Thing;
+import main.Util;
 import main.World;
 
 public class Client implements Runnable{
@@ -223,11 +227,23 @@ public class Client implements Runnable{
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
+					
 					if(world!=null) {
 						world.drawEverything(g, panel, lookingat);
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
+
+					//UI
+					g.setColor(new Color(52,52,52));
+					g.fillRect(0, 0, panel.getWidth(), 20);
+					g.fillRect(0, panel.getHeight()-120, panel.getWidth(), 120);
+					g.setColor(Color.white);
+					g.drawString("Gold: "+me.resource().gold()+"| Wood: "+me.resource().wood()+"| Stone: "+me.resource().stone()+"| Food: "+me.resource().food(),10,12);
+					
+					if(world!=null) {
+						world.drawMinimap(g, panel, lookingat);
+					}
 				}
 			};
 			this.add(panel);
@@ -243,12 +259,45 @@ public class Client implements Runnable{
 				}
 				@Override
 				public void mousePressed(MouseEvent e) {
-					mousepress = e.getPoint();
+					if(e.getButton()==MouseEvent.BUTTON1) {
+						mousepress = e.getPoint();
+						if((mousepress.x>panel.getWidth()-244)&&(mousepress.x<panel.getWidth())&&
+							(mousepress.y>panel.getHeight()-244)&&(mousepress.y<panel.getHeight())){
+							lookingat.x=20*(mousepress.x-(panel.getWidth()-244))-panel.getWidth()/2;
+							lookingat.y=20*(mousepress.y-(panel.getHeight()-244))-panel.getHeight()/2;
+							if(lookingat.y<0){
+								lookingat.y=0;
+							}
+							else if(lookingat.y+frame.getHeight()>4800){
+								lookingat.y=4800;
+							}
+							if(lookingat.x<0){
+								lookingat.x=0;
+							}
+							else if(lookingat.x+frame.getWidth()>4800){
+								lookingat.x=4800;
+							}
+						}
+							
+					}
+					if(e.getButton()==MouseEvent.BUTTON3) {
+						
+					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
+					Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
+					ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+					for(int a=0; a<world.getAllThings().size(); a++) {
+						Thing t = world.getAllThings().get(a);
+						if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
+							if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+								possibleselect.add(world.getAllThings().get(a));
+							}
+						}
+					}
+					System.out.println("Selected things:"+possibleselect.size());
+					//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 				}
 			});
 			this.addKeyListener(new KeyListener() {
