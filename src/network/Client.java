@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import main.Player;
+import main.Resource;
 import main.Thing;
 import main.Unit;
 import main.Util;
@@ -54,6 +55,13 @@ public class Client implements Runnable{
 	private Timer timer; 
 	private Point mousepress;
 	private Point currentmouse;
+	Resource farm=new Resource(-10,-10,-40,0);
+	Resource quarry=new Resource(-10,0,-50,0);
+	Resource lumbermill=new Resource(-50,-0,-0,0);
+	Resource tower=new Resource(-100,-80,-40,0);
+	Resource barracks=new Resource(-30,-50,-30,0);
+	Resource range=new Resource(-30,-30,-50,0);
+	Resource hospital=new Resource(-40,-50,-50,0);
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
@@ -86,7 +94,6 @@ public class Client implements Runnable{
 					}
 				}
 				if(frame!=null)  {
-					System.out.println("repainting frame");
 					frame.repaint();
 				}
 			}
@@ -385,10 +392,31 @@ public class Client implements Runnable{
 					}
 //					if(workercommands==true){
 						if(e.getKeyCode()>=49 && e.getKeyCode()<=56) {
-							int buildingtype = e.getKeyCode()-49;
+							int buildingtype = e.getKeyCode()-48;
 							BuildCommand bc = new BuildCommand();
 							bc.type = buildingtype;
 							bc.location = currentmouse;
+							if(bc.type==1){
+								me.resource().add(farm);
+							}
+							else if(bc.type==2){
+								me.resource().add(quarry);
+							}
+							else if(bc.type==3){
+								me.resource().add(lumbermill);
+							}
+							else if(bc.type==4){
+								me.resource().add(tower);
+							}
+							else if(bc.type==5){
+								me.resource().add(barracks);
+							}
+							else if(bc.type==6){
+								me.resource().add(range);
+							}
+							else if(bc.type==7){
+								me.resource().add(hospital);
+							}
 							send(bc);
 						}
 //					}
