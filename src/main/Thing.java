@@ -53,5 +53,10 @@ public class Thing implements Serializable{
 		this.x = x;
 		this.y = y;
 	}
+	public int euclidianDistanceFrom(Point other) {
+		int dx = other.x-x;
+		int dy = other.y-y;
+		return (int)(Math.sqrt(dx*dx+dy*dy));
+	}
 	
 }

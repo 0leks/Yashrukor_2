@@ -3,6 +3,7 @@ package network;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -54,6 +55,8 @@ public class Client implements Runnable{
 	private Timer timer; 
 	private Point mousepress;
 	private Point currentmouse;
+	private String errormessage;
+	private int errortic;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
@@ -84,6 +87,9 @@ public class Client implements Runnable{
 					if(lookingat.x+frame.getWidth()>4800){
 						lookingat.x=4800;
 					}
+				}
+				if(errortic--<0) {
+					errormessage = null;
 				}
 				if(frame!=null)  {
 					System.out.println("repainting frame");
@@ -254,6 +260,11 @@ public class Client implements Runnable{
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
+					if(errormessage!=null) {
+						g.setColor(Color.red);
+						g.setFont(new Font("Nyala", Font.PLAIN, 50));
+						g.drawString(errormessage, 100, getHeight()/2);
+					}
 				}
 			};
 			this.add(panel);
@@ -388,8 +399,13 @@ public class Client implements Runnable{
 							int buildingtype = e.getKeyCode()-49;
 							BuildCommand bc = new BuildCommand();
 							bc.type = buildingtype;
-							bc.location = currentmouse;
-							send(bc);
+							bc.location = new Point(currentmouse.x+lookingat.x, currentmouse.y+lookingat.y);
+							if(world.spotCloseEnough(bc.location, me)) {
+								send(bc);
+							} else {
+								errormessage = "Too far from your buildings";
+								errortic = 20;
+							}
 						}
 //					}
 				}
