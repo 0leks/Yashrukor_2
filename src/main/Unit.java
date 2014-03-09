@@ -84,6 +84,9 @@ public class Unit extends Thing  implements Serializable{
 			range = 20; 
 		}
 	}
+	public Player getPlayer() {
+		return this.myPlayer;
+	}
 	public void tic(){
 		
 		super.tic();
