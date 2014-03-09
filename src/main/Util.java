@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 public class Util {
@@ -17,5 +18,8 @@ public class Util {
 			height = y1-y2;
 		}
 		return new Rectangle(xf, yf, width, height);
+	}
+	public static Color inverseColor(Color c) {
+		return new Color(255-c.getRed(), 255-c.getGreen(), 255-c.getBlue());
 	}
 }
