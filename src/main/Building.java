@@ -87,40 +87,32 @@ public class Building extends Thing {
 					timetic=0;
 				}
 			}
-			else if(type==BARRACKS){
-			
-			}
-			else if(type==RANGE){
-			}
-			if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
-				if(creatingunits==true){
-					unittic++;
-					if(unittic==unitreq){
-						//	ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-						if(unittomake==Unit.WORKER){
-							myPlayer.resource().add(worker);
-						}
-						else if(unittomake==Unit.WARRIOR){
-							myPlayer.resource().add(warrior);
-						}
-						else if(unittomake==Unit.ARCHER){
-							myPlayer.resource().add(archer);
-						}
-						else if(unittomake==Unit.KNIGHT){
-							myPlayer.resource().add(knight);
-						}
-						else if(unittomake==Unit.CROSSBOW){
-							myPlayer.resource().add(crossbow);
-						}
-						else if(unittomake==Unit.MEDIC){
-							myPlayer.resource().add(medic);
-						}
-						else if(unittomake==Unit.SHAMAN){
-							myPlayer.resource().add(shaman);
-						}
-						unittic=0;
-						unitreq=0;
-						creatingunits=false;
+		}
+		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
+			if(creatingunits==true){
+				unittic++;
+				if(unittic==unitreq){
+					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					if(unittomake==Unit.WORKER){
+						myPlayer.resource().add(worker);
+					}
+					else if(unittomake==Unit.WARRIOR){
+						myPlayer.resource().add(warrior);
+					}
+					else if(unittomake==Unit.ARCHER){
+						myPlayer.resource().add(archer);
+					}
+					else if(unittomake==Unit.KNIGHT){
+						myPlayer.resource().add(knight);
+					}
+					else if(unittomake==Unit.CROSSBOW){
+						myPlayer.resource().add(crossbow);
+					}
+					else if(unittomake==Unit.MEDIC){
+						myPlayer.resource().add(medic);
+					}
+					else if(unittomake==Unit.SHAMAN){
+						myPlayer.resource().add(shaman);
 					}
 				}
 			}	
