@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -182,8 +183,9 @@ public class Client implements Runnable {
 			lookingat.x = frame.getWidth() / 2;
 			lookingat.y = frame.getHeight() / 2;
 			thread.start();
-		}catch(ConnectException e){
-			System.out.println("Connection Error: "+e.getMessage());
+		}catch(SocketException e){
+			e.printStackTrace();
+			main(null);
 		}catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
