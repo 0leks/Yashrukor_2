@@ -19,7 +19,6 @@ public class Building extends Thing {
 	private int unittomake;
 	private boolean underConstruction;
 	
-	private Resource worker=new Resource(-10,0,0,-10);
 	private Resource warrior=new Resource(-20,-20,-20,-20);
 	private Resource archer=new Resource(-30,-20,-10,-20);
 	private Resource knight=new Resource(-40,-30,-30,-60);
@@ -29,7 +28,7 @@ public class Building extends Thing {
 	
 	private boolean creatingunits=false;
 	public Building(int x, int y, int type, Player p) {
-		super(x, y, 100, 100 ,0);
+		super(x, y, 100, 100 ,200);
 		myPlayer=p;
 		this.type=type;
 		if(type == BASE)
@@ -70,6 +69,11 @@ public class Building extends Thing {
 		}
 	}
 	public void tic(){
+		if(hp <= 0)
+		{
+			myWorld.allThings.remove(this);
+			super.destroyed = true;
+		}
 		if(underConstruction == false){
 			if(type==BASE){
 				timetic++;
@@ -108,28 +112,40 @@ public class Building extends Thing {
 			}
 		}
 		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
-			if(creatingunits==true){
+			//System.out.println("Creatingunits " + creatingunits);
+			if(creatingunits){
 				unittic++;
+				System.out.println("Unitereq: " + unitreq);
+				if(unitreq>0){
+					System.out.println(unitreq);
+				}
 				if(unittic==unitreq){
-					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					if(unittomake==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
+					if(unittomake==Unit.WARRIOR){
+						myWorld.getAllThings().add(new Unit(1,x+width,y+height,myPlayer));
+						System.out.println("MADE");
 						myPlayer.resource().add(warrior);
 					}
-					else if(unittomake==Unit.ARCHER&&myPlayer.resource().check(archer)){
+					else if(unittomake==Unit.ARCHER){
+						myWorld.getAllThings().add(new Unit(2,x+width,y+height,myPlayer));
 						myPlayer.resource().add(archer);
 					}
-					else if(unittomake==Unit.KNIGHT&&myPlayer.resource().check(knight)){
+					else if(unittomake==Unit.KNIGHT){
+						myWorld.getAllThings().add(new Unit(3,x+width,y+height,myPlayer));
 						myPlayer.resource().add(knight);
 					}
-					else if(unittomake==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
+					else if(unittomake==Unit.CROSSBOW){
+						myWorld.getAllThings().add(new Unit(4,x+width,y+height,myPlayer));
 						myPlayer.resource().add(crossbow);
 					}
-					else if(unittomake==Unit.MEDIC&&myPlayer.resource().check(medic)){
+					else if(unittomake==Unit.MEDIC){
+						myWorld.getAllThings().add(new Unit(5,x+width,y+height,myPlayer));
 						myPlayer.resource().add(medic);
 					}
-					else if(unittomake==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
+					else if(unittomake==Unit.SHAMAN){
+						myWorld.getAllThings().add(new Unit(6,x+width,y+height,myPlayer));
 						myPlayer.resource().add(shaman);
 					}
+					unittic=0;
 				}
 			}	
 		}
@@ -166,37 +182,38 @@ public class Building extends Thing {
 		return type;
 	}
 	public void createUnit(int unit){
-		if (type==6){
-			if(unit ==Unit.WARRIOR){
+		if (type==5){
+			if(unit ==Unit.WARRIOR&&myPlayer.resource().check(warrior)){
 				unitreq=20*10;
 				unittomake=unit;
 				creatingunits=true;
+				System.out.println(creatingunits);
 			}
-			else if(unit ==Unit.KNIGHT){
+			else if(unit ==Unit.KNIGHT&&myPlayer.resource().check(knight)){
 				unitreq=20*30;
 				unittomake=unit;
 				creatingunits=true;
 			}
 		}
-		if(type==7){
-			if(unit ==Unit.ARCHER){
+		if(type==6){
+			if(unit ==Unit.ARCHER&&myPlayer.resource().check(archer)){
 				unitreq=20*10;
 				unittomake=unit;
 				creatingunits=true;
 			}
-			else if(unit ==Unit.CROSSBOW){
+			else if(unit ==Unit.CROSSBOW&&myPlayer.resource().check(crossbow)){
 				unitreq=20*40;
 				unittomake=unit;
 				creatingunits=true;
 			}
 		}
-		if(type==8){
-			if(unit ==Unit.MEDIC){
+		if(type==7){
+			if(unit ==Unit.MEDIC&&myPlayer.resource().check(medic)){
 				unitreq=20*20;
 				unittomake=unit;
 				creatingunits=true;
 			}
-			else if(unit ==Unit.SHAMAN){
+			else if(unit ==Unit.SHAMAN&&myPlayer.resource().check(shaman)){
 				unitreq=20*120;
 				unittomake=unit;
 				creatingunits=true;

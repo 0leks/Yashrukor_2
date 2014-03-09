@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -54,6 +55,10 @@ public class Client implements Runnable {
 	private boolean movecameraleft;
 	private boolean movecameraup;
 	private boolean movecameradown;
+	private boolean smovecameraright;
+	private boolean smovecameraleft;
+	private boolean smovecameraup;
+	private boolean smovecameradown;
 	private int cameraspeed = 20;
 	private Timer timer;
 	private Point mousepress;
@@ -69,6 +74,8 @@ public class Client implements Runnable {
 		timer = new Timer(100, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				//mouseOnSide(currentmouse);
 				if (movecameraup) {
 					lookingat.y -= cameraspeed;
 					if (lookingat.y < 0) {
@@ -93,6 +100,30 @@ public class Client implements Runnable {
 						lookingat.x = 4800;
 					}
 				}
+				if (smovecameraup) {
+					lookingat.y -= 4*cameraspeed;
+					if (lookingat.y < 0) {
+						lookingat.y = 0;
+					}
+				}
+				if (smovecameradown) {
+					lookingat.y += 4*cameraspeed;
+					if (lookingat.y + frame.getHeight() > 4800) {
+						lookingat.y = 4800;
+					}
+				}
+				if (smovecameraleft) {
+					lookingat.x -=4*cameraspeed;
+					if (lookingat.x < 0) {
+						lookingat.x = 0;
+					}
+				}
+				if (smovecameraright) {
+					lookingat.x += 4*cameraspeed;
+					if (lookingat.x + frame.getWidth() > 4800) {
+						lookingat.x = 4800;
+					}
+				}
 				if (errortic-- < 0) {
 					errormessage = null;
 				}
@@ -103,7 +134,27 @@ public class Client implements Runnable {
 		});
 		timer.start();
 	}
-
+	public void mouseOnSide(Point mouse)
+	{
+		if(mouse.x >= frame.getWidth()-5)
+			smovecameraright = true;
+		else
+			smovecameraright = false;
+		if(mouse.x <= 5)
+			smovecameraleft = true;
+		else
+			smovecameraleft = false;
+		if(mouse.y <= 5)
+			smovecameraup = true;
+		else
+			smovecameraup = false;
+		if(mouse.y >= frame.getHeight()-5)
+			smovecameradown = true;
+		else
+			smovecameradown = false;
+		
+		
+	}
 	public void connect(String ip) {
 
 		InetAddress hostIP = null;
@@ -144,7 +195,7 @@ public class Client implements Runnable {
 		Client c = new Client();
 		// c.start();
 	}
-
+	
 	public void send(Object o) {
 		try {
 			out.writeUnshared(o);
@@ -152,7 +203,7 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void read() {
 		while (true) {
 			try {
@@ -203,7 +254,7 @@ public class Client implements Runnable {
 			ipaddress = new JTextField("localhost");
 			ipaddress.setMinimumSize(new Dimension(200, 20));
 			ipaddress.setPreferredSize(new Dimension(200, 20));
-			panel = new JPanel() {
+			panel = new JPanel() { 
 				@Override
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
@@ -296,6 +347,8 @@ public class Client implements Runnable {
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					currentmouse = e.getPoint();
+					mouseOnSide(currentmouse);
+					
 				}
 			});
 			this.addMouseListener(new MouseListener() {
@@ -393,6 +446,7 @@ public class Client implements Runnable {
 									possibleselect.add(world.getAllThings().get(a));
 								}
 							}
+							
 							selected = possibleselect;
 							System.out.println("Selected things:" + possibleselect.size());
 							updateUI(selected);
@@ -434,7 +488,18 @@ public class Client implements Runnable {
 						movecameraright = false;
 					}
 					if(e.getKeyCode() == KeyEvent.VK_A){
-						Point p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+						Point p;
+						if ((currentmouse.x > panel.getWidth() - 244)
+								&& (currentmouse.x < panel.getWidth())
+								&& (currentmouse.y > panel.getHeight() - 244)
+								&& (currentmouse.y < panel.getHeight())) {
+							p = new Point((20 * (currentmouse.x - (panel
+									.getWidth() - 244))),(20 * (currentmouse.y - (panel
+									.getHeight() - 244))));
+						}
+						else{
+							p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+						}
 						for(int a=0; a<selected.size();a++) {
 							if(selected.get(a) instanceof Unit) {
 								Unit u = (Unit)selected.get(a);
@@ -447,23 +512,62 @@ public class Client implements Runnable {
 						}
 						
 					}
-					if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
-						int buildingtype = e.getKeyCode() - 48;
-						BuildCommand bc = new BuildCommand();
-						bc.type = buildingtype;
-						bc.location = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
-						boolean cansend = false;
-						if (world.spotCloseEnough(bc.location, me)) {
-							if (me.resource().check(Building.getResource(bc.type))) {
-								me.resource().add(Building.getResource(bc.type));
-								send(bc);
-							} else {
-								errormessage = "Not enough Resources";
+					if(bselected==0){
+						if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
+							int buildingtype = e.getKeyCode() - 48;
+							BuildCommand bc = new BuildCommand();
+							bc.type = buildingtype;
+							bc.location = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+							boolean cansend = false;
+							if (world.spotCloseEnough(bc.location, me)) {
+								if (me.resource().check(Building.getResource(bc.type))) {
+									me.resource().add(Building.getResource(bc.type));
+									send(bc);
+								} else {
+									errormessage = "Not enough Resources";
+									errortic = 20;
+								}
+							} 
+							else {
+								errormessage = "Too far from your buildings";
 								errortic = 20;
 							}
-						} else {
-							errormessage = "Too far from your buildings";
-							errortic = 20;
+						}
+					}
+					else if(bselected==1){
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.WARRIOR);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.KNIGHT);
+							}
+						}
+					}
+					else if(bselected==2){
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.ARCHER);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.CROSSBOW);
+							}
+						}
+					}
+					else if(bselected==3){
+						if(e.getKeyCode()==49){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.MEDIC);
+							}
+						}
+						if(e.getKeyCode()==50){
+							for(Thing t:selected){
+								((Building)t).createUnit(Unit.SHAMAN);
+							}
 						}
 					}
 				}
@@ -474,7 +578,6 @@ public class Client implements Runnable {
 			});
 		}
 	}
-
 	public int updateUI(ArrayList<Thing> selected) {
 		boolean all = true;
 		ArrayList<Building> bs = new ArrayList<Building>();
