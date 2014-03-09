@@ -7,11 +7,9 @@ public class Thing implements Serializable{
 	protected int y;
 	int MAXHEALTH;
 	int hp;
-	private boolean isBeingAttacked;
 	private boolean destroyed;
 	public static World myWorld;
-	public Thing()
-	{
+	public Thing(){
 		destroyed = false; 
 	}
 	public Thing(int x, int y)
@@ -20,7 +18,14 @@ public class Thing implements Serializable{
 		this.x = x;
 		this.y = y;
 	}	
-	
+	public void tic()
+	{
+		if(hp <= 0)
+		{
+			myWorld.allThings.remove(this);
+			destroyed = true;
+		}
+	}
 	public void getAttacked(int damage)
 	{
 		hp -= damage; 

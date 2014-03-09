@@ -14,7 +14,10 @@ public class Building extends Thing {
 	private int timetic=0;
 	private int unittic=0;
 	private int unitreq;
+	private int buildtic;
+	private int buildTime;
 	private int unittomake;
+	private boolean underConstruction;
 	
 	private Resource worker=new Resource(-10,0,0,-10);
 	private Resource warrior=new Resource(-20,-20,-20,-20);
@@ -25,45 +28,66 @@ public class Building extends Thing {
 	private Resource shaman=new Resource(-100,-50,-50,-100);
 	
 	private boolean creatingunits=false;
-	public Building(int x, int y, int type){
+	public Building(int x, int y, int type, Player p){
+		myPlayer=p;
 		this.x = x;
 		this.y = y;
 		this.type=type;
+		if(type == BASE)
+			buildTime = 0;
+		else if(type == FARM)
+			buildTime = 200;
+		else if(type == QUARRY)
+			buildTime = 200;
+		else if(type == LUMBERMILL)
+			buildTime = 200;
+		else if(type == TOWER)
+			buildTime = 600;
+		else if(type == BARRACKS)
+			buildTime = 200;
+		else if(type == RANGE)
+			buildTime = 100;
+		else if(type == HOSPITAL)
+			buildTime = 200;
+		
 	}
 	public void tic(){
-		if(type==BASE){
-			timetic++;
-			if(timetic==20){
-				myPlayer.resource().addGold(2);
-				timetic=0;
+		if(underConstruction == false)
+		{
+			if(type==BASE){
+				timetic++;
+				if(timetic==20){
+					myPlayer.resource().addGold(2);
+					timetic=0;
+				}
 			}
-		}
-		else if(type==FARM){
-			timetic++;
-			if(timetic==20){
-				myPlayer.resource().addFood(4);
-				timetic=0;
+			else if(type==FARM){
+				timetic++;
+				if(timetic==20){
+					myPlayer.resource().addFood(4);
+					timetic=0;
+				}
 			}
-		}
-		else if(type==QUARRY){
-			timetic++;
-			if(timetic==20){
-				myPlayer.resource().addStone(5);
-				timetic=0;
+			else if(type==QUARRY){
+				timetic++;
+				if(timetic==20){
+					myPlayer.resource().addStone(5);
+					timetic=0;
+				}
 			}
-		}
-		else if(type==LUMBERMILL){
-			timetic++;
-			if(timetic==20){
-				myPlayer.resource().addWood(5);
-				timetic=0;
+			else if(type==LUMBERMILL){
+				timetic++;
+				if(timetic==20){
+					myPlayer.resource().addWood(5);
+					timetic=0;
+				}
 			}
-		}
-		else if(type==TOWER){
-			timetic++;
-			if(timetic==20){
-				//ATTACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				timetic=0;
+			else if(type==TOWER){
+				timetic++;
+				if(timetic==20){
+					//	ATTACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					timetic=0;
+				}
 			}
 		}
 		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
@@ -92,12 +116,34 @@ public class Building extends Thing {
 					else if(unittomake==Unit.SHAMAN){
 						myPlayer.resource().add(shaman);
 					}
-					unittic=0;
-					unitreq=0;
-					creatingunits=false;
 				}
-			}
+			}	
 		}
+		else
+		{
+			buildtic--;
+			if(buildtic <=0)
+			{
+				underConstruction = false; 
+			}
+			
+		}
+	}
+	public int getBuildTime()
+	{
+		return buildTime;
+	}
+	public void setBuildTic(int x)
+	{
+		buildtic = x;
+	}
+	public void setConstruction(boolean b)
+	{
+		underConstruction = b;
+	}
+	public boolean getConstruction()
+	{
+		return underConstruction;
 	}
 	public Player getPlayer(){
 		return myPlayer;
