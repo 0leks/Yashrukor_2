@@ -108,8 +108,10 @@ public class Building extends Thing {
 			}
 		}
 		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
+			System.out.println("Creatingunits " + creatingunits);
 			if(creatingunits==true){
 				unittic++;
+				System.out.println("Unitereq: " + unitreq);
 				if(unitreq>0){
 					System.out.println(unitreq);
 				}
