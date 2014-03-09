@@ -49,6 +49,7 @@ public class Client implements Runnable{
 	private boolean movecameraleft;
 	private boolean movecameraup;
 	private boolean movecameradown;
+	private boolean workercommands=false;
 	private int cameraspeed = 20;
 	private Timer timer; 
 	private Point mousepress;
@@ -246,7 +247,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 //					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat, me,false);
+						world.drawEverything(g, panel, lookingat, me,false,workercommands);
 					} else {
 //						System.out.println("World is null!");
 					}
@@ -328,7 +329,9 @@ public class Client implements Runnable{
 								selected = possibleselect;
 							}
 						}
+						selected = possibleselect;
 						System.out.println("Selected things:"+possibleselect.size());
+						updateUI(selected);
 						//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 					}
 				}
@@ -347,6 +350,29 @@ public class Client implements Runnable{
 					}
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
 						movecameraright = true;
+					}
+					if(workercommands==true){
+						if(e.getKeyCode()==KeyEvent.VK_1) {
+							//build farm
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_2) {
+							//build quarry
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_3) {
+							//build lumbermill
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_4) {
+							//build tower
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_5) {
+							//build barracks
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_6) {
+							//build range
+						}
+						else if(e.getKeyCode()==KeyEvent.VK_7) {
+							//build hospital
+						}
 					}
 //					System.out.println(lookingat);
 				}
@@ -373,5 +399,17 @@ public class Client implements Runnable{
 	}
 	public void start() {
 		thread.start();
+	}
+	public void updateUI(ArrayList<Thing> selected){
+		ArrayList<Unit> units=new ArrayList<Unit>();
+		workercommands=false;
+		for(Thing t:selected){
+			if(t instanceof Unit){
+				if(((Unit)t).unitType()==Unit.WORKER){
+					workercommands=true;
+				}
+			}
+		}
+		
 	}
 }

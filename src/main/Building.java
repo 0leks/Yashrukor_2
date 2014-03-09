@@ -2,14 +2,14 @@ package main;
 
 public class Building extends Thing {
 	Player myPlayer;
-	public final int BASE = 1;
-	public final int FARM = 2;
-	public final int QUARRY = 3;
-	public final int LUMBERMILL = 4;
-	public final int TOWER = 5;
-	public final int BARRACKS = 6;
-	public final int RANGE = 7;
-	public final int HOSPITAL = 8; 
+	public final int BASE = 0;
+	public final int FARM = 1;
+	public final int QUARRY = 2;
+	public final int LUMBERMILL = 3;
+	public final int TOWER = 4;
+	public final int BARRACKS = 5;
+	public final int RANGE = 6;
+	public final int HOSPITAL = 7; 
 	private int type;
 	private int timetic=0;
 	private int unittic=0;
