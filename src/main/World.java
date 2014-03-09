@@ -249,6 +249,18 @@ public class World implements Serializable {
 		g.setColor(new Color(107,68,35));
 		g.drawRect(drawingon.getWidth()-244+lookingat.x/20, drawingon.getHeight()-244+lookingat.y/20, screenw/20, screenh/20);
 	}
+	public ArrayList<Thing> thingsInRange(Point p, int range)
+	{
+		ArrayList<Thing> inRange = new ArrayList<Thing>();
+		for(Thing t : allThings)
+		{
+			if(Math.abs(t.euclidianDistanceFrom(p)) < range)
+			{
+				inRange.add(t);
+			}
+		}
+		return inRange;
+	}
 	public Thing thingInPoint(Point p)
 	{
 		for(Thing t : allThings)

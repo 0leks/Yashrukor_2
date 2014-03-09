@@ -88,13 +88,8 @@ public class Unit extends Thing  implements Serializable{
 			Command todo = commandList.remove(0);// gets and does the next command
 												// that the unit needs to do
 			if (todo.command == Command.ATTACKMOVE) {
-				if (todo.target != null) {
-					if (distanceTo(todo.target) > 40 + todo.target.width) {
-						moveToward(todo.target.x, todo.target.y);
-						commandList.add(0, todo);
-					} else
-						attack(todo.target);
-				}
+				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), this.range);
+				//for()
 			} else if (todo.command == Command.ATTACK) {
 				if (todo.target != null) {
 					attack(todo.target);
