@@ -69,7 +69,7 @@ public class World implements Serializable {
 				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
-		//MAKING TERRAIN
+		//MAKING TERRAIN here
 		g.setColor(new Color (1,50,32));
 		g.fillRect(0-lookingat.x, 2300-lookingat.y, 1600, 200);
 		g.fillRect(3200-lookingat.x, 2300-lookingat.y, 1600, 200);
