@@ -12,8 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -32,10 +29,12 @@ import javax.swing.Timer;
 
 import main.Player;
 import main.Thing;
+import main.Unit;
 import main.Util;
 import main.World;
 
 public class Client implements Runnable{
+	private ArrayList<Thing> selected;
 	private Thread thread;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
@@ -281,23 +280,44 @@ public class Client implements Runnable{
 							
 					}
 					if(e.getButton()==MouseEvent.BUTTON3) {
-						
+						System.out.println("Pressed Button 3");
+						if(selected != null) {
+							System.out.println("Selected not null size:"+selected.size());
+							for(int a=0; a<selected.size(); a++) {
+								if(selected.get(a) instanceof Unit) {
+									MoveCommand temp = new MoveCommand();
+									temp.id = selected.get(a).id;
+									int targetx = e.getX()+lookingat.x;
+									int targety = e.getY()+lookingat.y;
+									temp.target = new Point(targetx, targety);
+									send(temp);
+									System.out.println("Sending Move Command");
+								}
+							}
+						}
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
-					ArrayList<Thing> possibleselect = new ArrayList<Thing>();
-					for(int a=0; a<world.getAllThings().size(); a++) {
-						Thing t = world.getAllThings().get(a);
-						if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
-							if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+					if(e.getButton()==MouseEvent.BUTTON1) {
+						Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
+						ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+						for(int a=0; a<world.getAllThings().size(); a++) {
+							Thing t = world.getAllThings().get(a);
+							if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
+								if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+									possibleselect.add(world.getAllThings().get(a));
+									selected = possibleselect;
+								}
+							}
+							if(selection.intersects(t.getBounds())) {
 								possibleselect.add(world.getAllThings().get(a));
+								selected = possibleselect;
 							}
 						}
+						System.out.println("Selected things:"+possibleselect.size());
+						//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 					}
-					System.out.println("Selected things:"+possibleselect.size());
-					//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 				}
 			});
 			this.addKeyListener(new KeyListener() {

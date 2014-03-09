@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 public class Thing implements Serializable{
@@ -22,6 +23,9 @@ public class Thing implements Serializable{
 		this.y = y;
 		myWorld.allThings.add(this);
 	}	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, width, height);
+	}
 	public Point getLocation() {
 		return new Point(x, y);
 	}

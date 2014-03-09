@@ -92,10 +92,6 @@ public class Unit extends Thing  implements Serializable{
 			range = 50; 
 		}
 	}
-
-	public void addCommand(Command c) {
-		this.commandList.add(c);
-	}
 	public void tic(){
 		if (commandList.size() > 0) {
 			Command todo = commandList.get(0);// gets and does the next command
@@ -156,7 +152,7 @@ public class Unit extends Thing  implements Serializable{
 		{
 			
 		}
-		
+		return null;
 	}
 
 	Point getNextPointInAngle(Point p,int angle)
@@ -170,6 +166,14 @@ public class Unit extends Thing  implements Serializable{
 		int dy = fp.y - ip.y;
 		int dx = fp.x - ip.x;
 		return Math.atan2(dx, dy);
+	}
+//	ArrayList<ArrayList> Paths;
+//	public ArrayList<Point> findPath(int x, int y)
+//	{
+//		
+//	}
+	public void addCommand(Command c) {
+		commandList.add(c);
 	}
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
