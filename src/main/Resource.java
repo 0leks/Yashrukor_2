@@ -8,10 +8,10 @@ public class Resource implements Serializable{
 	private int stone;
 	private int food;
 	public Resource(){
-		gold=50;
-		wood=50;
-		stone=50;
-		food=50;
+		gold=500;
+		wood=500;
+		stone=500;
+		food=500;
 	}
 	public Resource (int g, int w, int s, int f){
 		gold=g;
