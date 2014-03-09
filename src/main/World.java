@@ -16,7 +16,7 @@ import javax.swing.Timer;
 import network.Server;
 
 public class World implements Serializable {
-	
+	public static final int FOGOFWAR = 1000;
 	int worldx=4800;
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -74,10 +74,26 @@ public class World implements Serializable {
 		}
 		return null;
 	}
-//		bselected: 0 = none (creation UI)
-//				1=barracks
-//				2=range
-//				3=hospital
+
+	public boolean spotCloseEnough(Point p, Player player) {
+		for(int a=0; a<allThings.size(); a++) {
+			Thing t = allThings.get(a);
+			if(t instanceof Building) {
+				Building b = (Building)t;
+				if(b.getPlayer().equals(player)) {
+					int distance = b.euclidianDistanceFrom(p);
+					if(distance<FOGOFWAR) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+//	bselected: 0 = none (creation UI)
+//	1=barracks
+//	2=range
+//	3=hospital
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
@@ -128,7 +144,7 @@ public class World implements Serializable {
 							for(int i=0;i<foglist.size();i+=0){
 								Fog f=foglist.get(i);
 								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
-								if(d<1000){
+								if(d<FOGOFWAR){
 									foglist.remove(f);
 								}
 								else{
@@ -143,7 +159,7 @@ public class World implements Serializable {
 							for(int i=0;i<foglist.size();i+=0){
 								Fog f=foglist.get(i);
 								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
-								if(d<1000){
+								if(d<FOGOFWAR){
 									foglist.remove(f);
 								}
 								else{

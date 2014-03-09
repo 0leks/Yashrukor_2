@@ -3,6 +3,7 @@ package network;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -57,6 +58,8 @@ public class Client implements Runnable{
 	private Point mousepress;
 	private Point currentmouse;
 	private int bselected=0;
+	private String errormessage;
+	private int errortic;
 	Resource farm=new Resource(-10,-10,-40,0);
 	Resource quarry=new Resource(-10,0,-50,0);
 	Resource lumbermill=new Resource(-50,-0,-0,0);
@@ -94,6 +97,9 @@ public class Client implements Runnable{
 					if(lookingat.x+frame.getWidth()>4800){
 						lookingat.x=4800;
 					}
+				}
+				if(errortic--<0) {
+					errormessage = null;
 				}
 				if(frame!=null)  {
 					frame.repaint();
@@ -263,6 +269,11 @@ public class Client implements Runnable{
 					}
 					g.setColor(Color.white);
 					g.drawString("lookingat:"+lookingat, 50, 50);
+					if(errormessage!=null) {
+						g.setColor(Color.red);
+						g.setFont(new Font("Nyala", Font.PLAIN, 50));
+						g.drawString(errormessage, 100, getHeight()/2);
+					}
 				}
 			};
 			this.add(panel);
@@ -398,29 +409,34 @@ public class Client implements Runnable{
 							int buildingtype = e.getKeyCode()-48;
 							BuildCommand bc = new BuildCommand();
 							bc.type = buildingtype;
-							bc.location = currentmouse;
-							if(bc.type==1){
-								me.resource().add(farm);
+							bc.location = new Point(currentmouse.x+lookingat.x, currentmouse.y+lookingat.y);
+							if(world.spotCloseEnough(bc.location, me)) {
+								if(bc.type==1){
+									me.resource().add(farm);
+								}
+								else if(bc.type==2){
+									me.resource().add(quarry);
+								}
+								else if(bc.type==3){
+									me.resource().add(lumbermill);
+								}
+								else if(bc.type==4){
+									me.resource().add(tower);
+								}
+								else if(bc.type==5){
+									me.resource().add(barracks);
+								}
+								else if(bc.type==6){
+									me.resource().add(range);
+								}
+								else if(bc.type==7){
+									me.resource().add(hospital);
+								}
+								send(bc);
+							} else {
+								errormessage = "Too far from your buildings";
+								errortic = 20;
 							}
-							else if(bc.type==2){
-								me.resource().add(quarry);
-							}
-							else if(bc.type==3){
-								me.resource().add(lumbermill);
-							}
-							else if(bc.type==4){
-								me.resource().add(tower);
-							}
-							else if(bc.type==5){
-								me.resource().add(barracks);
-							}
-							else if(bc.type==6){
-								me.resource().add(range);
-							}
-							else if(bc.type==7){
-								me.resource().add(hospital);
-							}
-							send(bc);
 						}
 //					}
 				}
