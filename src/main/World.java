@@ -54,6 +54,7 @@ public class World implements Serializable {
 				for(int a=0; a<allThings.size(); a++) {
 					allThings.get(a).tic();
 				}
+				System.out.println(allThings.size());
 			}
 		});
 		worldtimer.start();
@@ -113,7 +114,8 @@ public class World implements Serializable {
 						foglist.add(new Fog(i,j));
 					}
 				}
-				for(Thing t:allThings){
+				for(int a=0; a<allThings.size(); a++){
+					Thing t = allThings.get(a);
 					if(t instanceof Unit){
 						Unit u=(Unit)t;
 						if(u.myPlayer.equals(player)){

@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -144,11 +145,13 @@ public class Client implements Runnable{
 				if(o instanceof World) {
 					world = null;
 					world = (World)o;
-					world.initializeAllThings();
 //					System.out.println("Read World! things:"+world.getAllThings().size());
 					frame.repaint();
 				}
 				if(o instanceof Thing) {
+					if(world.getAllThings()==null) {
+						world.initializeAllThings();
+					}
 					world.getAllThings().add((Thing)o);
 				}
 			} catch (ClassNotFoundException e) {
@@ -163,7 +166,7 @@ public class Client implements Runnable{
 		JPanel panel;
 		JSlider red, green, blue;
 		JTextField ipaddress;
-		FlowLayout fl;
+		GroupLayout fl;
 		JButton connect;
 		Timer colortimer;
 		public PlayerSelectionFrame() {
@@ -173,7 +176,9 @@ public class Client implements Runnable{
 			green.setMinorTickSpacing(10);
 			blue = new JSlider(JSlider.HORIZONTAL, 0, 255, (int)(Math.random()*255));
 			blue.setMinorTickSpacing(10);
-			fl = new FlowLayout();
+			ipaddress = new JTextField("localhost");
+			ipaddress.setMinimumSize(new Dimension(200, 20));
+			ipaddress.setPreferredSize(new Dimension(200, 20));
 			panel = new JPanel() {
 				@Override
 				public void paintComponent(Graphics g) {
@@ -182,15 +187,22 @@ public class Client implements Runnable{
 					g.fillRect(1, 1, 20, 20);
 				}
 			};
-			panel.setLayout(fl);
+			panel.setLayout(null);
+			red.setLocation(10, 10);
+			red.setSize(200, 20);
 			panel.add(red);
+			green.setLocation(10, 40);
+			green.setSize(200, 20);
 			panel.add(green);
+			red.setLocation(10, 70);
+			red.setSize(200, 20);
 			panel.add(blue);
-			ipaddress = new JTextField("localhost");
-			ipaddress.setMinimumSize(new Dimension(200, 20));
-			ipaddress.setPreferredSize(new Dimension(200, 20));
+			ipaddress.setLocation(10, 100);
+			ipaddress.setSize(200, 20);
 			panel.add(ipaddress);
 			connect = new JButton("Connect");
+			connect.setLocation(10, 130);
+			connect.setSize(200, 20);
 			connect.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {

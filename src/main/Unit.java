@@ -23,7 +23,7 @@ public class Unit extends Thing  implements Serializable{
 	private int unitType;
 	
 	public Unit(int unitType, int x, int y, Player p){
-		super(x,y, width, height);
+		super(x,y, width, height, 0);
 		this.x = x;
 		this.y = y;
 		myPlayer = p;
