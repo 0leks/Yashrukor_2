@@ -56,6 +56,7 @@ public class Connection implements Runnable{
 					Building bob = new Building(bc.location.x, bc.location.y, bc.type, me);
 					me.resource().add(Building.getResource(bc.type));
 					server.theworld.addBuilding(bob);
+					System.out.println("creating building");
 				}
 				if(read instanceof AttackMoveCommand) {
 					AttackMoveCommand ac = (AttackMoveCommand)read;
