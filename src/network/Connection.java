@@ -71,6 +71,13 @@ public class Connection implements Runnable{
 					c.setY(ac.target.y);
 					thing.addCommand(c);
 				}
+				if(read instanceof HealCommand) {
+					HealCommand hc = (HealCommand)read;
+					Unit healer = (Unit)(server.theworld.getThing(hc.id));
+					Command c = new Command(Command.HEALSINGLE);
+					c.setTarget(hc.target);
+					healer.addCommand(c);
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 //				try {

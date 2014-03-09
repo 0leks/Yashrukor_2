@@ -7,7 +7,8 @@ import java.io.Serializable;
 public class Thing implements Serializable{
 	protected int x;
 	protected int y;
-	int MAXHEALTH;
+
+	int MAXHEALTH=1;
 	int width;
 	int height; 
 	int hp;
