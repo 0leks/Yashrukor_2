@@ -33,7 +33,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 50;
 			damage = 20;
 			isRanged = false;
-			range = 0;
+			range = 40;
 			speed = 6;
 		}
 		if(unitType == ARCHER){
@@ -41,7 +41,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 60;
 			damage = 10;
 			isRanged = true;
-			range = 4;
+			range = 160;
 			speed = 6;
 		}
 		if(unitType == KNIGHT){
@@ -49,7 +49,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 200;
 			damage = 40;
 			isRanged = false;
-			range = 0;
+			range = 40;
 			speed = 10;
 		}
 		if(unitType == CROSSBOW){
@@ -57,7 +57,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 100;
 			damage = 30;
 			isRanged = true;
-			range = 5;
+			range = 200;
 			speed = 5;
 		}
 		if(unitType == MEDIC){
@@ -65,14 +65,14 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 80;
 			damage = 0; //heals 5 for closest ally
 			isRanged = true;
-			range = 4;
+			range = 160;
 			speed = 4;
 		}
 		if(unitType == SHAMAN){
 			hp = 80;
 			damage = 0; //heals 5 for allies in range
 			isRanged = true;
-			range = 4;
+			range = 160;
 			speed = 4;
 		}
 		if(isRanged)
@@ -81,7 +81,7 @@ public class Unit extends Thing  implements Serializable{
 		}
 		else
 		{
-			range = 50; 
+			range = 60; 
 		}
 	}
 	public void tic(){
