@@ -1,10 +1,13 @@
 package network;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,11 +31,35 @@ public class Server implements Runnable{
 	boolean drawworld;
 	public Timer timer;
 	public Point lookingat;
+	private boolean movecameraright;
+	private boolean movecameraleft;
+	private boolean movecameraup;
+	private boolean movecameradown;
+	private int cameraspeed = 20;
 	public Server() {
 		connections = new ArrayList<Connection>();
 		asdf = new CreationFrame();
 		lookingat = new Point(asdf.getWidth()/2, asdf.getHeight()/2);
 		thread = new Thread(this);
+		timer = new Timer(100, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(movecameraup) {
+					lookingat.y-=cameraspeed;
+				}
+				if(movecameradown) {
+					lookingat.y+=cameraspeed;
+				}
+				if(movecameraleft) {
+					lookingat.x-=cameraspeed;
+				}
+				if(movecameraright) {
+					lookingat.x+=cameraspeed;
+				}
+				asdf.repaint();
+			}
+		});
+		timer.start();
 	}
 	public void start() {
 		thread.start();
@@ -74,7 +101,7 @@ public class Server implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sendtoall(world);
-				asdf.panel.repaint();
+//				asdf.panel.repaint();
 			}
 		});
 		timer.start();
@@ -91,11 +118,14 @@ public class Server implements Runnable{
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle("Yashrukor Server Settings");
 			this.setVisible(true);
+
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(drawworld) {
 						world.drawEverything(g, panel, lookingat);
+						g.setColor(Color.white);
+						g.drawString("lookingat: "+lookingat, 50, 50);
 					}
 				}
 			};
@@ -107,10 +137,45 @@ public class Server implements Runnable{
 				public void actionPerformed(ActionEvent arg0) {
 					panel.remove(start);
 					startGame();
-					panel.repaint();
+//					panel.repaint();
 				}
 			});
 			panel.add(start);
+			this.addKeyListener(new KeyListener() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_UP) {
+						movecameraup = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+						movecameradown = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+						movecameraleft = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+						movecameraright = true;
+					}
+				}
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_UP) {
+						movecameraup = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+						movecameradown = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+						movecameraleft = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+						movecameraright = false;
+					}
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+				}
+			});
 		}
 	}
 	public static void main(String[] args) {

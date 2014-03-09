@@ -39,10 +39,37 @@ public class Client implements Runnable{
 	private PlayerSelectionFrame frame1;
 	private Player me;
 	private Point lookingat;
+	private boolean movecameraright;
+	private boolean movecameraleft;
+	private boolean movecameraup;
+	private boolean movecameradown;
+	private int cameraspeed = 20;
+	private Timer timer;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
 		lookingat = new Point(0, 0);
+		timer = new Timer(100, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(movecameraup) {
+					lookingat.y-=cameraspeed;
+				}
+				if(movecameradown) {
+					lookingat.y+=cameraspeed;
+				}
+				if(movecameraleft) {
+					lookingat.x-=cameraspeed;
+				}
+				if(movecameraright) {
+					lookingat.x+=cameraspeed;
+				}
+				if(frame!=null)  {
+					frame.repaint();
+				}
+			}
+		});
+		timer.start();
 	}
 	public void connect(String ip) {
 
@@ -93,11 +120,11 @@ public class Client implements Runnable{
 		while(true) {
 			try {
 				Object o = in.readUnshared();
-				System.out.println("Read Object:"+o);
+//				System.out.println("Read Object:"+o);
 				//this.send("Read Object:"+o);
 				if(o instanceof World) {
 					world = (World)o;
-					System.out.println("Read World!");
+//					System.out.println("Read World!");
 					frame.panel.repaint();
 				}
 			} catch (ClassNotFoundException e) {
@@ -178,31 +205,7 @@ public class Client implements Runnable{
 			this.setUndecorated(true);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setVisible(true);
-			this.addKeyListener(new KeyListener() {
-				@Override
-				public void keyPressed(KeyEvent e) {
-					if(e.getKeyCode()==KeyEvent.VK_UP) {
-						lookingat.y-=10;
-					}
-					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
-						lookingat.y+=10;
-					}
-					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-						lookingat.x-=10;
-					}
-					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-						lookingat.x+=10;
-					}
-					System.out.println(lookingat);
-				}
-				@Override
-				public void keyReleased(KeyEvent e) {
-					
-				}
-				@Override
-				public void keyTyped(KeyEvent e) {
-				}
-			});
+			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
 					if(world!=null) {
@@ -213,6 +216,42 @@ public class Client implements Runnable{
 				}
 			};
 			this.add(panel);
+			this.addKeyListener(new KeyListener() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_UP) {
+						movecameraup = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+						movecameradown = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+						movecameraleft = true;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+						movecameraright = true;
+					}
+//					System.out.println(lookingat);
+				}
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_UP) {
+						movecameraup = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+						movecameradown = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+						movecameraleft = false;
+					}
+					if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+						movecameraright = false;
+					}
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+				}
+			});
 		}
 	}
 	public void start() {
