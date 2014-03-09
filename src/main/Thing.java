@@ -50,5 +50,15 @@ public class Thing implements Serializable{
 		this.x = x;
 		this.y = y;
 	}
+	public Point[] getCorners()
+	{
+		Point[] arrayPoint = new Point[4];
+		arrayPoint[0] = new Point(x-width, y-height);
+		arrayPoint[1] = new Point(x+width, y-height);
+		arrayPoint[2] = new Point(x-width, y+height);
+		arrayPoint[3] = new Point(x+width, y+height);
+		return arrayPoint; 
+		
+	}
 	
 }

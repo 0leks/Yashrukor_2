@@ -132,6 +132,17 @@ public class Unit extends Thing  implements Serializable{
 	ArrayList<ArrayList> Paths;
 	ArrayList<Point> somePointList;
 	int pathCounter = 0;
+	public ArrayList<Point> findPaths(int x, int y)
+	{
+		ArrayList<Point> closedSet = new ArrayList<Point>();
+		ArrayList<Point> openSet = new ArrayList<Point>();
+		openSet.add(new Point(this.x,this.y));
+		ArrayList<Point> cameFrom = new ArrayList<Point>();
+		while(openSet.size() > 0)
+		{
+			
+		}
+	}
 	public ArrayList<Point> findPath(int x, int y, ArrayList<Point> pointList)
 	{
 		if(pathCounter < 1)
@@ -150,11 +161,16 @@ public class Unit extends Thing  implements Serializable{
 		}
 		else
 		{
+			Thing thingInSpot = myWorld.thingInPoint(getNextPointInAngle(pointList.get(pointList.size()-1),angle));
+			store
+			for( Point p : thingInSpot.getCorners())
+			{
+				
+			}
 			
 		}
-		return null;
+		//return null;
 	}
-
 	Point getNextPointInAngle(Point p,int angle)
 	{
 		int x = (int) (speed*Math.cos(angle));
@@ -165,7 +181,7 @@ public class Unit extends Thing  implements Serializable{
 	{
 		int dy = fp.y - ip.y;
 		int dx = fp.x - ip.x;
-		return Math.atan2(dx, dy);
+		return Math.atan2(dy, dx);
 	}
 //	ArrayList<ArrayList> Paths;
 //	public ArrayList<Point> findPath(int x, int y)
@@ -222,6 +238,10 @@ public class Unit extends Thing  implements Serializable{
 		{
 			target.getAttacked(damage);
 		}
+	}
+	public double distanceBetween(Point ip, Point fp)
+	{
+		return Math.sqrt((ip.y-fp.y)*(ip.y-fp.y) + (ip.x-fp.x)*(ip.x-fp.x));
 	}
 	public int distanceTo(Thing target)
 	{
