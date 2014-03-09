@@ -54,7 +54,7 @@ public class World implements Serializable {
 				for(int a=0; a<allThings.size(); a++) {
 					allThings.get(a).tic();
 				}
-				System.out.println(allThings.size());
+//				System.out.println(allThings.size());
 			}
 		});
 		worldtimer.start();
