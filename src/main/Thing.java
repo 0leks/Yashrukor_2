@@ -21,6 +21,8 @@ public class Thing implements Serializable{
 		destroyed = false;
 		this.x = x;
 		this.y = y;
+		this.width=width;
+		this.height=height;
 		myWorld.allThings.add(this);
 	}	
 	public Rectangle getBounds() {

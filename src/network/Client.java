@@ -286,6 +286,11 @@ public class Client implements Runnable{
 									temp.id = selected.get(a).id;
 									int targetx = e.getX()+lookingat.x;
 									int targety = e.getY()+lookingat.y;
+									if((e.getX()>panel.getWidth()-244)&&(e.getX()<panel.getWidth())&&
+											(e.getY()>panel.getHeight()-244)&&(e.getY()<panel.getHeight())){
+										targetx=20*(e.getX()-(panel.getWidth()-244));
+										targety=20*(e.getY()-(panel.getHeight()-244));
+									}
 									temp.target = new Point(targetx, targety);
 									send(temp);
 									System.out.println("Sending Move Command");

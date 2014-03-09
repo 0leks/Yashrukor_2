@@ -90,13 +90,13 @@ public class World implements Serializable {
 				g.setColor(Color.white);
 				g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			} 
-			else if(thing instanceof Terrain) {
+			else if(thing instanceof Terrain){
 				Terrain t = (Terrain)thing;
-				System.out.println("ter");
-				g.setColor(new Color (1,50,32));
+				//g.setColor(new Color (1,50,32));
+				g.setColor(Color.white);
 				g.fillRect(t.x-lookingat.x, t.y-lookingat.y, t.width(), t.height());
 			} 
-			else {
+			else{
 				//this is temporary drawing code for representing Things on the screen
 				g.setColor(Color.black);
 				g.fillRect(thing.x-lookingat.x, thing.y-lookingat.y, 50, 50);
