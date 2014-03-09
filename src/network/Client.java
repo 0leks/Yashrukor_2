@@ -70,7 +70,7 @@ public class Client implements Runnable {
 	private int bselected = 0;
 	private String errormessage;
 	private int errortic;
-
+	private String winner;
 	public Client() {
 		thread = new Thread(this);
 		frame1 = new PlayerSelectionFrame();
@@ -217,6 +217,10 @@ public class Client implements Runnable {
 					world = (World) o;
 					world.initializeAllThings();
 				}
+				if(o instanceof String) {
+					winner = (String)o;
+					
+				}
 				if (o instanceof Thing) {
 //					if (world.getAllThings() == null) {
 //						world.initializeAllThings();
@@ -347,7 +351,7 @@ public class Client implements Runnable {
 					g.setColor(Color.white);
 					g.drawString("lookingat:" + lookingat, 50, 50);
 					if (errormessage != null) {
-						g.setColor(Color.red);
+						g.setColor(Color.blue);
 						g.setFont(new Font("Nyala", Font.PLAIN, 50));
 						g.drawString(errormessage, 100, getHeight() / 2);
 					}
@@ -355,6 +359,11 @@ public class Client implements Runnable {
 						g.setColor(Color.green);
 						Rectangle sele = Util.normalizeRectangle(mousepress.x, mousepress.y, currentmouse.x, currentmouse.y);
 						g.drawRect(sele.x, sele.y, sele.width, sele.height);
+					}
+					if(winner!=null) {
+						g.setColor(Color.red);
+						g.setFont(new Font("Nyala", Font.PLAIN, 50));
+						g.drawString(winner, 50, getHeight()/2);
 					}
 				}
 			};
@@ -484,6 +493,7 @@ public class Client implements Runnable {
 								
 								Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()+lookingat.x,e.getY()+lookingat.y);
 								ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+								if(world!=null)
 								for (int a = 0; a < world.getAllThings().size(); a++) {
 									Thing t = world.getAllThings().get(a);
 	//								if (t.getLocation().x > selection.x

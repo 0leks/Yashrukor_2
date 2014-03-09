@@ -83,6 +83,14 @@ public class Server implements Runnable{
 						connections.get(a).send(connections.get(a).getPlayer().resource());
 					}
 				}
+				if(theworld!=null ) {
+					Player p = checkForWin();
+					if(p!=null) {
+						String winner = p.toString()+" Won!";
+						sendtoall(winner);
+					}
+				}
+				
 				asdf.repaint();
 			}
 		});
