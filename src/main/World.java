@@ -6,9 +6,12 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import network.Server;
 
@@ -22,14 +25,15 @@ public class World implements Serializable {
 	ArrayList<Thing> allThings = new ArrayList<Thing>();
 	TempFrameForTestingOnly asdf;
 	transient Server server;
+	Timer worldtimer;
 	public World(Server serv) {
 		Thing.myWorld = this;
 		initializeTerrain();
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Unit(1, 0, 50, server.connections.get(0).getPlayer()));
-				allThings.add(new Building(50, 50, 1,server.connections.get(0).getPlayer()));
+				allThings.add(new Unit(1, 50, 50, server.connections.get(0).getPlayer()));
+				allThings.add(new Building(100, 50, 1,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
 				allThings.add(new Unit(1, 4650, 4700, server.connections.get(1).getPlayer()));
@@ -45,6 +49,23 @@ public class World implements Serializable {
 			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
+		worldtimer = new Timer(50, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int a=0; a<allThings.size(); a++) {
+					allThings.get(a).tic();
+				}
+			}
+		});
+		worldtimer.start();
+	}
+	public Thing getThing(int id) {
+		for(int a=0; a<allThings.size(); a++) {
+			if(allThings.get(a).id==id) {
+				return allThings.get(a);
+			}
+		}
+		return null;
 	}
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(0,128,0));

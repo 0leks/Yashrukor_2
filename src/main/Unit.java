@@ -145,7 +145,9 @@ public class Unit extends Thing  implements Serializable{
 //	{
 //		
 //	}
-	
+	public void addCommand(Command c) {
+		commandList.add(c);
+	}
 	public void moveToward(int x, int y) //Need to implement, moves the Unit, one unit in the direction 
 	{
 		int dx = x-this.x;
