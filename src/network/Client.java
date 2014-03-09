@@ -255,7 +255,7 @@ public class Client implements Runnable {
 		Timer colortimer;
 
 		public PlayerSelectionFrame() {
-			super("YashRukor2");
+			super("Yashrukor II");
 			red = new JSlider(JSlider.HORIZONTAL, 0, 255,
 					(int) (Math.random() * 255));
 			red.setMinorTickSpacing(10);
