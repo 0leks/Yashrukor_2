@@ -130,9 +130,6 @@ public class Client implements Runnable {
 				if (errortic-- < 0) {
 					errormessage = null;
 				}
-				if (frame != null) {
-					frame.repaint();
-				}
 			}
 		});
 		timer.start();
@@ -217,13 +214,15 @@ public class Client implements Runnable {
 					world = null;
 					world = (World) o;
 					world.initializeAllThings();
-					frame.repaint();
 				}
 				if (o instanceof Thing) {
 //					if (world.getAllThings() == null) {
 //						world.initializeAllThings();
 //					}
 					world.getAllThings().add((Thing) o);
+					if (frame != null) {
+						frame.repaint();
+					}
 				}
 				if(o instanceof Resource) {
 					Resource p = (Resource)o;
@@ -387,11 +386,11 @@ public class Client implements Runnable {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON1) {
-						mousepress = e.getPoint();
-						if ((mousepress.x > panel.getWidth() - 244)
-								&& (mousepress.x < panel.getWidth())
-								&& (mousepress.y > panel.getHeight() - 244)
-								&& (mousepress.y < panel.getHeight())) {
+						if ((e.getX() > panel.getWidth() - 244)
+								&& (e.getX() < panel.getWidth())
+								&& (e.getY() > panel.getHeight() - 244)
+								&& (e.getY() < panel.getHeight())) {
+							mousepress = e.getPoint();
 							lookingat.x = 20
 									* (mousepress.x - (panel.getWidth() - 244))
 									- panel.getWidth() / 2;
@@ -408,6 +407,9 @@ public class Client implements Runnable {
 							} else if (lookingat.x + frame.getWidth()/2 > 4800+frame.getHeight()/2) {
 								lookingat.x = 4800+ frame.getWidth()/2;
 							}
+							mousepress = null;
+						} else {
+							mousepress = e.getPoint();
 						}
 					}
 					if (e.getButton() == MouseEvent.BUTTON3) {
@@ -470,35 +472,38 @@ public class Client implements Runnable {
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON1) {
-						if ((mousepress.x > panel.getWidth() - 244)
-								&& (mousepress.x < panel.getWidth())
-								&& (mousepress.y > panel.getHeight() - 244)
-								&& (mousepress.y < panel.getHeight())) {
-
-						} else {
-							Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()+lookingat.x,e.getY()+lookingat.y);
-							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
-							for (int a = 0; a < world.getAllThings().size(); a++) {
-								Thing t = world.getAllThings().get(a);
-//								if (t.getLocation().x > selection.x
-//										&& t.getLocation().x < selection.x
-//												+ selection.width) {
-//									if (t.getLocation().y > selection.y
-//											&& t.getLocation().y < selection.y
-//													+ selection.height) {
-//										possibleselect.add(world.getAllThings()
-//												.get(a));
-//										selected = possibleselect;
-//									}
-//								}
-								if (selection.intersects(t.getBounds())) {
-									possibleselect.add(t);
+						if(mousepress!=null) {
+							if ((mousepress.x > panel.getWidth() - 244)
+									&& (mousepress.x < panel.getWidth())
+									&& (mousepress.y > panel.getHeight() - 244)
+									&& (mousepress.y < panel.getHeight())) {
+	
+							} else {
+								
+								Rectangle selection = Util.normalizeRectangle(mousepress.x+lookingat.x, mousepress.y+lookingat.y, e.getX()+lookingat.x,e.getY()+lookingat.y);
+								ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+								for (int a = 0; a < world.getAllThings().size(); a++) {
+									Thing t = world.getAllThings().get(a);
+	//								if (t.getLocation().x > selection.x
+	//										&& t.getLocation().x < selection.x
+	//												+ selection.width) {
+	//									if (t.getLocation().y > selection.y
+	//											&& t.getLocation().y < selection.y
+	//													+ selection.height) {
+	//										possibleselect.add(world.getAllThings()
+	//												.get(a));
+	//										selected = possibleselect;
+	//									}
+	//								}
+									if (selection.intersects(t.getBounds())) {
+										possibleselect.add(t);
+									}
 								}
-							}
-							mousepress = null;
-							selected = possibleselect;
-							updateUI(selected);
-							System.out.println("selected "+selected.size());
+								mousepress = null;
+								selected = possibleselect;
+								updateUI(selected);
+								System.out.println("selected "+selected.size());
+						}
 						}
 					}
 				}
