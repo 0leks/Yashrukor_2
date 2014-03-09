@@ -122,7 +122,7 @@ public class Unit extends Thing  implements Serializable{
 			} else if (todo.command == Command.MOVE) {
 				moveToward(todo.x, todo.y);
 				if (this.x != todo.x || this.y != todo.y) {
-//					System.out.println("Command x: " + todo.x + " y: " + todo.y);
+					System.out.println("Command x: " + todo.x + " y: " + todo.y);
 					commandList.add(0, todo);
 				}
 //				System.out.println(this.x+" "+this.y);
@@ -166,7 +166,7 @@ public class Unit extends Thing  implements Serializable{
 	{
 		int dy = fp.y - ip.y;
 		int dx = fp.x - ip.x;
-		return Math.atan2(dx, dy);
+		return Math.atan2(dy, dx);
 	}
 //	ArrayList<ArrayList> Paths;
 //	public ArrayList<Point> findPath(int x, int y)
