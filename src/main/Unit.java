@@ -85,6 +85,8 @@ public class Unit extends Thing  implements Serializable{
 		}
 	}
 	public void tic(){
+		
+		super.tic();
 		if (commandList.size() > 0) {
 			Command todo = commandList.remove(0);// gets and does the next command
 												// that the unit needs to do
@@ -319,10 +321,7 @@ public class Unit extends Thing  implements Serializable{
 	}
 	public void attack(Thing target)
 	{
-		if(distanceTo(target) < range)
-		{
-			target.getAttacked(damage);
-		}
+		target.getAttacked(damage);
 	}
 	public double distanceBetween(Point ip, Point fp)
 	{
