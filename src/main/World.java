@@ -132,7 +132,7 @@ public class World implements Serializable {
 					g.fillRect(building.x-lookingat.x, building.y-lookingat.y, building.width, building.height);
 					
 					g.setColor(Color.green);
-					g.fillRect(building.x-lookingat.x, building.y-lookingat.y-10, (building.width)*(building.hp/building.MAXHEALTH), 10);
+					g.fillRect(building.x-lookingat.x, building.y-lookingat.y-10, ((int)((building.width)*((double)building.hp/(double)building.MAXHEALTH))), 10);
 					g.setColor(Color.black);
 					g.drawRect(building.x-lookingat.x, building.y-lookingat.y-10, building.width, 10);
 					g.setColor(Color.white);
@@ -158,7 +158,7 @@ public class World implements Serializable {
 							g.drawImage(ii, unit.x-lookingat.x, unit.y-lookingat.y, unit.width,unit.height,null);
 							
 							g.setColor(unit.myPlayer.getColor());
-							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, (unit.width)*(unit.hp/unit.MAXHEALTH), 10);
+							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))), 10);
 							g.setColor(Color.black);
 							g.drawRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							
@@ -167,7 +167,7 @@ public class World implements Serializable {
 						}
 						else if(unit.unitType()==3||unit.unitType()==5){
 							//g.fillOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
-							g.drawImage(arch, unit.x-lookingat.x, unit.y-lookingat.y, (unit.width)*(unit.hp/unit.MAXHEALTH),unit.height,null);
+							g.drawImage(arch, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
 							g.setColor(unit.myPlayer.getColor());
 							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							g.setColor(Color.black);
@@ -178,7 +178,7 @@ public class World implements Serializable {
 						}
 						else if(unit.unitType()==6||unit.unitType()==7){
 							//g.drawOval(unit.x-lookingat.x, unit.y-lookingat.y, unit.width, unit.height);
-							g.drawImage(med, unit.x-lookingat.x, unit.y-lookingat.y, (unit.width)*(unit.hp/unit.MAXHEALTH),unit.height,null);
+							g.drawImage(med, unit.x-lookingat.x, unit.y-lookingat.y, ((int)((unit.width)*((double)unit.hp/(double)unit.MAXHEALTH))),unit.height,null);
 							g.setColor(unit.myPlayer.getColor());
 							g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y-10, unit.width, 10);
 							g.setColor(Color.black);
