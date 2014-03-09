@@ -21,11 +21,12 @@ public class World implements Serializable {
 	int worldy=4800;
 	int screenw=(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int screenh=(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	transient ArrayList<Thing> allThings = new ArrayList<Thing>();
+	transient ArrayList<Thing> allThings;
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	Timer worldtimer;
 	public World(Server serv) {
+		allThings = new ArrayList<Thing>();
 		Thing.myWorld = this;
 		initializeTerrain();
 		if(serv!=null) {
@@ -51,6 +52,7 @@ public class World implements Serializable {
 		worldtimer = new Timer(50, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(allThings.size());
 				for(int a=0; a<allThings.size(); a++) {
 					allThings.get(a).tic();
 				}
@@ -94,9 +96,8 @@ public class World implements Serializable {
 			else if(thing instanceof Terrain){
 				Terrain t = (Terrain)thing;
 				g.setColor(new Color (1,50,32));
-				g.setColor(Color.white);
 				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
-				System.out.println(t.x-lookingat.x);
+				System.out.println((t.x-lookingat.x)+" "+(t.y-lookingat.y)+" "+t.width()+" "+t.height());
 			} 
 			else{
 				//this is temporary drawing code for representing Things on the screen

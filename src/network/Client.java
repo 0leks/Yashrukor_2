@@ -83,7 +83,7 @@ public class Client implements Runnable{
 					}
 				}
 				if(frame!=null)  {
-//					System.out.println("repainting frame");
+					System.out.println("repainting frame");
 					frame.repaint();
 				}
 			}
