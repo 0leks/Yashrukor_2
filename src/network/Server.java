@@ -67,6 +67,10 @@ public class Server implements Runnable{
 						}
 					}
 				}
+				for(int a=0; a<connections.size(); a++) {
+//					System.out.println("Sending Resource:"+connections.get(a).getPlayer().resource());
+					connections.get(a).send(connections.get(a).getPlayer().resource());
+				}
 				asdf.repaint();
 			}
 		});

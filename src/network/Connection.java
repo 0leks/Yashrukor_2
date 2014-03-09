@@ -54,6 +54,7 @@ public class Connection implements Runnable{
 				if(read instanceof BuildCommand) {
 					BuildCommand bc = (BuildCommand)read;
 					Building bob = new Building(bc.location.x, bc.location.y, bc.type, me);
+					me.resource().add(Building.getResource(bc.type));
 					server.theworld.addBuilding(bob);
 				}
 			} catch (ClassNotFoundException e) {
