@@ -107,8 +107,8 @@ public class Building extends Thing {
 			}
 		}
 		if(type==BARRACKS||type==RANGE||type==HOSPITAL){
-			System.out.println("Creatingunits " + creatingunits);
-			if(creatingunits==true){
+			//System.out.println("Creatingunits " + creatingunits);
+			if(creatingunits){
 				unittic++;
 				System.out.println("Unitereq: " + unitreq);
 				if(unitreq>0){
@@ -182,6 +182,7 @@ public class Building extends Thing {
 				unitreq=20*10;
 				unittomake=unit;
 				creatingunits=true;
+				System.out.println(creatingunits);
 			}
 			else if(unit ==Unit.KNIGHT&&myPlayer.resource().check(knight)){
 				unitreq=20*30;

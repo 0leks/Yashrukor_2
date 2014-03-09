@@ -446,6 +446,7 @@ public class Client implements Runnable {
 									possibleselect.add(world.getAllThings().get(a));
 								}
 							}
+							
 							selected = possibleselect;
 							System.out.println("Selected things:" + possibleselect.size());
 							updateUI(selected);
@@ -511,7 +512,6 @@ public class Client implements Runnable {
 						}
 						
 					}
-					System.out.println("bs:"+bselected);
 					if(bselected==0){
 						if (e.getKeyCode() >= 49 && e.getKeyCode() <= 56) {
 							int buildingtype = e.getKeyCode() - 48;
@@ -535,7 +535,6 @@ public class Client implements Runnable {
 						}
 					}
 					else if(bselected==1){
-						System.out.println(e.getKeyCode());
 						if(e.getKeyCode()==49){
 							for(Thing t:selected){
 								((Building)t).createUnit(Unit.WARRIOR);
