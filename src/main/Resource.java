@@ -22,16 +22,16 @@ public class Resource implements Serializable{
 	public boolean check(Resource r){
 		Resource ths=new Resource(gold,wood,stone,food);
 		ths.add(r);
-		if(gold<0){
+		if(ths.gold<0){
 			return false;
 		}
-		if(wood<0){
+		if(ths.wood<0){
 			return false;
 		}
-		if(stone<0){
+		if(ths.stone<0){
 			return false;
 		}
-		if(food<0){
+		if(ths.food<0){
 			return false;
 		}
 		return true;

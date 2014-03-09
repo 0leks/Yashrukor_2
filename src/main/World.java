@@ -32,23 +32,23 @@ public class World implements Serializable {
 		if(serv!=null) {
 			server = serv;
 			if(server.connections.size()>0){
-				allThings.add(new Building(100, 50, 1,server.connections.get(0).getPlayer()));
+				allThings.add(new Building(100, 50, 0,server.connections.get(0).getPlayer()));
 			}
 			if(server.connections.size()>1){
-				allThings.add(new Building(4700, 4700, 1,server.connections.get(1).getPlayer()));
+				allThings.add(new Building(4700, 4700, 0,server.connections.get(1).getPlayer()));
 			}
 			if(server.connections.size()>2){
-				allThings.add(new Building(50, 4700, 1,server.connections.get(2).getPlayer()));
+				allThings.add(new Building(50, 4700, 0,server.connections.get(2).getPlayer()));
 			}
 			if(server.connections.size()>3){
-				allThings.add(new Building(4700, 50, 1,server.connections.get(3).getPlayer()));
+				allThings.add(new Building(4700, 50, 0,server.connections.get(3).getPlayer()));
 			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 		worldtimer = new Timer(50, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(allThings.size());
+//				System.out.println(allThings.size());
 				for(int a=0; a<allThings.size(); a++) {
 					allThings.get(a).tic();
 				}
@@ -115,7 +115,7 @@ public class World implements Serializable {
 			else if(thing instanceof Terrain) {
 				Terrain t = (Terrain)thing;
 				g.setColor(new Color (1,50,32));
-				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());System.out.println((t.x-lookingat.x)+" "+(t.y-lookingat.y)+" "+t.width()+" "+t.height());
+				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
 			} 
 			else {
 				//this is temporary drawing code for representing Things on the screen
