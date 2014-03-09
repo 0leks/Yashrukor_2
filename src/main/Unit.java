@@ -125,6 +125,7 @@ public class Unit extends Thing  implements Serializable{
 					commandList.add(0,todo);
 				}
 			} else if (todo.command == Command.ATTACK) {
+				System.out.println("Attack Target: " + todo.target);
 				if (todo.target != null) {
 					if(this.euclidianDistanceFrom(new Point(todo.target.x, todo.target.y)) > range+todo.target.width)
 					{

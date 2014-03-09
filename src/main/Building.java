@@ -69,6 +69,7 @@ public class Building extends Thing {
 		}
 	}
 	public void tic(){
+		System.out.println("Under Construction: " + underConstruction);
 		if(underConstruction == false){
 			if(type==BASE){
 				timetic++;
