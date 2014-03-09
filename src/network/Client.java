@@ -443,7 +443,18 @@ public class Client implements Runnable {
 						movecameraright = false;
 					}
 					if(e.getKeyCode() == KeyEvent.VK_A){
-						Point p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+						Point p;
+						if ((currentmouse.x > panel.getWidth() - 244)
+								&& (currentmouse.x < panel.getWidth())
+								&& (currentmouse.y > panel.getHeight() - 244)
+								&& (currentmouse.y < panel.getHeight())) {
+							p = new Point((20 * (currentmouse.x - (panel
+									.getWidth() - 244))),(20 * (currentmouse.y - (panel
+									.getHeight() - 244))));
+						}
+						else{
+							p = new Point(currentmouse.x + lookingat.x,currentmouse.y + lookingat.y);
+						}
 						for(int a=0; a<selected.size();a++) {
 							if(selected.get(a) instanceof Unit) {
 								Unit u = (Unit)selected.get(a);
