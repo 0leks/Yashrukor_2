@@ -234,7 +234,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 //					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat, me);
+						world.drawEverything(g, panel, lookingat, me,false);
 					} else {
 						System.out.println("World is null!");
 					}
