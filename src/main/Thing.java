@@ -68,8 +68,8 @@ public class Thing implements Serializable{
 		return (int)(Math.sqrt(dx*dx+dy*dy));
 
 	}
-	public boolean collides (Thing t){
-		return this.getBounds().intersects(t.getBounds());
+	public boolean collides (Rectangle t){
+		return this.getBounds().intersects(t);
 //		if(((t.x>x)&&(t.x<(x+width)))||(((t.x+t.width)>x)&&((t.x+t.width)<(x+width)))){
 //			if(((t.y>y)&&(t.y<(y+height)))||(((t.y+t.height)>y)&&((t.y+t.height)<(y+height)))){
 //				return true;
