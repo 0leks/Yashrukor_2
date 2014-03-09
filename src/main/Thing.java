@@ -36,11 +36,13 @@ public class Thing implements Serializable{
 		if(hp <= 0)
 		{
 			myWorld.allThings.remove(this);
+			System.out.println("destroy");
 			destroyed = true;
 		}
 	}
 	public void getAttacked(int damage)
 	{
+		System.out.println("HP:"+hp);
 		hp -= damage; 
 	}
 	public World myWorld()
