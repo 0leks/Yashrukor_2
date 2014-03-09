@@ -1,7 +1,7 @@
 package main;
 
 public class Terrain extends Thing{
-	public Terrain(int x, int y, int h, int w){
+	public Terrain(int x, int y, int w, int h){
 		
 		super(x,y,w,h);
 	}

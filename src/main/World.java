@@ -83,7 +83,8 @@ public class World implements Serializable {
 				g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
 				g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
-			} else if(thing instanceof Unit) {
+			} 
+			else if(thing instanceof Unit) {
 				Unit unit = (Unit)thing;
 				g.setColor(unit.myPlayer.getColor());
 				g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
@@ -92,8 +93,7 @@ public class World implements Serializable {
 			} 
 			else if(thing instanceof Terrain){
 				Terrain t = (Terrain)thing;
-				//g.setColor(new Color (1,50,32));
-				g.setColor(Color.white);
+				g.setColor(new Color (1,50,32));
 				g.fillRect(t.x-lookingat.x, t.y-lookingat.y, t.width(), t.height());
 			} 
 			else{
@@ -224,10 +224,10 @@ public class World implements Serializable {
 		return false;
 	}
 	public void initializeTerrain(){
-		allThings.add(new Terrain(0,2300,200,1600));
-		allThings.add(new Terrain(3200,2300,200,1600));
-		allThings.add(new Terrain(2300,0,1600,200));
-		allThings.add(new Terrain(2300,3200,1600,200));
+		allThings.add(new Terrain(0,2300,1600,200));
+		allThings.add(new Terrain(3200,2300,1600,200));
+		allThings.add(new Terrain(2300,0,200,1600));
+		allThings.add(new Terrain(2300,3200,200,1600));
 		
 		allThings.add(new Terrain(1600,1600,200,200));
 		allThings.add(new Terrain(3000,3000,200,200));
@@ -248,7 +248,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel, new Point(0, 0),null,true);
+					drawEverything(g, panel, new Point(0, 0),null,false);
 				}
 			};
 			this.add(panel);
