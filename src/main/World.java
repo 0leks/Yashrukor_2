@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class World implements Serializable {
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
-	public void drawEverything(Graphics g, JPanel drawingon) {
+	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
 		for(int a=0; a<allThings.size(); a++) {
@@ -50,24 +51,36 @@ public class World implements Serializable {
 			if(thing instanceof Building){
 				Building building = (Building)thing;
 				g.setColor(building.myPlayer.getColor());
-				g.fillRect(building.x, building.y, 50, 50);
+				g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
-				g.drawString("Building #"+a, thing.x, thing.y+20);
+				g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			} else if(thing instanceof Unit) {
 				Unit unit = (Unit)thing;
 				g.setColor(unit.myPlayer.getColor());
-				g.fillRect(unit.x, unit.y, 50, 50);
+				g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
-				g.drawString("Unit #"+a, thing.x, thing.y+20);
+				g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			} 
 			else {
 				//this is temporary drawing code for representing Things on the screen
 				g.setColor(Color.black);
-				g.fillRect(thing.x, thing.y, 50, 50);
+				g.fillRect(thing.x-lookingat.x, thing.y-lookingat.y, 50, 50);
 				g.setColor(Color.white);
-				g.drawString("Thing #"+a, thing.x, thing.y+20);
+				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 			}
 		}
+		//MAKING TERRAIN here
+		g.setColor(new Color (1,50,32));
+		g.fillRect(0-lookingat.x, 2300-lookingat.y, 1600, 200);
+		g.fillRect(3200-lookingat.x, 2300-lookingat.y, 1600, 200);
+		g.fillRect(2300-lookingat.x, 0-lookingat.y, 200, 1600);
+		g.fillRect(2300-lookingat.x, 3200-lookingat.y, 200, 1600);
+		
+		g.fillRect(1600-lookingat.x, 1600-lookingat.y, 200, 200);
+		g.fillRect(3000-lookingat.x, 3000-lookingat.y, 200, 200);
+		g.fillRect(3000-lookingat.x, 1600-lookingat.y, 200, 200);
+		g.fillRect(1600-lookingat.x, 3000-lookingat.y, 200, 200);
+		g.fillRect(2350-lookingat.x, 2350-lookingat.y, 100, 100);
 	}
 	public class TempFrameForTestingOnly extends JFrame {
 		JPanel panel;
@@ -78,7 +91,7 @@ public class World implements Serializable {
 			this.setVisible(true);
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-					drawEverything(g, panel);
+					drawEverything(g, panel, new Point(0, 0));
 				}
 			};
 			this.add(panel);
