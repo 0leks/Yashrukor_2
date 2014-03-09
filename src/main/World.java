@@ -20,28 +20,25 @@ public class World implements Serializable {
 	TempFrameForTestingOnly asdf;
 	transient Server server;
 	public World(Server serv) {
+		Thing.myWorld = this;
 		if(serv!=null) {
 			server = serv;
-			for(int a=0; a<server.connections.size(); a++) {
-				allThings.add(new Unit(1, (int)(Math.random()*500), (int)(Math.random()*500), server.connections.get(a).getPlayer()));
+			if(server.connections.size()>0){
+				allThings.add(new Unit(1, 0, 50, server.connections.get(0).getPlayer()));
+				allThings.add(new Building(50, 50, 1,server.connections.get(0).getPlayer()));
 			}
-		}
-		Thing.myWorld = this;
-		if(server.connections.size()>0){
-			allThings.add(new Unit(1, 0, 50, server.connections.get(0).getPlayer()));
-			allThings.add(new Building(50, 50, 1,server.connections.get(0).getPlayer()));
-		}
-		if(server.connections.size()>1){
-			allThings.add(new Unit(1, 4650, 4700, server.connections.get(1).getPlayer()));
-			allThings.add(new Building(4700, 4700, 1,server.connections.get(1).getPlayer()));
-		}
-		if(server.connections.size()>2){
-			allThings.add(new Unit(1, 0, 4700, server.connections.get(2).getPlayer()));
-			allThings.add(new Building(50, 4700, 1,server.connections.get(2).getPlayer()));
-		}
-		if(server.connections.size()>3){
-			allThings.add(new Unit(1, 4700, 0, server.connections.get(3).getPlayer()));
-			allThings.add(new Building(4700, 50, 1,server.connections.get(3).getPlayer()));
+			if(server.connections.size()>1){
+				allThings.add(new Unit(1, 4650, 4700, server.connections.get(1).getPlayer()));
+				allThings.add(new Building(4700, 4700, 1,server.connections.get(1).getPlayer()));
+			}
+			if(server.connections.size()>2){
+				allThings.add(new Unit(1, 0, 4700, server.connections.get(2).getPlayer()));
+				allThings.add(new Building(50, 4700, 1,server.connections.get(2).getPlayer()));
+			}
+			if(server.connections.size()>3){
+				allThings.add(new Unit(1, 4700, 0, server.connections.get(3).getPlayer()));
+				allThings.add(new Building(4700, 50, 1,server.connections.get(3).getPlayer()));
+			}
 		}
 		//TempFrameForTestingOnly asdf = new TempFrameForTestingOnly();
 	}
@@ -51,14 +48,15 @@ public class World implements Serializable {
 		for(int a=0; a<allThings.size(); a++) {
 			Thing thing = allThings.get(a);
 			if(thing instanceof Building){
-				g.setColor(Color.blue);
-				g.fillRect(thing.x, thing.y, 50, 50);
+				Building building = (Building)thing;
+				g.setColor(building.myPlayer.getColor());
+				g.fillRect(building.x, building.y, 50, 50);
 				g.setColor(Color.white);
 				g.drawString("Building #"+a, thing.x, thing.y+20);
 			} else if(thing instanceof Unit) {
 				Unit unit = (Unit)thing;
-				g.setColor(new Color(200, 40, 60));
-				g.fillRect(thing.x, thing.y, 50, 50);
+				g.setColor(unit.myPlayer.getColor());
+				g.fillRect(unit.x, unit.y, 50, 50);
 				g.setColor(Color.white);
 				g.drawString("Unit #"+a, thing.x, thing.y+20);
 			} 
