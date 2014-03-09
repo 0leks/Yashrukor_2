@@ -14,10 +14,8 @@ public class Building extends Thing {
 	private int timetic=0;
 	private int unittic=0;
 	private int unitreq;
-
 	private int unittomake;
 	private boolean creatingunits=false;
-
 	public Building(int x, int y, int type){
 		this.x = x;
 		this.y = y;
@@ -58,7 +56,11 @@ public class Building extends Thing {
 				//ATTACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				timetic=0;
 			}
-
+		}
+		else if(type==BARRACKS){
+			
+		}
+		else if(type==RANGE){
 		}
 		if(type==BASE||type==BARRACKS||type==RANGE||type==HOSPITAL){
 			if(creatingunits==true){
