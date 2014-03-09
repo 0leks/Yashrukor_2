@@ -29,9 +29,8 @@ public class Building extends Thing {
 	
 	private boolean creatingunits=false;
 	public Building(int x, int y, int type, Player p){
+		super(x, y);
 		myPlayer=p;
-		this.x = x;
-		this.y = y;
 		this.type=type;
 		if(type == BASE)
 			buildTime = 0;

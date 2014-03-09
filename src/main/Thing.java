@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Point;
 import java.io.Serializable;
 
 public class Thing implements Serializable{
@@ -9,15 +10,18 @@ public class Thing implements Serializable{
 	int hp;
 	private boolean destroyed;
 	public static World myWorld;
-	public Thing(){
-		destroyed = false; 
-	}
+	private static int idcounter = 0;
+	public final int id;
 	public Thing(int x, int y)
 	{
+		id = idcounter++;
 		destroyed = false;
 		this.x = x;
 		this.y = y;
 	}	
+	public Point getLocation() {
+		return new Point(x, y);
+	}
 	public void tic()
 	{
 		if(hp <= 0)

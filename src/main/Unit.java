@@ -20,8 +20,7 @@ public class Unit extends Thing  implements Serializable{
 	private int unitType;
 	
 	public Unit(int unitType, int x, int y, Player p){
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		myPlayer = p;
 		this.unitType = unitType; 
 		if(unitType == WORKER){
