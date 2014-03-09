@@ -456,7 +456,8 @@ public class Unit extends Thing  implements Serializable{
 		cur.x = newx;
 		cur.y = newy;
 		boolean colli=false;
-		for(Thing t:myWorld.getAllThings()){
+		for(int a=0; a<myWorld.getAllThings().size(); a++){
+			Thing t=myWorld.getAllThings().get(a);
 			if(t!=this && t.collides(cur)){
 				colli=true;
 			}
