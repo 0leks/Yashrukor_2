@@ -22,10 +22,13 @@ public class Building extends Thing {
 	public boolean creatingunits=false;
 	public Building(int x, int y, int type, Player p) {
 		super(x, y, 100, 100 ,300);
+		super.MAXHEALTH=300;
 		this.type=type;
+		myPlayer=p;
 		if(type == BASE){
 			buildTime = 0;
 			super.hp=1200;
+			super.MAXHEALTH=1200;
 		}
 		else if(type == FARM)
 			buildTime = 200;
@@ -36,18 +39,22 @@ public class Building extends Thing {
 		else if(type == TOWER){
 			buildTime = 600;
 			super.hp=600;
+			super.MAXHEALTH=600;
 		}
 		else if(type == BARRACKS){
 			buildTime = 200;
 		 	super.hp=400;
+		 	super.MAXHEALTH=400;
 		}
 		else if(type == RANGE){
 			buildTime = 100;
 			super.hp=400;
+			super.MAXHEALTH=400;
 		}
 		else if(type == HOSPITAL){
 			buildTime = 200;
 			super.hp=400;
+			super.MAXHEALTH=400;
 		}
 	}
 	public static Resource getResource(int type) {
