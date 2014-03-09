@@ -33,7 +33,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 1000;
 			damage = 5;
 			isRanged = false;
-			range = 20;
+			range = 60;
 			speed = 6;
 		}
 		if(unitType == ARCHER){
@@ -41,7 +41,7 @@ public class Unit extends Thing  implements Serializable{
 			MAXHEALTH = 600;
 			damage = 4;
 			isRanged = true;
-			range = 160;
+			range = 220;
 			speed = 6;
 		}
 		if(unitType == KNIGHT){
@@ -77,11 +77,11 @@ public class Unit extends Thing  implements Serializable{
 		}
 		if(isRanged)
 		{
-			range = 200;
+			range = 250;
 		}
 		else
 		{
-			range = 20; 
+			range = 60; 
 		}
 	}
 	public Player getPlayer() {
