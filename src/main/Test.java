@@ -13,7 +13,7 @@ public class Test {
 	public Test() {
 
 		World w = new World(null);
-		 u = new Unit(1, 50, 50, new Player(Color.red));
+		 u = new Unit(2, 50, 50, new Player(Color.red));
 		 t = new Unit(2,400,400, new Player(Color.blue));
 		w.allThings.add(u);
 		Command c = new Command(Command.MOVE);
