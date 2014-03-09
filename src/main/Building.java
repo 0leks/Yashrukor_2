@@ -15,6 +15,7 @@ public class Building extends Thing {
 	private int unittic=0;
 	private int unitreq;
 	private int buildtic;
+	private int buildTime;
 	private int unittomake;
 	private boolean underConstruction;
 	
@@ -32,21 +33,21 @@ public class Building extends Thing {
 		this.y = y;
 		this.type=type;
 		if(type == BASE)
-			buildtic = 0;
+			buildTime = 0;
 		else if(type == FARM)
-			buildtic = 200;
+			buildTime = 200;
 		else if(type == QUARRY)
-			buildtic = 200;
+			buildTime = 200;
 		else if(type == LUMBERMILL)
-			buildtic = 200;
+			buildTime = 200;
 		else if(type == TOWER)
-			buildtic = 600;
+			buildTime = 600;
 		else if(type == BARRACKS)
-			buildtic = 200;
+			buildTime = 200;
 		else if(type == RANGE)
-			buildtic = 100;
+			buildTime = 100;
 		else if(type == HOSPITAL)
-			buildtic = 200;
+			buildTime = 200;
 		
 	}
 	public void tic(){
@@ -126,6 +127,14 @@ public class Building extends Thing {
 			}
 			
 		}
+	}
+	public int getBuildTime()
+	{
+		return buildTime;
+	}
+	public void setBuildTic(int x)
+	{
+		buildtic = x;
 	}
 	public void setConstruction(boolean b)
 	{

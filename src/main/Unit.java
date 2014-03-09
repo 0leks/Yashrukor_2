@@ -102,7 +102,7 @@ public class Unit extends Thing  implements Serializable{
 				}
 				else
 				{
-					
+					buildBuilding((Building)todo.target);
 				}
 			}
 		}
@@ -117,7 +117,8 @@ public class Unit extends Thing  implements Serializable{
 	}
 	public void buildBuilding(Building b)
 	{
-		
+		b.setBuildTic(b.getBuildTime());
+		b.setConstruction(true);
 	}
 	public void attack(Thing target)
 	{
