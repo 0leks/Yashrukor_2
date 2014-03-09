@@ -125,9 +125,6 @@ public class Server implements Runnable{
 			
 			panel = new JPanel() {
 				public void paintComponent(Graphics g) {
-//					if(drawworld) {
-//						theworld.drawEverything(g, panel, lookingat, null,true);
-//					}
 					g.setColor(Color.black);
 					for(int a=0; a<connections.size(); a++) {
 						if(connections.get(a).getPlayer()!=null) {

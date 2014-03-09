@@ -30,6 +30,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+import main.Building;
 import main.Player;
 import main.Resource;
 import main.Thing;
@@ -56,6 +57,7 @@ public class Client implements Runnable{
 	private Timer timer; 
 	private Point mousepress;
 	private Point currentmouse;
+	private int bselected=0;
 	private String errormessage;
 	private int errortic;
 	Resource farm=new Resource(-10,-10,-40,0);
@@ -261,7 +263,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 //					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat, me,true);
+						world.drawEverything(g, panel, lookingat, me,true,bselected);
 					} else {
 //						System.out.println("World is null!");
 					}
@@ -365,6 +367,7 @@ public class Client implements Runnable{
 							}
 							selected = possibleselect;
 							System.out.println("Selected things:"+possibleselect.size());
+							updateUI(selected);
 							//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 						}
 					}
@@ -442,6 +445,44 @@ public class Client implements Runnable{
 				}
 			});
 		}
+	}
+	public int updateUI(ArrayList<Thing> selected){
+		boolean all=true;
+		ArrayList<Building> bs=new ArrayList<Building>();
+		for(Thing t:selected){
+			if(t instanceof Building){
+				bs.add((Building)t);
+			}
+		}
+		for(Building b:bs){
+			if(b.getType()!=Building.BARRACKS){
+				all=false;
+			}
+		}
+		if(all==true){
+			bselected=1;
+			return bselected;
+		}
+		for(Building b:bs){
+			if(b.getType()!=Building.RANGE){
+				all=false;
+			}
+		}
+		if(all==true){
+			bselected=2;
+			return bselected;
+		}
+		for(Building b:bs){
+			if(b.getType()!=Building.HOSPITAL){
+				all=false;
+			}
+		}
+		if(all==true){
+			bselected=3;
+			return bselected;
+		}
+		bselected=0;
+		return bselected;
 	}
 	public void start() {
 		thread.start();

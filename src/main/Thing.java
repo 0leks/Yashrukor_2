@@ -15,8 +15,7 @@ public class Thing implements Serializable{
 	public static World myWorld;
 	private static int idcounter = 0;
 	public final int id;
-	public Thing(int x, int y, int width, int height, int health)
-	{
+	public Thing(int x, int y, int width, int height, int health){
 		hp = health;
 		id = idcounter++;
 		destroyed = false;

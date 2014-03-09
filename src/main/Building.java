@@ -2,14 +2,14 @@ package main;
 
 public class Building extends Thing {
 	Player myPlayer;
-	public final int BASE = 0;
-	public final int FARM = 1;
-	public final int QUARRY = 2;
-	public final int LUMBERMILL = 3;
-	public final int TOWER = 4;
-	public final int BARRACKS = 5;
-	public final int RANGE = 6;
-	public final int HOSPITAL = 7; 
+	public final static int BASE = 0;
+	public final static int FARM = 1;
+	public final static int QUARRY = 2;
+	public final static int LUMBERMILL = 3;
+	public final static int TOWER = 4;
+	public final static int BARRACKS = 5;
+	public final static int RANGE = 6;
+	public final static int HOSPITAL = 7; 
 	private int type;
 	private int timetic=0;
 	private int unittic=0;
@@ -94,10 +94,7 @@ public class Building extends Thing {
 				unittic++;
 				if(unittic==unitreq){
 					//ADD THE UNIT THE THE WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					if(unittomake==Unit.WORKER){
-						myPlayer.resource().add(worker);
-					}
-					else if(unittomake==Unit.WARRIOR){
+					if(unittomake==Unit.WARRIOR){
 						myPlayer.resource().add(warrior);
 					}
 					else if(unittomake==Unit.ARCHER){
@@ -147,14 +144,10 @@ public class Building extends Thing {
 	public Player getPlayer(){
 		return myPlayer;
 	}
+	public int getType(){
+		return type;
+	}
 	public void createUnit(int unit){
-		if (type==1){
-			if(unit ==Unit.WORKER){
-				unitreq=20*5;
-				unittomake=unit;
-				creatingunits=true;
-			}
-		}
 		if (type==6){
 			if(unit ==Unit.WARRIOR){
 				unitreq=20*10;
