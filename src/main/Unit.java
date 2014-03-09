@@ -230,7 +230,7 @@ public class Unit extends Thing  implements Serializable{
 				colli=true;
 			}
 		}
-		if(colli=false){
+		if(colli==false){
 			int dx = x-this.x;
 			int dy = y-this.y;
 			if(dy == 0)
