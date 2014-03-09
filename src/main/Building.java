@@ -28,7 +28,8 @@ public class Building extends Thing {
 	private Resource shaman=new Resource(-100,-50,-50,-100);
 	
 	private boolean creatingunits=false;
-	public Building(int x, int y, int type){
+	public Building(int x, int y, int type, Player p){
+		myPlayer=p;
 		this.x = x;
 		this.y = y;
 		this.type=type;
