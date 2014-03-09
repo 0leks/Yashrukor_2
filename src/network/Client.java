@@ -247,7 +247,7 @@ public class Client implements Runnable{
 				public void paintComponent(Graphics g) {
 //					System.out.println("repainting");
 					if(world!=null) {
-						world.drawEverything(g, panel, lookingat, me,false,workercommands);
+						world.drawEverything(g, panel, lookingat, me,true,workercommands);
 					} else {
 //						System.out.println("World is null!");
 					}
@@ -314,25 +314,31 @@ public class Client implements Runnable{
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if(e.getButton()==MouseEvent.BUTTON1) {
-						Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
-						ArrayList<Thing> possibleselect = new ArrayList<Thing>();
-						for(int a=0; a<world.getAllThings().size(); a++) {
-							Thing t = world.getAllThings().get(a);
-							if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
-								if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+						if((mousepress.x>panel.getWidth()-244)&&(mousepress.x<panel.getWidth())&&
+								(mousepress.y>panel.getHeight()-244)&&(mousepress.y<panel.getHeight())){
+								
+						}
+						else{
+							Rectangle selection = Util.normalizeRectangle(mousepress.x, mousepress.y, e.getX(), e.getY());
+							ArrayList<Thing> possibleselect = new ArrayList<Thing>();
+							for(int a=0; a<world.getAllThings().size(); a++) {
+								Thing t = world.getAllThings().get(a);
+								if(t.getLocation().x>selection.x && t.getLocation().x<selection.x+selection.width) {
+									if(t.getLocation().y>selection.y && t.getLocation().y<selection.y+selection.height) {
+										possibleselect.add(world.getAllThings().get(a));
+										selected = possibleselect;
+									}
+								}
+								if(selection.intersects(t.getBounds())) {
 									possibleselect.add(world.getAllThings().get(a));
 									selected = possibleselect;
 								}
 							}
-							if(selection.intersects(t.getBounds())) {
-								possibleselect.add(world.getAllThings().get(a));
-								selected = possibleselect;
-							}
+							selected = possibleselect;
+							System.out.println("Selected things:"+possibleselect.size());
+							updateUI(selected);
+							//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 						}
-						selected = possibleselect;
-						System.out.println("Selected things:"+possibleselect.size());
-						updateUI(selected);
-						//IM ABOUT TO IMPLEMENT SENDING COMMANDS OVER, TEMPORARY PASUE HERE
 					}
 				}
 			});
