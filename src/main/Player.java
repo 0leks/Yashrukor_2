@@ -11,7 +11,7 @@ public class Player implements Serializable{
 		color = scolor;
 	}
 	public Color getColor() {
-		return color;
+		return color; 
 	}
 	public Resource resource(){
 		return resource;
