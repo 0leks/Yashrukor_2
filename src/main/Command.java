@@ -6,7 +6,7 @@ public class Command {
 	public final static int MOVE = 2;
 	public final static int BUILD = 3;
 	public final static int HEALSINGLE = 4;
-	
+	public final static int HEALAOE = 5;
 	int command;
 	Thing target;
 	int x;
