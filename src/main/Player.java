@@ -25,4 +25,7 @@ public class Player implements Serializable{
 	public String toString() {
 		return "Player("+color+" "+resource+")";
 	}
+	public void setResource(Resource p) {
+		resource = p;
+	}
 }

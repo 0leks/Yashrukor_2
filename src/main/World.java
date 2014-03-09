@@ -98,112 +98,114 @@ public class World implements Serializable {
 	public void drawEverything(Graphics g, JPanel drawingon, Point lookingat, Player player, boolean fowon, int bselected) {
 		g.setColor(new Color(0,128,0));
 		g.fillRect(drawingon.getX(), drawingon.getY(), drawingon.getWidth(), drawingon.getHeight());
-		for(int a=0; a<allThings.size(); a++) {
-			Thing thing = allThings.get(a);
-			if(thing instanceof Building){
-				Building building = (Building)thing;
-				g.setColor(building.myPlayer.getColor());
-				g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
-				g.setColor(Color.white);
-				g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
-			} else if(thing instanceof Unit) {
-				Unit unit = (Unit)thing;
-				g.setColor(unit.myPlayer.getColor());
-				g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
-				g.setColor(Color.white);
-				g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
-			} 
-			else if(thing instanceof Terrain) {
-				Terrain t = (Terrain)thing;
-				g.setColor(new Color (1,50,32));
-				g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
-			} 
-			else {
-				//this is temporary drawing code for representing Things on the screen
-				g.setColor(Color.black);
-				g.fillRect(thing.x-lookingat.x, thing.y-lookingat.y, 50, 50);
-				g.setColor(Color.white);
-				g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
-			}
-		}
-		//fog of war
-		if(player!=null){
-			ArrayList<Fog> foglist=new ArrayList<Fog>();
-			if(fowon==true){
-				for(int i=0;i<4800;i+=100){
-					for(int j=0;j<4800;j+=100){
-						foglist.add(new Fog(i,j));
-					}
+		if(allThings!=null) {
+			for(int a=0; a<allThings.size(); a++) {
+				Thing thing = allThings.get(a);
+				if(thing instanceof Building){
+					Building building = (Building)thing;
+					g.setColor(building.myPlayer.getColor());
+					g.fillRect(building.x-lookingat.x, building.y-lookingat.y, 50, 50);
+					g.setColor(Color.white);
+					g.drawString("Building #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+				} else if(thing instanceof Unit) {
+					Unit unit = (Unit)thing;
+					g.setColor(unit.myPlayer.getColor());
+					g.fillRect(unit.x-lookingat.x, unit.y-lookingat.y, 50, 50);
+					g.setColor(Color.white);
+					g.drawString("Unit #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
+				} 
+				else if(thing instanceof Terrain) {
+					Terrain t = (Terrain)thing;
+					g.setColor(new Color (1,50,32));
+					g.fillRect(t.x-lookingat.x, t.y-lookingat.y,t.width(), t.height());
+				} 
+				else {
+					//this is temporary drawing code for representing Things on the screen
+					g.setColor(Color.black);
+					g.fillRect(thing.x-lookingat.x, thing.y-lookingat.y, 50, 50);
+					g.setColor(Color.white);
+					g.drawString("Thing #"+a, thing.x-lookingat.x, thing.y-lookingat.y+20);
 				}
-				for(int a=0; a<allThings.size(); a++){
-					Thing t = allThings.get(a);
-					if(t instanceof Unit){
-						Unit u=(Unit)t;
-						if(u.myPlayer.equals(player)){
-							for(int i=0;i<foglist.size();i+=0){
-								Fog f=foglist.get(i);
-								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
-								if(d<FOGOFWAR){
-									foglist.remove(f);
+			}
+			//fog of war
+			if(player!=null){
+				ArrayList<Fog> foglist=new ArrayList<Fog>();
+				if(fowon==true){
+					for(int i=0;i<4800;i+=100){
+						for(int j=0;j<4800;j+=100){
+							foglist.add(new Fog(i,j));
+						}
+					}
+					for(int a=0; a<allThings.size(); a++){
+						Thing t = allThings.get(a);
+						if(t instanceof Unit){
+							Unit u=(Unit)t;
+							if(u.myPlayer.equals(player)){
+								for(int i=0;i<foglist.size();i+=0){
+									Fog f=foglist.get(i);
+									int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
+									if(d<FOGOFWAR){
+										foglist.remove(f);
+									}
+									else{
+										i++;
+									}
 								}
-								else{
-									i++;
+							}
+						}
+						if(t instanceof Building){
+							Building u=(Building)t;
+							if(u.myPlayer.equals(player)){
+								for(int i=0;i<foglist.size();i+=0){
+									Fog f=foglist.get(i);
+									int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
+									if(d<FOGOFWAR){
+										foglist.remove(f);
+									}
+									else{
+										i++;
+									}
 								}
 							}
 						}
 					}
-					if(t instanceof Building){
-						Building u=(Building)t;
-						if(u.myPlayer.equals(player)){
-							for(int i=0;i<foglist.size();i+=0){
-								Fog f=foglist.get(i);
-								int d=(int) Math.sqrt(Math.pow(u.x-f.x,2)+Math.pow(u.y-f.y,2));
-								if(d<FOGOFWAR){
-									foglist.remove(f);
-								}
-								else{
-									i++;
-								}
-							}
-						}
+					g.setColor(new Color(192,192,192));
+					for(Fog f:foglist){
+						g.fillRect(f.x-lookingat.x, f.y-lookingat.y, 100, 100);
 					}
+					
+				}	
+				//UI
+				g.setColor(new Color(52,52,52));
+				g.fillRect(0, 0, drawingon.getWidth(), 20);
+				g.fillRect(0, drawingon.getHeight()-120, drawingon.getWidth(), 120);
+				g.setColor(Color.white);
+				g.drawString("Gold: "+player.resource().gold()+"  Wood: "+player.resource().wood()+"  Stone: "+player.resource().stone()+"  Food: "+player.resource().food(),10,12);
+				int w=(drawingon.getWidth()-360)/7;
+				g.setColor(Color.white);
+				if(bselected==0){
+					g.fillRect(10, drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
 				}
-				g.setColor(new Color(192,192,192));
-				for(Fog f:foglist){
-					g.fillRect(f.x-lookingat.x, f.y-lookingat.y, 100, 100);
+				else if(bselected==1){
+					g.fillRect(10, drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
 				}
-				
-			}	
-			//UI
-			g.setColor(new Color(52,52,52));
-			g.fillRect(0, 0, drawingon.getWidth(), 20);
-			g.fillRect(0, drawingon.getHeight()-120, drawingon.getWidth(), 120);
-			g.setColor(Color.white);
-			g.drawString("Gold: "+player.resource().gold()+"  Wood: "+player.resource().wood()+"  Stone: "+player.resource().stone()+"  Food: "+player.resource().food(),10,12);
-			int w=(drawingon.getWidth()-360)/7;
-			g.setColor(Color.white);
-			if(bselected==0){
-				g.fillRect(10, drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+2*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+3*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+4*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+5*(w+10), drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+6*(w+10), drawingon.getHeight()-110, w, 100);
+				else if(bselected==2){
+					g.fillRect(10, drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+				}
+				else if(bselected==3){
+					g.fillRect(10, drawingon.getHeight()-110, w, 100);
+					g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
+				}
+				drawMinimap(g, drawingon,lookingat,foglist,fowon);
 			}
-			else if(bselected==1){
-				g.fillRect(10, drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-			}
-			else if(bselected==2){
-				g.fillRect(10, drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-			}
-			else if(bselected==3){
-				g.fillRect(10, drawingon.getHeight()-110, w, 100);
-				g.fillRect(10+1*(w+10), drawingon.getHeight()-110, w, 100);
-			}
-			drawMinimap(g, drawingon,lookingat,foglist,fowon);
 		}
 		
 		

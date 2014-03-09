@@ -170,6 +170,11 @@ public class Client implements Runnable {
 					}
 					world.getAllThings().add((Thing) o);
 				}
+				if(o instanceof Resource) {
+					Resource p = (Resource)o;
+//					System.out.println("Read Resource:"+p);
+					me.setResource(p);
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -459,7 +464,6 @@ public class Client implements Runnable {
 							errortic = 20;
 						}
 					}
-					// }
 				}
 
 				@Override
