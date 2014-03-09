@@ -254,8 +254,9 @@ public class Client implements Runnable {
 					world = (World) o;
 					world.initializeAllThings();
 				}
-				if(o instanceof String) {
-					winner = (String)o;
+				if(o instanceof Win) {
+					Win win = (Win)o;
+					winner = win.winner;
 					
 				}
 				if (o instanceof Thing) {

@@ -86,8 +86,9 @@ public class Server implements Runnable{
 				if(theworld!=null ) {
 					Player p = checkForWin();
 					if(p!=null) {
-						String winner = p.toString()+" Won!";
-						sendtoall(winner);
+						Win w = new Win();
+						w.winner = p.toString()+" Won!";
+						sendtoall(w);
 					}
 				}
 				
