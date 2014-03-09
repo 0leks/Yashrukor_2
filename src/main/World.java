@@ -154,34 +154,7 @@ public class World implements Serializable {
 		
 	}
 
-<<<<<<< HEAD
 	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat, ArrayList<Fog> fog) {
-=======
-	public Thing thingInPoint(Point p)
-	{
-		for(Thing t : allThings)
-		{
-			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
-			{
-				return t;
-			}
-		}
-		return null;
-	}
-	public boolean pointOccupied(Point p)
-	{
-		for(Thing t : allThings)
-		{
-			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void drawMinimap(Graphics g, JPanel drawingon, Point lookingat) {
->>>>>>> bc2c0756e57f645c12a0ee4005fc558a71af7902
 		g.setColor(new Color(107,68,35));
 		g.fillRect(drawingon.getWidth()-248, drawingon.getHeight()-248, 248, 248);
 		g.setColor(new Color(0,128,0));
@@ -216,6 +189,28 @@ public class World implements Serializable {
 		}
 		g.setColor(new Color(107,68,35));
 		g.drawRect(drawingon.getWidth()-244+lookingat.x/20, drawingon.getHeight()-244+lookingat.y/20, screenw/20, screenh/20);
+	}
+	public Thing thingInPoint(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return t;
+			}
+		}
+		return null;
+	}
+	public boolean pointOccupied(Point p)
+	{
+		for(Thing t : allThings)
+		{
+			if((p.x > t.x-t.width/2 && p.x < t.x+t.width) && (p.y > t.y-t.height/2 && p.y < t.y+t.height))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	public void initializeTerrain(){
 		allThings.add(new Terrain(0,2300,200,1600));

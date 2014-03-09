@@ -42,14 +42,14 @@ public class Connection implements Runnable{
 				if(read instanceof Player) {
 					me = (Player)read;
 				}
-				if(read instanceof MoveCommand) {
-					MoveCommand mv = (MoveCommand)read;
-					Unit thing = (Unit)server.world.getThing(mv.id);
-					Command c = new Command(Command.MOVE);
-					c.setX(mv.target.x);
-					c.setY(mv.target.y);
-					thing.addCommand(c);
-				}
+//				if(read instanceof MoveCommand) {
+//					MoveCommand mv = (MoveCommand)read;
+//					Unit thing = (Unit)server.world.getThing(mv.id);
+//					Command c = new Command(Command.MOVE);
+//					c.setX(mv.target.x);
+//					c.setY(mv.target.y);
+//					thing.addCommand(c);
+//				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

@@ -268,23 +268,23 @@ public class Client implements Runnable{
 						}
 							
 					}
-					if(e.getButton()==MouseEvent.BUTTON3) {
-						System.out.println("Pressed Button 3");
-						if(selected != null) {
-							System.out.println("Selected not null size:"+selected.size());
-							for(int a=0; a<selected.size(); a++) {
-								if(selected.get(a) instanceof Unit) {
-									MoveCommand temp = new MoveCommand();
-									temp.id = selected.get(a).id;
-									int targetx = e.getX()+lookingat.x;
-									int targety = e.getY()+lookingat.y;
-									temp.target = new Point(targetx, targety);
-									send(temp);
-									System.out.println("Sending Move Command");
-								}
-							}
-						}
-					}
+//					if(e.getButton()==MouseEvent.BUTTON3) {
+//						System.out.println("Pressed Button 3");
+//						if(selected != null) {
+//							System.out.println("Selected not null size:"+selected.size());
+//							for(int a=0; a<selected.size(); a++) {
+//								if(selected.get(a) instanceof Unit) {
+//									MoveCommand temp = new MoveCommand();
+//									temp.id = selected.get(a).id;
+//									int targetx = e.getX()+lookingat.x;
+//									int targety = e.getY()+lookingat.y;
+//									temp.target = new Point(targetx, targety);
+//									send(temp);
+//									System.out.println("Sending Move Command");
+//								}
+//							}
+//						}
+//					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
