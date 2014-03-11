@@ -1,4 +1,4 @@
-Yashruko 2: (Subname TBD)
+Yashruko 2: (Subname tbd)
 
 Welcome to Yashrukor, this is an online multiplayer cabapable RTS game developed using only native Java libraries.
 

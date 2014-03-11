@@ -262,7 +262,7 @@ public class Client implements Runnable {
 				if (o instanceof Thing) {
 //					if (world.getAllThings() == null) {
 //						world.initializeAllThings();
-//					}
+//					}	
 					world.getAllThings().add((Thing) o);
 					if (frame != null) {
 						frame.repaint();
