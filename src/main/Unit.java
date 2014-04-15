@@ -107,7 +107,7 @@ public class Unit extends Thing  implements Serializable{
 			if (todo.command == Command.ATTACKMOVE) {
 				Command attacktheloser = null;
 				ArrayList<Thing> inRange = myWorld.thingsInRange(new Point(this.x, this.y), myWorld.FOGOFWAR);
-//				System.out.println(inRange);
+				System.out.println(inRange);
 				//Command attacktheloser = null;
 				ArrayList<Thing> enemies = new ArrayList<Thing>();
 				for(Thing t : inRange)
@@ -129,6 +129,7 @@ public class Unit extends Thing  implements Serializable{
 					}
 					
 				}
+				System.out.println("The size of enemies " + enemies.size());
 				int distance = Integer.MAX_VALUE;
 				Thing tempo = null;
 				if(enemies.size() > 0)
@@ -143,11 +144,11 @@ public class Unit extends Thing  implements Serializable{
 					}
 					Command killThis = new Command(Command.ATTACK);
 					killThis.setTarget(tempo);
-					commandList.add(1,killThis);
+					commandList.add(0,killThis);
 				}
 				else
 				{
-					System.out.println("AttackMove Moving Toward " + x + ", " + y);
+//					System.out.println("AttackMove Moving Toward " + x + ", " + y);
 					moveToward(todo.x, todo.y);
 					commandList.add(0,todo);
 				}
@@ -160,7 +161,8 @@ public class Unit extends Thing  implements Serializable{
 						moveToward(todo.target.x, todo.target.y);
 						commandList.add(0,todo);
 					}
-					attack(todo.target);
+					else
+						attack(todo.target);
 					if(todo.target.hp > 0)
 						commandList.add(0,todo);
 				}
