@@ -546,10 +546,20 @@ public class Client implements Runnable {
 	//									}
 	//								}
 									if (selection.intersects(t.getBounds())) {
-										possibleselect.add(t);
+										if(t instanceof Unit)
+										{
+											if(((Unit)t).getPlayer().equals(me))
+												possibleselect.add(t);
+										}
+										if(t instanceof Building)
+										{
+											if(((Building)t).getPlayer().equals(me))
+												possibleselect.add(t);
+										}
 									}
 								}
 								mousepress = null;
+								
 								selected = possibleselect;
 								updateUI(selected);
 								System.out.println("selected "+selected.size());
