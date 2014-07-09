@@ -312,7 +312,7 @@ public class Unit extends Thing  implements Serializable{
 			if(coll==null) {
 				
 			} else {
-//				System.out.println("FOUND COLLISION");
+//				System.out.println("FOUND COLLISION");       zzzzzzzzzzzzzzzzzz
 				return coll;
 			}
 		}
